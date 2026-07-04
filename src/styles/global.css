@@ -3355,7 +3355,7 @@ textarea {
   }
 
   to {
-    transform: translate3d(-50%, 0, 0);
+    transform: translate3d(calc(-50% - 9px), 0, 0);
   }
 }
 
@@ -3502,8 +3502,12 @@ textarea {
     width: max-content;
     gap: 18px;
     padding-inline: 18px;
-    animation: foodMarqueeLeft 24s linear infinite;
+    animation: foodMarqueeLeft 42s linear infinite;
     will-change: transform;
+  }
+
+  .floating-showcase:active .showcase-track {
+    animation-play-state: paused;
   }
 
   .floating-showcase figure,
