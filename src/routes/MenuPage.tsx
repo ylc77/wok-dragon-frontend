@@ -2,7 +2,6 @@ import { useMemo, useState } from 'react';
 import { MenuCategoryTabs } from '../components/MenuCategoryTabs';
 import { MenuList } from '../components/MenuList';
 import { MobileQuickNav } from '../components/MobileQuickNav';
-import { ReservationSection } from '../components/ReservationSection';
 import { useLanguage } from '../components/languageContext';
 import { menuCategories, menuItems } from '../data/menu';
 import { menuCategoryImageOverrides } from '../data/menuCategoryImages';
@@ -28,10 +27,10 @@ const elText = {
   menu: '\u039c\u03b5\u03bd\u03bf\u03cd',
   title: '\u03a4\u03bf \u03bc\u03b5\u03bd\u03bf\u03cd \u03c4\u03bf\u03c5 Wok Dragon',
   intro:
-    '\u039a\u03b1\u03b8\u03b1\u03c1\u03cc \u03bc\u03b5\u03bd\u03bf\u03cd, \u03b5\u03cd\u03ba\u03bf\u03bb\u03b5\u03c2 \u03c4\u03b9\u03bc\u03ad\u03c2, \u03c3\u03c9\u03c3\u03c4\u03ad\u03c2 \u03b5\u03b9\u03ba\u03cc\u03bd\u03b5\u03c2.',
+    '\u0394\u03b5\u03af\u03c4\u03b5 set menus, noodles, \u03c1\u03cd\u03b6\u03b9, \u03ba\u03c1\u03b5\u03b1\u03c4\u03b9\u03ba\u03ac, seafood, \u03bb\u03b1\u03c7\u03b1\u03bd\u03b9\u03ba\u03ac \u03ba\u03b1\u03b9 \u03c0\u03bf\u03c4\u03ac.',
   category: '\u039a\u03b1\u03c4\u03b7\u03b3\u03bf\u03c1\u03af\u03b1',
   countSuffix:
-    '\u03b5\u03c0\u03b9\u03bb\u03bf\u03b3\u03ad\u03c2. \u0393\u03c1\u03ae\u03b3\u03bf\u03c1\u03b7 \u03c0\u03bb\u03bf\u03ae\u03b3\u03b7\u03c3\u03b7 \u03bc\u03b5 \u03c4\u03b7\u03bd \u03b5\u03c0\u03ac\u03bd\u03c9 \u03bc\u03c0\u03ac\u03c1\u03b1.',
+    '\u03b5\u03c0\u03b9\u03bb\u03bf\u03b3\u03ad\u03c2 \u03c3\u03b5 \u03b1\u03c5\u03c4\u03ae \u03c4\u03b7\u03bd \u03ba\u03b1\u03c4\u03b7\u03b3\u03bf\u03c1\u03af\u03b1.',
   prices: '\u03a4\u03b9\u03bc\u03ad\u03c2 \u03c3\u03b5 \u20ac',
 };
 
@@ -63,7 +62,7 @@ export function MenuPage() {
           <p>
             {isGreek
               ? elText.intro
-              : 'Clear categories, easy prices, and photos only where they help the customer choose.'}
+              : 'Browse set menus, noodles, rice, meat, seafood, vegetables, and drinks.'}
           </p>
         </div>
       </section>
@@ -82,7 +81,7 @@ export function MenuPage() {
                 <p>
                   {isGreek
                     ? `${activeItems.length} ${elText.countSuffix}`
-                    : `${activeItems.length} items. Use the category bar above to move through the menu quickly.`}
+                    : `${activeItems.length} dishes in this category.`}
                 </p>
               </div>
 
@@ -107,7 +106,6 @@ export function MenuPage() {
           </div>
         </div>
       </section>
-      <ReservationSection />
       <MobileQuickNav />
     </>
   );

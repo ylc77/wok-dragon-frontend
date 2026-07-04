@@ -8,6 +8,12 @@ export function MobileQuickNav() {
 
   const items = [
     {
+      to: '/menu',
+      label: isGreek ? '\u039c\u03b5\u03bd\u03bf\u03cd' : 'Menu',
+      icon: MenuIcon,
+      tone: 'light',
+    },
+    {
       to: '/reservation',
       label: isGreek ? '\u039a\u03c1\u03ac\u03c4\u03b7\u03c3\u03b7' : 'Book a Table',
       icon: CalendarDays,
@@ -18,12 +24,6 @@ export function MobileQuickNav() {
       label: isGreek ? '\u03a7\u03ac\u03c1\u03c4\u03b7\u03c2' : 'Find Us',
       icon: MapPin,
       tone: 'dark',
-    },
-    {
-      to: '/menu',
-      label: isGreek ? '\u039c\u03b5\u03bd\u03bf\u03cd' : 'Our Menu',
-      icon: MenuIcon,
-      tone: 'light',
     },
   ];
 
