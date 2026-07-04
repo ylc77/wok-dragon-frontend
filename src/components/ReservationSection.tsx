@@ -48,11 +48,13 @@ export function ReservationSection() {
     headline: isGreek
       ? '\u039a\u03bb\u03b5\u03af\u03c3\u03c4\u03b5 \u03c4\u03c1\u03b1\u03c0\u03ad\u03b6\u03b9 \u03c3\u03c4\u03bf Wok Dragon'
       : 'Book with Wok Dragon',
-    formTitle: isGreek ? '\u03a3\u03c4\u03bf\u03b9\u03c7\u03b5\u03af\u03b1 \u03ba\u03c1\u03ac\u03c4\u03b7\u03c3\u03b7\u03c2' : 'Booking details',
+    formTitle: isGreek ? '\u039a\u03bb\u03b5\u03af\u03c3\u03c4\u03b5 \u03c4\u03c1\u03b1\u03c0\u03ad\u03b6\u03b9' : 'Reserve a table',
     formIntro: isGreek
-      ? '\u03a3\u03c5\u03bc\u03c0\u03bb\u03b7\u03c1\u03ce\u03c3\u03c4\u03b5 \u03c4\u03b1 \u03c3\u03c4\u03bf\u03b9\u03c7\u03b5\u03af\u03b1 \u03c3\u03b1\u03c2 \u03ba\u03b1\u03b9 \u03b8\u03b1 \u03b5\u03c0\u03b9\u03ba\u03bf\u03b9\u03bd\u03c9\u03bd\u03ae\u03c3\u03bf\u03c5\u03bc\u03b5 \u03bc\u03b1\u03b6\u03af \u03c3\u03b1\u03c2 \u03b3\u03b9\u03b1 \u03b5\u03c0\u03b9\u03b2\u03b5\u03b2\u03b1\u03af\u03c9\u03c3\u03b7.'
-      : 'Fill in your details and we will contact you to confirm availability.',
-    formEyebrow: isGreek ? '\u0391\u03af\u03c4\u03b7\u03bc\u03b1 \u03ba\u03c1\u03ac\u03c4\u03b7\u03c3\u03b7\u03c2' : 'Reservation Details',
+      ? '\u0395\u03c0\u03b9\u03bb\u03ad\u03be\u03c4\u03b5 \u03ac\u03c4\u03bf\u03bc\u03b1, \u03b7\u03bc\u03b5\u03c1\u03bf\u03bc\u03b7\u03bd\u03af\u03b1 \u03ba\u03b1\u03b9 \u03ce\u03c1\u03b1. \u039c\u03b5\u03c4\u03ac \u03b8\u03b1 \u03c3\u03b1\u03c2 \u03ba\u03b1\u03bb\u03ad\u03c3\u03bf\u03c5\u03bc\u03b5 \u03b3\u03b9\u03b1 \u03c4\u03b5\u03bb\u03b9\u03ba\u03ae \u03b5\u03c0\u03b9\u03b2\u03b5\u03b2\u03b1\u03af\u03c9\u03c3\u03b7.'
+      : 'Choose party size, date, and time. The restaurant will call you to confirm.',
+    formEyebrow: isGreek ? 'Wok Dragon EXPRESS' : 'Wok Dragon EXPRESS',
+    diningDetails: isGreek ? '\u03a3\u03c4\u03bf\u03b9\u03c7\u03b5\u03af\u03b1 \u03b5\u03c0\u03af\u03c3\u03ba\u03b5\u03c8\u03b7\u03c2' : 'Dining details',
+    contactDetails: isGreek ? '\u03a3\u03c4\u03bf\u03b9\u03c7\u03b5\u03af\u03b1 \u03b5\u03c0\u03b9\u03ba\u03bf\u03b9\u03bd\u03c9\u03bd\u03af\u03b1\u03c2' : 'Contact details',
     name: isGreek ? '\u038c\u03bd\u03bf\u03bc\u03b1' : 'Name',
     phoneField: isGreek ? '\u03a4\u03b7\u03bb\u03ad\u03c6\u03c9\u03bd\u03bf' : 'Phone',
     date: isGreek ? '\u0397\u03bc\u03b5\u03c1\u03bf\u03bc\u03b7\u03bd\u03af\u03b1' : 'Date',
@@ -173,32 +175,19 @@ export function ReservationSection() {
             <p>{text.formIntro}</p>
           </div>
 
-          <label>
+          <div className="reservation-form-section-title full-field">{text.diningDetails}</div>
+
+          <label className="guest-field booking-primary-field">
             <span>
-              {text.name} <b>*</b>
+              {text.guests} <b>*</b>
             </span>
-            <input
-              autoComplete="name"
-              required
-              value={form.name}
-              onChange={(event) => updateField('name', event.target.value)}
-              placeholder={text.namePlaceholder}
-            />
+            <select required value={form.guests} onChange={(event) => updateField('guests', event.target.value)}>
+              {['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'].map((value) => (
+                <option key={value}>{value}</option>
+              ))}
+            </select>
           </label>
-          <label>
-            <span>
-              {text.phoneField} <b>*</b>
-            </span>
-            <input
-              autoComplete="tel"
-              required
-              type="tel"
-              value={form.phone}
-              onChange={(event) => updateField('phone', event.target.value)}
-              placeholder={text.phonePlaceholder}
-            />
-          </label>
-          <label className="native-date-field">
+          <label className="native-date-field booking-primary-field">
             <span>
               {text.date} <b>*</b>
             </span>
@@ -217,7 +206,7 @@ export function ReservationSection() {
             </div>
             <small>{text.dateHelper}</small>
           </label>
-          <label className="native-date-field">
+          <label className="native-date-field booking-primary-field">
             <span>
               {text.time} <b>*</b>
             </span>
@@ -238,15 +227,33 @@ export function ReservationSection() {
             </div>
             <small>{text.timeHelper}</small>
           </label>
-          <label className="guest-field">
+
+          <div className="reservation-form-section-title full-field">{text.contactDetails}</div>
+
+          <label className="contact-field">
             <span>
-              {text.guests} <b>*</b>
+              {text.name} <b>*</b>
             </span>
-            <select required value={form.guests} onChange={(event) => updateField('guests', event.target.value)}>
-              {['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'].map((value) => (
-                <option key={value}>{value}</option>
-              ))}
-            </select>
+            <input
+              autoComplete="name"
+              required
+              value={form.name}
+              onChange={(event) => updateField('name', event.target.value)}
+              placeholder={text.namePlaceholder}
+            />
+          </label>
+          <label className="contact-field">
+            <span>
+              {text.phoneField} <b>*</b>
+            </span>
+            <input
+              autoComplete="tel"
+              required
+              type="tel"
+              value={form.phone}
+              onChange={(event) => updateField('phone', event.target.value)}
+              placeholder={text.phonePlaceholder}
+            />
           </label>
           <label className="full-field">
             <span>{text.notes}</span>

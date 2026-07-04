@@ -22,16 +22,18 @@ export function HeroCollage() {
       </div>
       <div className="hero-copy">
         <h1 id="hero-title">
-          {isGreek ? 'Πάντα υπάρχει λόγος για Wok' : 'There is Always a Reason to Wok'}
+          {isGreek
+            ? '\u03a0\u03ac\u03bd\u03c4\u03b1 \u03c5\u03c0\u03ac\u03c1\u03c7\u03b5\u03b9 \u03bb\u03cc\u03b3\u03bf\u03c2 \u03b3\u03b9\u03b1 Wok'
+            : 'There is Always a Reason to Wok'}
         </h1>
         <p>{isGreek ? site.sloganEl : site.sloganEn}</p>
         <p className="greek-line">{isGreek ? site.sloganEn : site.sloganEl}</p>
         <div className="hero-actions">
           <Link className="button button-dark" to="/menu">
-            {isGreek ? 'Δείτε το μενού' : 'View Menu'}
+            {isGreek ? '\u0394\u03b5\u03af\u03c4\u03b5 \u03c4\u03bf \u03bc\u03b5\u03bd\u03bf\u03cd' : 'View Menu'}
           </Link>
           <Link className="button button-light book-table-button" to="/reservation">
-            {isGreek ? 'Κράτηση τραπεζιού' : 'Book a Table'}
+            {isGreek ? '\u039a\u03c1\u03ac\u03c4\u03b7\u03c3\u03b7 \u03c4\u03c1\u03b1\u03c0\u03b5\u03b6\u03b9\u03bf\u03cd' : 'Book a Table'}
           </Link>
         </div>
       </div>

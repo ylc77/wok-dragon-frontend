@@ -3310,3 +3310,235 @@ textarea {
     grid-template-columns: 1fr;
   }
 }
+
+/* Homepage motion and Google-like reservation flow */
+@keyframes wokHeroFloat {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  to {
+    transform: translate3d(0, -18px, 0) scale(1.035);
+  }
+}
+
+@keyframes wokHeroMobileSlide {
+  0%,
+  19% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  25%,
+  94% {
+    opacity: 0;
+    transform: scale(1.055);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.hero-collage .hero-image {
+  animation: wokHeroFloat 6.8s ease-in-out infinite alternate;
+}
+
+.hero-collage .tile-two {
+  animation-delay: -1.4s;
+}
+
+.hero-collage .tile-three {
+  animation-delay: -2.8s;
+}
+
+.hero-collage .tile-four {
+  animation-delay: -4.2s;
+}
+
+.reservation-form {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.reservation-form-heading,
+.reservation-form-section-title,
+.reservation-form .full-field,
+.reservation-form .form-error,
+.reservation-form .form-success,
+.reservation-form .reservation-submit {
+  grid-column: 1 / -1;
+}
+
+.reservation-form-section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4px;
+  color: #202124;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 0.92rem;
+  font-weight: 950;
+}
+
+.reservation-form-section-title::before {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--red);
+  content: '';
+}
+
+.reservation-form .booking-primary-field {
+  grid-column: span 2;
+  padding: 14px;
+  border: 1px solid #e6e6e6;
+  border-radius: 18px;
+  background: #fafafa;
+}
+
+.reservation-form .contact-field {
+  grid-column: span 3;
+}
+
+.reservation-form .booking-primary-field > span {
+  color: #5f6368;
+  font-size: 0.78rem;
+}
+
+.reservation-form .booking-primary-field select,
+.reservation-form .booking-primary-field .native-field-shell {
+  background: #fff;
+}
+
+.reservation-form .booking-primary-field small {
+  color: #777;
+  font-size: 0.76rem;
+}
+
+@media (max-width: 980px) {
+  .hero-collage {
+    height: auto;
+    min-height: 0;
+    padding: calc(62px + min(54svh, 430px)) 0 0;
+    background: var(--red);
+  }
+
+  .hero-collage::after {
+    display: none;
+  }
+
+  .hero-collage .hero-image {
+    top: 62px;
+    right: 0;
+    bottom: auto;
+    left: 0;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    height: min(54svh, 430px);
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    opacity: 0;
+    overflow: hidden;
+    animation: wokHeroMobileSlide 16s ease-in-out infinite;
+  }
+
+  .hero-collage .tile-one {
+    animation-delay: 0s;
+  }
+
+  .hero-collage .tile-two {
+    animation-delay: 4s;
+  }
+
+  .hero-collage .tile-three {
+    animation-delay: 8s;
+  }
+
+  .hero-collage .tile-four {
+    animation-delay: 12s;
+  }
+
+  .hero-collage .hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .hero-copy {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    z-index: 4;
+    display: grid;
+    max-width: none;
+    min-height: 0;
+    margin: 0;
+    padding: 30px 20px calc(96px + 26px);
+    background:
+      linear-gradient(180deg, rgba(0, 0, 0, 0.06), transparent 34%),
+      var(--red);
+    color: #fff;
+    place-items: start;
+    text-align: left;
+  }
+
+  .hero-copy h1 {
+    max-width: 380px;
+    margin-bottom: 14px;
+    font-size: clamp(2.45rem, 12vw, 4rem);
+    line-height: 0.9;
+    text-shadow: 0 5px 0 rgba(0, 0, 0, 0.18);
+  }
+
+  .hero-copy p {
+    max-width: 350px;
+    font-size: 0.96rem;
+    line-height: 1.28;
+  }
+
+  .hero-collage .hero-actions {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .hero-collage .hero-actions .button {
+    width: 100%;
+    min-height: 54px;
+  }
+
+  .reservation-form .booking-primary-field,
+  .reservation-form .contact-field {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 620px) {
+  .hero-collage {
+    padding-top: calc(62px + min(49svh, 360px));
+  }
+
+  .hero-collage .hero-image {
+    height: min(49svh, 360px);
+  }
+
+  .hero-copy {
+    padding-inline: 18px;
+  }
+
+  .reservation-form-section-title {
+    margin-top: 2px;
+  }
+
+  .reservation-form .booking-primary-field {
+    padding: 12px;
+    border-radius: 16px;
+  }
+}
