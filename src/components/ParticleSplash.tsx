@@ -12,8 +12,8 @@ type SparkParticle = {
 };
 
 const SPLASH_SEEN_KEY = 'wok-dragon-particle-splash-seen';
-const FADE_AFTER_MS = 1200;
-const FALLBACK_CLOSE_MS = 2000;
+const FADE_AFTER_MS = 2200;
+const FALLBACK_CLOSE_MS = 3000;
 
 function createParticle(width: number, height: number): SparkParticle {
   const fromCenter = Math.random() > 0.38;
@@ -189,9 +189,7 @@ export function ParticleSplash() {
     <div className={`particle-splash ${isClosing ? 'is-closing' : ''}`} aria-hidden="true">
       <canvas ref={canvasRef} className="particle-splash-canvas" />
       <div className="particle-splash-logo">
-        <span className="particle-splash-dragon">WD</span>
-        <strong>Wok Dragon</strong>
-        <small>Express</small>
+        <img className="particle-splash-logo-image" src="/brand/wok-dragon-logo.png" alt="" />
       </div>
     </div>
   );
