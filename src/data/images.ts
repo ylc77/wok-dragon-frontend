@@ -56,7 +56,7 @@ export const foodImages = {
   pdfBeef:
     '/menu-pdf-images/page-09-image-07.jpg',
   pdfBeefMixed:
-    '/menu-pdf-images/page-09-image-06.jpg',
+    '/menu-pdf-images/page-09-image-06.png',
   pdfBeefBroccoli:
     '/menu-pdf-images/page-09-image-08.jpg',
   pdfBeefPepper:
@@ -74,7 +74,7 @@ export const foodImages = {
   pdfPorkSauce:
     '/menu-pdf-images/page-11-image-09.jpg',
   pdfPorkMeiCai:
-    '/menu-pdf-images/page-11-image-11.jpg',
+    '/menu-pdf-images/page-11-image-11.png',
   pdfPorkRibs:
     '/menu-pdf-images/page-11-image-12.jpg',
   pdfPorkCrispy:

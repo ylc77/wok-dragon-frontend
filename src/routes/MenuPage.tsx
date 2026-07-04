@@ -25,7 +25,7 @@ const featuredCategoryIds = new Set([
 
 const elText = {
   menu: '\u039c\u03b5\u03bd\u03bf\u03cd',
-  title: '\u03a4\u03bf \u03bc\u03b5\u03bd\u03bf\u03cd \u03c4\u03bf\u03c5 Wok Dragon',
+  title: 'Wok Dragon',
   intro:
     '\u0394\u03b5\u03af\u03c4\u03b5 set menus, noodles, \u03c1\u03cd\u03b6\u03b9, \u03ba\u03c1\u03b5\u03b1\u03c4\u03b9\u03ba\u03ac, seafood, \u03bb\u03b1\u03c7\u03b1\u03bd\u03b9\u03ba\u03ac \u03ba\u03b1\u03b9 \u03c0\u03bf\u03c4\u03ac.',
   category: '\u039a\u03b1\u03c4\u03b7\u03b3\u03bf\u03c1\u03af\u03b1',
@@ -58,7 +58,7 @@ export function MenuPage() {
       <section className="menu-hero menu-hero-polished">
         <div>
           <span className="section-kicker">{isGreek ? elText.menu : 'Menu'}</span>
-          <h1>{isGreek ? elText.title : 'The Wok Dragon Menu'}</h1>
+          <h1>{isGreek ? elText.title : 'Wok Dragon'}</h1>
           <p>
             {isGreek
               ? elText.intro
@@ -89,7 +89,13 @@ export function MenuPage() {
                 <div className={`menu-photo-mosaic photo-count-${Math.min(galleryImages.length, 5)}`} aria-label={activeLabel}>
                   {galleryImages.map((image, index) => (
                     <figure key={`${image}-${index}`}>
-                      <img src={image} alt={`${activeLabel} ${index + 1}`} />
+                      <img
+                        src={image}
+                        alt={`${activeLabel} ${index + 1}`}
+                        onError={(event) => {
+                          event.currentTarget.closest('figure')?.setAttribute('hidden', '');
+                        }}
+                      />
                     </figure>
                   ))}
                 </div>

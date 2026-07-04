@@ -35,48 +35,51 @@ export function ReservationSection() {
   const sendToApi = import.meta.env.VITE_RESERVATION_API_ENABLED === 'true';
 
   const text = {
-    title: isGreek ? 'Κρατήσεις' : 'Reservations',
+    title: isGreek ? '\u039a\u03c1\u03b1\u03c4\u03ae\u03c3\u03b5\u03b9\u03c2' : 'Reservations',
     intro: isGreek
-      ? 'Στείλτε το αίτημά σας και η τελική επιβεβαίωση θα γίνει απευθείας από το εστιατόριο.'
+      ? '\u03a3\u03c4\u03b5\u03af\u03bb\u03c4\u03b5 \u03c4\u03bf \u03b1\u03af\u03c4\u03b7\u03bc\u03b1 \u03ba\u03c1\u03ac\u03c4\u03b7\u03c3\u03b7\u03c2 \u03ba\u03b1\u03b9 \u03b7 \u03c4\u03b5\u03bb\u03b9\u03ba\u03ae \u03b5\u03c0\u03b9\u03b2\u03b5\u03b2\u03b1\u03af\u03c9\u03c3\u03b7 \u03b3\u03af\u03bd\u03b5\u03c4\u03b1\u03b9 \u03b1\u03c0\u03b5\u03c5\u03b8\u03b5\u03af\u03b1\u03c2 \u03b1\u03c0\u03cc \u03c4\u03bf \u03b5\u03c3\u03c4\u03b9\u03b1\u03c4\u03cc\u03c1\u03b9\u03bf.'
       : 'Send your request and final confirmation comes directly from the restaurant.',
-    phone: isGreek ? 'Τηλέφωνο' : 'Phone',
-    address: isGreek ? 'Διεύθυνση' : 'Address',
-    hours: isGreek ? 'Ώρες λειτουργίας' : 'Opening hours',
+    phone: isGreek ? '\u03a4\u03b7\u03bb\u03ad\u03c6\u03c9\u03bd\u03bf' : 'Phone',
+    address: isGreek ? '\u0394\u03b9\u03b5\u03cd\u03b8\u03c5\u03bd\u03c3\u03b7' : 'Address',
+    hours: isGreek ? '\u038f\u03c1\u03b5\u03c2 \u03bb\u03b5\u03b9\u03c4\u03bf\u03c5\u03c1\u03b3\u03af\u03b1\u03c2' : 'Opening hours',
     note: isGreek
-      ? 'Η τελική επιβεβαίωση γίνεται απευθείας από το εστιατόριο.'
+      ? '\u0397 \u03c4\u03b5\u03bb\u03b9\u03ba\u03ae \u03b5\u03c0\u03b9\u03b2\u03b5\u03b2\u03b1\u03af\u03c9\u03c3\u03b7 \u03b3\u03af\u03bd\u03b5\u03c4\u03b1\u03b9 \u03b1\u03c0\u03b5\u03c5\u03b8\u03b5\u03af\u03b1\u03c2 \u03b1\u03c0\u03cc \u03c4\u03bf \u03b5\u03c3\u03c4\u03b9\u03b1\u03c4\u03cc\u03c1\u03b9\u03bf.'
       : 'Final confirmation comes directly from the restaurant.',
-    formTitle: isGreek ? 'Στοιχεία κράτησης' : 'Booking details',
+    headline: isGreek
+      ? '\u039a\u03bb\u03b5\u03af\u03c3\u03c4\u03b5 \u03c4\u03c1\u03b1\u03c0\u03ad\u03b6\u03b9 \u03c3\u03c4\u03bf Wok Dragon'
+      : 'Book with Wok Dragon',
+    formTitle: isGreek ? '\u03a3\u03c4\u03bf\u03b9\u03c7\u03b5\u03af\u03b1 \u03ba\u03c1\u03ac\u03c4\u03b7\u03c3\u03b7\u03c2' : 'Booking details',
     formIntro: isGreek
-      ? 'Συμπληρώστε τα στοιχεία σας και θα επικοινωνήσουμε μαζί σας για επιβεβαίωση.'
+      ? '\u03a3\u03c5\u03bc\u03c0\u03bb\u03b7\u03c1\u03ce\u03c3\u03c4\u03b5 \u03c4\u03b1 \u03c3\u03c4\u03bf\u03b9\u03c7\u03b5\u03af\u03b1 \u03c3\u03b1\u03c2 \u03ba\u03b1\u03b9 \u03b8\u03b1 \u03b5\u03c0\u03b9\u03ba\u03bf\u03b9\u03bd\u03c9\u03bd\u03ae\u03c3\u03bf\u03c5\u03bc\u03b5 \u03bc\u03b1\u03b6\u03af \u03c3\u03b1\u03c2 \u03b3\u03b9\u03b1 \u03b5\u03c0\u03b9\u03b2\u03b5\u03b2\u03b1\u03af\u03c9\u03c3\u03b7.'
       : 'Fill in your details and we will contact you to confirm availability.',
-    formEyebrow: isGreek ? 'Αίτημα κράτησης' : 'Reservation Details',
-    name: isGreek ? 'Όνομα' : 'Name',
-    phoneField: isGreek ? 'Τηλέφωνο' : 'Phone',
-    date: isGreek ? 'Ημερομηνία' : 'Date',
-    time: isGreek ? 'Ώρα' : 'Time',
-    guests: isGreek ? 'Άτομα' : 'Guests',
-    notes: isGreek ? 'Σημειώσεις' : 'Notes',
-    namePlaceholder: isGreek ? 'Το όνομά σας' : 'Your name',
-    phonePlaceholder: isGreek ? 'Αριθμός τηλεφώνου' : 'Phone number',
-    datePlaceholder: isGreek ? 'Επιλέξτε ημερομηνία' : 'Select date',
-    timePlaceholder: isGreek ? 'Επιλέξτε ώρα' : 'Select time',
-    dateHelper: isGreek ? 'Μορφή εμφάνισης: ΗΗ/ΜΜ/ΕΕΕΕ' : 'Shown as DD/MM/YYYY',
-    timeHelper: isGreek ? 'Ωράριο: 12:00 - 23:30' : 'Opening hours: 12:00 - 23:30',
+    formEyebrow: isGreek ? '\u0391\u03af\u03c4\u03b7\u03bc\u03b1 \u03ba\u03c1\u03ac\u03c4\u03b7\u03c3\u03b7\u03c2' : 'Reservation Details',
+    name: isGreek ? '\u038c\u03bd\u03bf\u03bc\u03b1' : 'Name',
+    phoneField: isGreek ? '\u03a4\u03b7\u03bb\u03ad\u03c6\u03c9\u03bd\u03bf' : 'Phone',
+    date: isGreek ? '\u0397\u03bc\u03b5\u03c1\u03bf\u03bc\u03b7\u03bd\u03af\u03b1' : 'Date',
+    time: isGreek ? '\u038f\u03c1\u03b1' : 'Time',
+    guests: isGreek ? '\u0386\u03c4\u03bf\u03bc\u03b1' : 'Guests',
+    notes: isGreek ? '\u03a3\u03b7\u03bc\u03b5\u03b9\u03ce\u03c3\u03b5\u03b9\u03c2' : 'Notes',
+    namePlaceholder: isGreek ? '\u03a4\u03bf \u03cc\u03bd\u03bf\u03bc\u03ac \u03c3\u03b1\u03c2' : 'Your name',
+    phonePlaceholder: isGreek ? '\u0391\u03c1\u03b9\u03b8\u03bc\u03cc\u03c2 \u03c4\u03b7\u03bb\u03b5\u03c6\u03ce\u03bd\u03bf\u03c5' : 'Phone number',
+    datePlaceholder: isGreek ? '\u0395\u03c0\u03b9\u03bb\u03ad\u03be\u03c4\u03b5 \u03b7\u03bc\u03b5\u03c1\u03bf\u03bc\u03b7\u03bd\u03af\u03b1' : 'Select date',
+    timePlaceholder: isGreek ? '\u0395\u03c0\u03b9\u03bb\u03ad\u03be\u03c4\u03b5 \u03ce\u03c1\u03b1' : 'Select time',
+    dateHelper: isGreek ? '\u0395\u03bc\u03c6\u03ac\u03bd\u03b9\u03c3\u03b7: \u0397\u0397/\u039c\u039c/\u0395\u0395\u0395\u0395' : 'Shown as DD/MM/YYYY',
+    timeHelper: isGreek ? '\u038f\u03c1\u03b5\u03c2: 12:00 - 23:30' : 'Opening hours: 12:00 - 23:30',
     notesPlaceholder: isGreek
-      ? 'Προτίμηση τραπεζιού, αλλεργίες ή κάτι άλλο χρήσιμο.'
+      ? '\u03a0\u03c1\u03bf\u03c4\u03af\u03bc\u03b7\u03c3\u03b7 \u03c4\u03c1\u03b1\u03c0\u03b5\u03b6\u03b9\u03bf\u03cd, \u03b1\u03bb\u03bb\u03b5\u03c1\u03b3\u03af\u03b5\u03c2 \u03ae \u03ba\u03ac\u03c4\u03b9 \u03ac\u03bb\u03bb\u03bf \u03c7\u03c1\u03ae\u03c3\u03b9\u03bc\u03bf.'
       : 'Table preference, allergies, or anything useful.',
     requiredError: isGreek
-      ? 'Συμπληρώστε τα υποχρεωτικά πεδία πριν στείλετε το αίτημα.'
+      ? '\u03a3\u03c5\u03bc\u03c0\u03bb\u03b7\u03c1\u03ce\u03c3\u03c4\u03b5 \u03c4\u03b1 \u03c5\u03c0\u03bf\u03c7\u03c1\u03b5\u03c9\u03c4\u03b9\u03ba\u03ac \u03c0\u03b5\u03b4\u03af\u03b1 \u03c0\u03c1\u03b9\u03bd \u03c3\u03c4\u03b5\u03af\u03bb\u03b5\u03c4\u03b5 \u03c4\u03bf \u03b1\u03af\u03c4\u03b7\u03bc\u03b1.'
       : 'Please complete the required fields before sending your request.',
     sendError: isGreek
-      ? 'Δεν ήταν δυνατή η αποστολή. Καλέστε το εστιατόριο για κράτηση.'
+      ? '\u0394\u03b5\u03bd \u03ae\u03c4\u03b1\u03bd \u03b4\u03c5\u03bd\u03b1\u03c4\u03ae \u03b7 \u03b1\u03c0\u03bf\u03c3\u03c4\u03bf\u03bb\u03ae. \u039a\u03b1\u03bb\u03ad\u03c3\u03c4\u03b5 \u03c4\u03bf \u03b5\u03c3\u03c4\u03b9\u03b1\u03c4\u03cc\u03c1\u03b9\u03bf \u03b3\u03b9\u03b1 \u03ba\u03c1\u03ac\u03c4\u03b7\u03c3\u03b7.'
       : 'Reservation request could not be sent. Please call the restaurant to book.',
-    successTitle: isGreek ? 'Το αίτημα κράτησης στάλθηκε' : 'Reservation request sent',
+    successTitle: isGreek ? '\u03a4\u03bf \u03b1\u03af\u03c4\u03b7\u03bc\u03b1 \u03ba\u03c1\u03ac\u03c4\u03b7\u03c3\u03b7\u03c2 \u03c3\u03c4\u03ac\u03bb\u03b8\u03b7\u03ba\u03b5' : 'Reservation request sent',
     successBody: isGreek
-      ? 'Το εστιατόριο θα επικοινωνήσει μαζί σας για επιβεβαίωση.'
+      ? '\u03a4\u03bf \u03b5\u03c3\u03c4\u03b9\u03b1\u03c4\u03cc\u03c1\u03b9\u03bf \u03b8\u03b1 \u03b5\u03c0\u03b9\u03ba\u03bf\u03b9\u03bd\u03c9\u03bd\u03ae\u03c3\u03b5\u03b9 \u03bc\u03b1\u03b6\u03af \u03c3\u03b1\u03c2 \u03b3\u03b9\u03b1 \u03b5\u03c0\u03b9\u03b2\u03b5\u03b2\u03b1\u03af\u03c9\u03c3\u03b7.'
       : 'The restaurant will contact you to confirm.',
-    sending: isGreek ? 'Αποστολή...' : 'Sending...',
-    submit: isGreek ? 'Αποστολή αιτήματος κράτησης' : 'Send Reservation Request',
+    sending: isGreek ? '\u0391\u03c0\u03bf\u03c3\u03c4\u03bf\u03bb\u03ae...' : 'Sending...',
+    submit: isGreek ? '\u0391\u03c0\u03bf\u03c3\u03c4\u03bf\u03bb\u03ae \u03b1\u03b9\u03c4\u03ae\u03bc\u03b1\u03c4\u03bf\u03c2 \u03ba\u03c1\u03ac\u03c4\u03b7\u03c3\u03b7\u03c2' : 'Send Reservation Request',
   };
 
   function updateField(field: keyof ReservationForm, value: string) {
@@ -128,7 +131,7 @@ export function ReservationSection() {
       <div className="reservation-shell">
         <aside className="reservation-info-card" aria-label={text.title}>
           <span>{text.title}</span>
-          <h2>{isGreek ? 'Κλείστε τραπέζι στο Wok Dragon' : 'Book with Wok Dragon'}</h2>
+          <h2>{text.headline}</h2>
           <p>{text.intro}</p>
 
           <ul>
