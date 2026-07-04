@@ -4,7 +4,7 @@ export const contactInfo: ContactInfo = {
   // Public listing data gathered from Google Maps-adjacent restaurant listings. Verify before launch.
   address: 'Mitropoleos 51, Athens 105 56, Greece',
   phone: '+30 210 323 8424',
-  openingHours: ['Daily: 12:00 - 23:30'],
+  openingHours: ['Mon-Tue, Thu-Sun: 12:00 - 23:30', 'Wednesday: Closed'],
   googleMapsQuery: 'Wok Dragon EXPRESS Athens',
   googleMapsEmbedUrl:
     'https://www.google.com/maps?q=Wok%20Dragon%20EXPRESS%20Athens&output=embed',

@@ -9,6 +9,7 @@ const OPENING_START_MINUTES = 12 * 60;
 const OPENING_END_MINUTES = 23 * 60 + 30;
 const TIME_STEP_MINUTES = 30;
 const RESERVATION_DAYS = 7;
+const CLOSED_WEEKDAY = 3;
 
 function pad(value: number) {
   return String(value).padStart(2, '0');
@@ -22,6 +23,22 @@ function addDays(date: Date, days: number) {
   const next = new Date(date);
   next.setDate(next.getDate() + days);
   return next;
+}
+
+function isClosedDate(date: Date) {
+  return date.getDay() === CLOSED_WEEKDAY;
+}
+
+function getDefaultReservationDate() {
+  const today = new Date();
+  for (let offset = 0; offset < RESERVATION_DAYS; offset += 1) {
+    const candidate = addDays(today, offset);
+    if (!isClosedDate(candidate)) {
+      return toDateValue(candidate);
+    }
+  }
+
+  return toDateValue(today);
 }
 
 function formatTimeFromMinutes(totalMinutes: number) {
@@ -43,7 +60,7 @@ function createInitialForm(): ReservationForm {
   return {
     name: '',
     phone: '',
-    date: toDateValue(new Date()),
+    date: getDefaultReservationDate(),
     time: getDefaultTime(),
     guests: '2',
     notes: '',
@@ -61,15 +78,16 @@ function createTimeOptions() {
 function createDateOptions() {
   const today = new Date();
 
-  return Array.from({ length: RESERVATION_DAYS }, (_, index) => {
-    const date = addDays(today, index);
-    const value = toDateValue(date);
+  return Array.from({ length: RESERVATION_DAYS }, (_, index) => addDays(today, index))
+    .filter((date) => !isClosedDate(date))
+    .map((date) => {
+      const value = toDateValue(date);
 
-    return {
-      label: formatDisplayDate(value),
-      value,
-    };
-  });
+      return {
+        label: formatDisplayDate(value),
+        value,
+      };
+    });
 }
 
 function formatDisplayDate(value: string) {
@@ -124,7 +142,9 @@ export function ReservationSection() {
     dateHelper: isGreek
       ? '\u039a\u03c1\u03b1\u03c4\u03ae\u03c3\u03b5\u03b9\u03c2 \u03ad\u03c9\u03c2 7 \u03b7\u03bc\u03ad\u03c1\u03b5\u03c2'
       : 'Reservations up to 7 days ahead',
-    timeHelper: isGreek ? '\u0391\u03bd\u03ac 30 \u03bb\u03b5\u03c0\u03c4\u03ac, 12:00 - 23:30' : 'Every 30 minutes, 12:00 - 23:30',
+    timeHelper: isGreek
+      ? '\u0391\u03bd\u03ac 30 \u03bb\u03b5\u03c0\u03c4\u03ac, 12:00 - 23:30. \u039a\u03bb\u03b5\u03b9\u03c3\u03c4\u03ac \u03a4\u03b5\u03c4\u03ac\u03c1\u03c4\u03b7.'
+      : 'Every 30 minutes, 12:00 - 23:30. Closed Wednesday.',
     notesPlaceholder: isGreek
       ? '\u03a0\u03c1\u03bf\u03c4\u03af\u03bc\u03b7\u03c3\u03b7 \u03c4\u03c1\u03b1\u03c0\u03b5\u03b6\u03b9\u03bf\u03cd, \u03b1\u03bb\u03bb\u03b5\u03c1\u03b3\u03af\u03b5\u03c2 \u03ae \u03ba\u03ac\u03c4\u03b9 \u03ac\u03bb\u03bb\u03bf \u03c7\u03c1\u03ae\u03c3\u03b9\u03bc\u03bf.'
       : 'Table preference, allergies, or anything useful.',
