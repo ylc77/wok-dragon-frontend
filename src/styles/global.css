@@ -426,10 +426,18 @@ textarea {
   background: #fff;
 }
 
+.showcase-track {
+  display: contents;
+}
+
 .floating-showcase figure {
   margin: 0;
   animation: foodFloat 6.5s ease-in-out infinite alternate;
   transform: rotate(var(--rotation, -2deg));
+}
+
+.floating-showcase figure[aria-hidden='true'] {
+  display: none;
 }
 
 .floating-showcase figure:nth-child(even) {
@@ -3341,6 +3349,16 @@ textarea {
   }
 }
 
+@keyframes foodMarqueeLeft {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
 .hero-collage .hero-image {
   animation: wokHeroFloat 6.8s ease-in-out infinite alternate;
 }
@@ -3469,45 +3487,51 @@ textarea {
   }
 
   .hero-copy {
-    position: relative;
-    right: auto;
-    bottom: auto;
-    left: auto;
-    z-index: 4;
-    display: grid;
-    max-width: none;
-    min-height: 0;
-    margin: 0;
-    padding: 30px 20px calc(78px + 24px);
-    background:
-      linear-gradient(180deg, rgba(0, 0, 0, 0.06), transparent 34%),
-      var(--red);
-    color: #fff;
-    place-items: start;
-    text-align: left;
-  }
-
-  .hero-copy h1 {
-    max-width: 380px;
-    margin-bottom: 14px;
-    font-size: clamp(2.45rem, 12vw, 4rem);
-    line-height: 0.9;
-    text-shadow: 0 5px 0 rgba(0, 0, 0, 0.18);
-  }
-
-  .hero-copy p {
-    max-width: 350px;
-    font-size: 0.96rem;
-    line-height: 1.28;
-  }
-
-  .hero-collage .hero-actions {
     display: none;
   }
 
-  .hero-collage .hero-actions .button {
-    width: 100%;
-    min-height: 54px;
+  .floating-showcase {
+    display: block;
+    overflow: hidden;
+    padding: 8px 0 52px;
+    background: #fff;
+  }
+
+  .showcase-track {
+    display: flex;
+    width: max-content;
+    gap: 18px;
+    padding-inline: 18px;
+    animation: foodMarqueeLeft 24s linear infinite;
+    will-change: transform;
+  }
+
+  .floating-showcase figure,
+  .floating-showcase figure:nth-child(even) {
+    display: block;
+    flex: 0 0 min(70vw, 292px);
+    min-width: min(70vw, 292px);
+    margin: 0;
+    animation: none;
+    transform: none;
+    transition: transform 180ms ease, filter 180ms ease;
+  }
+
+  .floating-showcase figure:active {
+    transform: scale(1.045);
+    filter: saturate(1.08);
+    z-index: 2;
+  }
+
+  .floating-showcase img {
+    aspect-ratio: 1.32;
+    border-radius: 7px;
+  }
+
+  .floating-showcase figcaption {
+    margin-top: 10px;
+    font-size: 1.08rem;
+    line-height: 1;
   }
 
   .reservation-form .booking-primary-field,
@@ -3526,7 +3550,7 @@ textarea {
   }
 
   .hero-copy {
-    padding-inline: 18px;
+    display: none;
   }
 
   .reservation-form-section-title {
