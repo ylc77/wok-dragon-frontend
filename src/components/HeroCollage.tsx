@@ -5,6 +5,10 @@ import { useLanguage } from './languageContext';
 export function HeroCollage() {
   const { language } = useLanguage();
   const isGreek = language === 'el';
+  const titleLines = isGreek
+    ? ['\u03a0\u03ac\u03bd\u03c4\u03b1 \u03c5\u03c0\u03ac\u03c1\u03c7\u03b5\u03b9', '\u03bb\u03cc\u03b3\u03bf\u03c2 \u03b3\u03b9\u03b1 Wok']
+    : ['There is', 'Always a', 'Reason to Wok'];
+  const title = titleLines.join(' ');
 
   return (
     <section className="hero-collage" aria-labelledby="hero-title">
@@ -21,10 +25,12 @@ export function HeroCollage() {
         <img src={site.heroImages[3]} alt="Asian wok dish close-up" />
       </div>
       <div className="hero-copy">
-        <h1 id="hero-title">
-          {isGreek
-            ? '\u03a0\u03ac\u03bd\u03c4\u03b1 \u03c5\u03c0\u03ac\u03c1\u03c7\u03b5\u03b9 \u03bb\u03cc\u03b3\u03bf\u03c2 \u03b3\u03b9\u03b1 Wok'
-            : 'There is Always a Reason to Wok'}
+        <h1 id="hero-title" key={language} className="hero-animated-title" aria-label={title}>
+          {titleLines.map((line, index) => (
+            <span key={line} className={`hero-title-line hero-title-line-${index + 1}`} aria-hidden="true">
+              <span>{line}</span>
+            </span>
+          ))}
         </h1>
         <p>{isGreek ? site.sloganEl : site.sloganEn}</p>
         <p className="greek-line">{isGreek ? site.sloganEn : site.sloganEl}</p>
