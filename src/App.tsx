@@ -4,10 +4,13 @@ import { useLocation } from 'react-router-dom';
 import { Footer } from './components/Footer';
 import { Header } from './components/Header';
 import { ParticleSplash } from './components/ParticleSplash';
+import { CookieBanner } from './components/CookieBanner';
+import { CookieConsentProvider } from './components/CookieConsentProvider';
 import { ContactPage } from './routes/ContactPage';
 import { HomePage } from './routes/HomePage';
 import { LocationPage } from './routes/LocationPage';
 import { MenuPage } from './routes/MenuPage';
+import { PrivacyPage } from './routes/PrivacyPage';
 import { ReservationPage } from './routes/ReservationPage';
 import './styles/global.css';
 
@@ -23,21 +26,25 @@ function ScrollToTop() {
 
 export default function App() {
   return (
-    <div className="app-shell">
-      <ParticleSplash />
-      <ScrollToTop />
-      <Header />
-      <main>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/menu" element={<MenuPage />} />
-          <Route path="/book" element={<ReservationPage />} />
-          <Route path="/reservation" element={<ReservationPage />} />
-          <Route path="/location" element={<LocationPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-        </Routes>
-      </main>
-      <Footer />
-    </div>
+    <CookieConsentProvider>
+      <div className="app-shell">
+        <ParticleSplash />
+        <ScrollToTop />
+        <Header />
+        <main>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/menu" element={<MenuPage />} />
+            <Route path="/book" element={<ReservationPage />} />
+            <Route path="/reservation" element={<ReservationPage />} />
+            <Route path="/location" element={<LocationPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/privacy" element={<PrivacyPage />} />
+          </Routes>
+        </main>
+        <Footer />
+        <CookieBanner />
+      </div>
+    </CookieConsentProvider>
   );
 }
