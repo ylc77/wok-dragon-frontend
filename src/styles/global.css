@@ -4499,6 +4499,12 @@ textarea {
   }
 }
 
+@media (max-width: 980px) {
+  .reason-section h2 {
+    display: none;
+  }
+}
+
 /* Uniform menu category boxes */
 .menu-page-refined .menu-tab-buttons {
   align-items: stretch;
