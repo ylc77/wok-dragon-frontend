@@ -7,7 +7,7 @@ import { useLanguage } from './languageContext';
 
 const OPENING_START_MINUTES = 12 * 60;
 const OPENING_END_MINUTES = 23 * 60 + 30;
-const TIME_STEP_MINUTES = 10;
+const TIME_STEP_MINUTES = 30;
 const RESERVATION_DAYS = 7;
 
 function pad(value: number) {
@@ -58,21 +58,15 @@ function createTimeOptions() {
   return options;
 }
 
-function createDateOptions(language: 'el' | 'en') {
+function createDateOptions() {
   const today = new Date();
-  const formatter = new Intl.DateTimeFormat(language === 'el' ? 'el-GR' : 'en-GB', {
-    weekday: 'short',
-    day: '2-digit',
-    month: '2-digit',
-  });
 
   return Array.from({ length: RESERVATION_DAYS }, (_, index) => {
     const date = addDays(today, index);
     const value = toDateValue(date);
-    const label = index === 0 ? (language === 'el' ? '\u03a3\u03ae\u03bc\u03b5\u03c1\u03b1' : 'Today') : formatter.format(date);
 
     return {
-      label: `${label} - ${formatDisplayDate(value)}`,
+      label: formatDisplayDate(value),
       value,
     };
   });
@@ -90,7 +84,7 @@ export function ReservationSection() {
   const isGreek = language === 'el';
   const phone = contactInfo.phone ?? '+30 210 323 8424';
   const openingHours = contactInfo.openingHours?.length ? contactInfo.openingHours : ['Daily: 12:00 - 23:30'];
-  const dateOptions = useMemo(() => createDateOptions(language), [language]);
+  const dateOptions = useMemo(() => createDateOptions(), []);
   const timeOptions = useMemo(() => createTimeOptions(), []);
   const [form, setForm] = useState<ReservationForm>(createInitialForm);
   const [submitted, setSubmitted] = useState(false);
@@ -130,7 +124,7 @@ export function ReservationSection() {
     dateHelper: isGreek
       ? '\u039a\u03c1\u03b1\u03c4\u03ae\u03c3\u03b5\u03b9\u03c2 \u03ad\u03c9\u03c2 7 \u03b7\u03bc\u03ad\u03c1\u03b5\u03c2'
       : 'Reservations up to 7 days ahead',
-    timeHelper: isGreek ? '\u0391\u03bd\u03ac 10 \u03bb\u03b5\u03c0\u03c4\u03ac, 12:00 - 23:30' : 'Every 10 minutes, 12:00 - 23:30',
+    timeHelper: isGreek ? '\u0391\u03bd\u03ac 30 \u03bb\u03b5\u03c0\u03c4\u03ac, 12:00 - 23:30' : 'Every 30 minutes, 12:00 - 23:30',
     notesPlaceholder: isGreek
       ? '\u03a0\u03c1\u03bf\u03c4\u03af\u03bc\u03b7\u03c3\u03b7 \u03c4\u03c1\u03b1\u03c0\u03b5\u03b6\u03b9\u03bf\u03cd, \u03b1\u03bb\u03bb\u03b5\u03c1\u03b3\u03af\u03b5\u03c2 \u03ae \u03ba\u03ac\u03c4\u03b9 \u03ac\u03bb\u03bb\u03bf \u03c7\u03c1\u03ae\u03c3\u03b9\u03bc\u03bf.'
       : 'Table preference, allergies, or anything useful.',
