@@ -189,7 +189,7 @@ export function ParticleSplash() {
     <div className={`particle-splash ${isClosing ? 'is-closing' : ''}`} aria-hidden="true">
       <canvas ref={canvasRef} className="particle-splash-canvas" />
       <div className="particle-splash-logo">
-        <img className="particle-splash-logo-image" src="/brand/wok-dragon-logo.png" alt="" />
+        <img className="particle-splash-logo-image" src="/brand/wok-dragon-logo-transparent.png" alt="" />
       </div>
     </div>
   );

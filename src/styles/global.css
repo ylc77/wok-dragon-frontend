@@ -3880,13 +3880,14 @@ textarea {
   gap: 0;
   padding: 5px 8px;
   overflow: hidden;
-  background: #fff;
+  background: transparent;
 }
 
 .logo-image {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.12));
 }
 
 .particle-splash-logo {
@@ -3896,17 +3897,32 @@ textarea {
   gap: 0;
 }
 
-.particle-splash-logo::before,
+.particle-splash-logo::before {
+  position: absolute;
+  inset: 7%;
+  display: block;
+  border: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(255, 230, 168, 0.16), transparent 58%),
+    radial-gradient(circle, rgba(226, 27, 22, 0.18), transparent 72%);
+  filter: blur(18px);
+  content: '';
+}
+
 .particle-splash-logo::after {
   display: none;
 }
 
 .particle-splash-logo-image {
+  position: relative;
+  z-index: 1;
   width: min(76vw, 440px);
   max-height: min(58vh, 440px);
   object-fit: contain;
   filter:
     drop-shadow(0 0 32px rgba(226, 27, 22, 0.38))
+    drop-shadow(0 0 2px rgba(255, 245, 218, 0.62))
     drop-shadow(0 18px 36px rgba(0, 0, 0, 0.48));
 }
 
@@ -3916,7 +3932,7 @@ textarea {
     min-width: 148px;
     height: 62px;
     padding: 4px 8px;
-    background: #fff;
+    background: transparent;
   }
 }
 
