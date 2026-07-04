@@ -4005,3 +4005,27 @@ textarea {
     font-size: 1.28rem;
   }
 }
+
+/* Desktop homepage food showcase sizing */
+@media (min-width: 981px) {
+  .floating-showcase {
+    grid-template-columns: repeat(4, minmax(190px, 300px));
+    justify-content: center;
+    gap: clamp(18px, 2vw, 30px);
+    padding: 34px clamp(24px, 4vw, 70px) 72px;
+  }
+
+  .floating-showcase figure:nth-child(even) {
+    margin-top: 24px;
+  }
+
+  .floating-showcase img {
+    aspect-ratio: 1.16;
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.14);
+  }
+
+  .floating-showcase figcaption {
+    margin-top: 9px;
+    font-size: 1rem;
+  }
+}
