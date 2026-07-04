@@ -3182,3 +3182,131 @@ textarea {
     width: 100%;
   }
 }
+
+/* Menu category lookup refinement */
+.menu-page-refined .menu-topbar {
+  position: relative;
+  top: auto;
+  overflow: visible;
+  padding: 18px;
+}
+
+.menu-page-refined .menu-tabs {
+  gap: 16px;
+}
+
+.menu-page-refined .menu-tab-group {
+  grid-template-columns: 110px minmax(0, 1fr);
+  align-items: start;
+}
+
+.menu-page-refined .menu-tab-group-label {
+  position: sticky;
+  top: 96px;
+  min-height: 40px;
+  padding-top: 11px;
+  border-bottom: 0;
+  border-right: 4px solid var(--red);
+}
+
+.menu-page-refined .menu-tab-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(128px, 1fr));
+  gap: 9px;
+  overflow: visible;
+  padding-bottom: 0;
+}
+
+.menu-page-refined .menu-tabs button {
+  width: 100%;
+  min-height: 44px;
+  padding: 9px 11px;
+  white-space: normal;
+}
+
+.menu-page-refined .menu-tabs button span {
+  display: block;
+  line-height: 1.12;
+}
+
+.menu-page-refined .menu-board-heading {
+  justify-content: flex-end;
+  padding: 14px clamp(16px, 2.4vw, 28px);
+  border-bottom: 2px solid #111;
+  background: #fff;
+}
+
+.menu-page-refined .menu-board-heading strong {
+  display: none;
+}
+
+.menu-page-refined .menu-board-heading span {
+  color: #666;
+}
+
+@media (max-width: 980px) {
+  .menu-page-refined .menu-topbar {
+    position: relative;
+    top: auto;
+    margin-inline: 0;
+    border-radius: 14px;
+  }
+
+  .menu-page-refined .menu-tab-group {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .menu-page-refined .menu-tab-group-label {
+    position: static;
+    width: 100%;
+    min-height: 0;
+    padding: 0 0 7px;
+    border-right: 0;
+    border-bottom: 3px solid var(--red);
+  }
+
+  .menu-page-refined .menu-tab-buttons {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    overflow: visible;
+    scrollbar-width: auto;
+  }
+
+  .menu-page-refined .menu-tab-buttons::-webkit-scrollbar {
+    display: none;
+  }
+
+  .menu-page-refined .menu-tabs button {
+    min-width: 0;
+    min-height: 46px;
+    padding-inline: 8px;
+  }
+}
+
+@media (max-width: 620px) {
+  .menu-page-refined .menu-topbar {
+    margin-inline: 0;
+    padding: 14px;
+  }
+
+  .menu-page-refined .menu-tab-buttons {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .menu-page-refined .menu-tabs button {
+    min-height: 48px;
+    font-size: 0.78rem;
+  }
+
+  .menu-page-refined .menu-board-heading {
+    padding: 12px 14px;
+  }
+}
+
+@media (max-width: 380px) {
+  .menu-page-refined .menu-tab-buttons {
+    grid-template-columns: 1fr;
+  }
+}

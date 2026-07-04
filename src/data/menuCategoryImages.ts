@@ -52,7 +52,7 @@ export const menuCategoryImageOverrides: Record<string, MenuCategoryImageSet> = 
   },
   beef: {
     image: foodImages.pdfBeef,
-    galleryImages: [foodImages.pdfBeefMixed, foodImages.pdfBeef, foodImages.pdfBeefBroccoli, foodImages.pdfBeefPepper],
+    galleryImages: [foodImages.pdfBeef, foodImages.pdfBeefBroccoli, foodImages.pdfBeefPepper],
   },
   chicken: {
     image: foodImages.pdfChicken,
