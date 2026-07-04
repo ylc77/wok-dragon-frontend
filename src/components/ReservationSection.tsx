@@ -1,20 +1,82 @@
 import { ArrowRight, CalendarDays, CheckCircle2, Clock3, MapPin, Phone } from 'lucide-react';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import type { FormEvent } from 'react';
 import { contactInfo } from '../data/contact';
 import type { ReservationForm } from '../types/reservation';
 import { useLanguage } from './languageContext';
 
-const initialForm: ReservationForm = {
-  name: '',
-  phone: '',
-  date: '',
-  time: '',
-  guests: '2',
-  notes: '',
-};
+const OPENING_START_MINUTES = 12 * 60;
+const OPENING_END_MINUTES = 23 * 60 + 30;
+const TIME_STEP_MINUTES = 10;
+const RESERVATION_DAYS = 7;
 
-const today = new Date().toISOString().slice(0, 10);
+function pad(value: number) {
+  return String(value).padStart(2, '0');
+}
+
+function toDateValue(date: Date) {
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+}
+
+function addDays(date: Date, days: number) {
+  const next = new Date(date);
+  next.setDate(next.getDate() + days);
+  return next;
+}
+
+function formatTimeFromMinutes(totalMinutes: number) {
+  return `${pad(Math.floor(totalMinutes / 60))}:${pad(totalMinutes % 60)}`;
+}
+
+function roundUpToStep(totalMinutes: number) {
+  return Math.ceil(totalMinutes / TIME_STEP_MINUTES) * TIME_STEP_MINUTES;
+}
+
+function getDefaultTime() {
+  const now = new Date();
+  const roundedNow = roundUpToStep(now.getHours() * 60 + now.getMinutes());
+  const clamped = Math.min(Math.max(roundedNow, OPENING_START_MINUTES), OPENING_END_MINUTES);
+  return formatTimeFromMinutes(clamped);
+}
+
+function createInitialForm(): ReservationForm {
+  return {
+    name: '',
+    phone: '',
+    date: toDateValue(new Date()),
+    time: getDefaultTime(),
+    guests: '2',
+    notes: '',
+  };
+}
+
+function createTimeOptions() {
+  const options: string[] = [];
+  for (let minutes = OPENING_START_MINUTES; minutes <= OPENING_END_MINUTES; minutes += TIME_STEP_MINUTES) {
+    options.push(formatTimeFromMinutes(minutes));
+  }
+  return options;
+}
+
+function createDateOptions(language: 'el' | 'en') {
+  const today = new Date();
+  const formatter = new Intl.DateTimeFormat(language === 'el' ? 'el-GR' : 'en-GB', {
+    weekday: 'short',
+    day: '2-digit',
+    month: '2-digit',
+  });
+
+  return Array.from({ length: RESERVATION_DAYS }, (_, index) => {
+    const date = addDays(today, index);
+    const value = toDateValue(date);
+    const label = index === 0 ? (language === 'el' ? '\u03a3\u03ae\u03bc\u03b5\u03c1\u03b1' : 'Today') : formatter.format(date);
+
+    return {
+      label: `${label} - ${formatDisplayDate(value)}`,
+      value,
+    };
+  });
+}
 
 function formatDisplayDate(value: string) {
   if (!value) return '';
@@ -28,7 +90,9 @@ export function ReservationSection() {
   const isGreek = language === 'el';
   const phone = contactInfo.phone ?? '+30 210 323 8424';
   const openingHours = contactInfo.openingHours?.length ? contactInfo.openingHours : ['Daily: 12:00 - 23:30'];
-  const [form, setForm] = useState<ReservationForm>(initialForm);
+  const dateOptions = useMemo(() => createDateOptions(language), [language]);
+  const timeOptions = useMemo(() => createTimeOptions(), []);
+  const [form, setForm] = useState<ReservationForm>(createInitialForm);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
   const [isSending, setIsSending] = useState(false);
@@ -63,10 +127,10 @@ export function ReservationSection() {
     notes: isGreek ? '\u03a3\u03b7\u03bc\u03b5\u03b9\u03ce\u03c3\u03b5\u03b9\u03c2' : 'Notes',
     namePlaceholder: isGreek ? '\u03a4\u03bf \u03cc\u03bd\u03bf\u03bc\u03ac \u03c3\u03b1\u03c2' : 'Your name',
     phonePlaceholder: isGreek ? '\u0391\u03c1\u03b9\u03b8\u03bc\u03cc\u03c2 \u03c4\u03b7\u03bb\u03b5\u03c6\u03ce\u03bd\u03bf\u03c5' : 'Phone number',
-    datePlaceholder: isGreek ? '\u0395\u03c0\u03b9\u03bb\u03ad\u03be\u03c4\u03b5 \u03b7\u03bc\u03b5\u03c1\u03bf\u03bc\u03b7\u03bd\u03af\u03b1' : 'Select date',
-    timePlaceholder: isGreek ? '\u0395\u03c0\u03b9\u03bb\u03ad\u03be\u03c4\u03b5 \u03ce\u03c1\u03b1' : 'Select time',
-    dateHelper: isGreek ? '\u0395\u03bc\u03c6\u03ac\u03bd\u03b9\u03c3\u03b7: \u0397\u0397/\u039c\u039c/\u0395\u0395\u0395\u0395' : 'Shown as DD/MM/YYYY',
-    timeHelper: isGreek ? '\u038f\u03c1\u03b5\u03c2: 12:00 - 23:30' : 'Opening hours: 12:00 - 23:30',
+    dateHelper: isGreek
+      ? '\u039a\u03c1\u03b1\u03c4\u03ae\u03c3\u03b5\u03b9\u03c2 \u03ad\u03c9\u03c2 7 \u03b7\u03bc\u03ad\u03c1\u03b5\u03c2'
+      : 'Reservations up to 7 days ahead',
+    timeHelper: isGreek ? '\u0391\u03bd\u03ac 10 \u03bb\u03b5\u03c0\u03c4\u03ac, 12:00 - 23:30' : 'Every 10 minutes, 12:00 - 23:30',
     notesPlaceholder: isGreek
       ? '\u03a0\u03c1\u03bf\u03c4\u03af\u03bc\u03b7\u03c3\u03b7 \u03c4\u03c1\u03b1\u03c0\u03b5\u03b6\u03b9\u03bf\u03cd, \u03b1\u03bb\u03bb\u03b5\u03c1\u03b3\u03af\u03b5\u03c2 \u03ae \u03ba\u03ac\u03c4\u03b9 \u03ac\u03bb\u03bb\u03bf \u03c7\u03c1\u03ae\u03c3\u03b9\u03bc\u03bf.'
       : 'Table preference, allergies, or anything useful.',
@@ -92,7 +156,10 @@ export function ReservationSection() {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!form.name.trim() || !form.phone.trim() || !form.date || !form.time || !form.guests) {
+    const isValidDate = dateOptions.some((option) => option.value === form.date);
+    const isValidTime = timeOptions.includes(form.time);
+
+    if (!form.name.trim() || !form.phone.trim() || !isValidDate || !isValidTime || !form.guests) {
       setError(text.requiredError);
       return;
     }
@@ -120,7 +187,7 @@ export function ReservationSection() {
       }
 
       setSubmitted(true);
-      setForm(initialForm);
+      setForm(createInitialForm());
     } catch {
       setError(text.sendError);
     } finally {
@@ -191,17 +258,20 @@ export function ReservationSection() {
             <span>
               {text.date} <b>*</b>
             </span>
-            <div className={`native-field-shell ${form.date ? 'has-value' : ''}`}>
-              <input
+            <div className="native-field-shell reservation-select-shell has-value">
+              <select
                 aria-label={text.date}
-                className="native-field-input"
-                min={today}
+                className="reservation-card-select"
                 required
-                type="date"
                 value={form.date}
                 onChange={(event) => updateField('date', event.target.value)}
-              />
-              <span className="native-field-display">{formatDisplayDate(form.date) || text.datePlaceholder}</span>
+              >
+                {dateOptions.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
               <CalendarDays size={18} />
             </div>
             <small>{text.dateHelper}</small>
@@ -210,19 +280,20 @@ export function ReservationSection() {
             <span>
               {text.time} <b>*</b>
             </span>
-            <div className={`native-field-shell ${form.time ? 'has-value' : ''}`}>
-              <input
+            <div className="native-field-shell reservation-select-shell has-value">
+              <select
                 aria-label={text.time}
-                className="native-field-input"
-                max="23:30"
-                min="12:00"
+                className="reservation-card-select"
                 required
-                step="900"
-                type="time"
                 value={form.time}
                 onChange={(event) => updateField('time', event.target.value)}
-              />
-              <span className="native-field-display">{form.time || text.timePlaceholder}</span>
+              >
+                {timeOptions.map((time) => (
+                  <option key={time} value={time}>
+                    {time}
+                  </option>
+                ))}
+              </select>
               <Clock3 size={18} />
             </div>
             <small>{text.timeHelper}</small>
