@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Footer } from './components/Footer';
 import { Header } from './components/Header';
+import { ParticleSplash } from './components/ParticleSplash';
 import { ContactPage } from './routes/ContactPage';
 import { HomePage } from './routes/HomePage';
 import { LocationPage } from './routes/LocationPage';
@@ -23,6 +24,7 @@ function ScrollToTop() {
 export default function App() {
   return (
     <div className="app-shell">
+      <ParticleSplash />
       <ScrollToTop />
       <Header />
       <main>
