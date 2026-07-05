@@ -1,6 +1,13 @@
 import type { Language } from '../components/languageContext';
 
-export type StructuredMenuCategoryId = 'soups' | 'salads' | 'appetizers' | 'soup-noodles' | 'fried-noodles';
+export type StructuredMenuCategoryId =
+  | 'soups'
+  | 'salads'
+  | 'appetizers'
+  | 'soup-noodles'
+  | 'fried-noodles'
+  | 'fried-rice'
+  | 'duck';
 
 export type StructuredMenuCategory = {
   id: StructuredMenuCategoryId;
@@ -26,6 +33,8 @@ export const structuredMenuCategories: StructuredMenuCategory[] = [
   { id: 'appetizers', labelEl: 'Ορεκτικά', labelEn: 'Appetizers', labelZh: '前菜' },
   { id: 'soup-noodles', labelEl: 'Σούπες με Noodles', labelEn: 'Noodle Soups', labelZh: '汤面 / 汤粉' },
   { id: 'fried-noodles', labelEl: 'Τηγανητά Noodles', labelEn: 'Fried Noodles', labelZh: '炒面 / 炒米粉' },
+  { id: 'fried-rice', labelEl: 'Τηγανητό Ρύζι', labelEn: 'Fried Rice', labelZh: '炒饭' },
+  { id: 'duck', labelEl: 'Πάπια', labelEn: 'Duck', labelZh: '鸭类' },
 ];
 
 export const structuredMenuDishes: StructuredMenuDish[] = [
@@ -511,6 +520,178 @@ export const structuredMenuDishes: StructuredMenuDish[] = [
     nameEn: 'Fried rice noodle Singapore',
     nameZh: '星洲炒米粉',
     price: '12.90',
+  },
+  {
+    number: '75',
+    categoryId: 'fried-rice',
+    nameEl: 'Ρύζι ατμού',
+    nameEn: 'Steamed rice',
+    nameZh: '白饭',
+    price: '3.00',
+  },
+  {
+    number: '76',
+    categoryId: 'fried-rice',
+    nameEl: 'Τηγανητό ρύζι με αυγό',
+    nameEn: 'Fried rice with egg',
+    nameZh: '鸡蛋炒饭',
+    price: '8.90',
+  },
+  {
+    number: '77',
+    categoryId: 'fried-rice',
+    nameEl: 'Τηγανητό ρύζι με μοσχάρι',
+    nameEn: 'Fried rice with beef',
+    nameZh: '牛肉炒饭',
+    price: '11.50',
+  },
+  {
+    number: '78',
+    categoryId: 'fried-rice',
+    nameEl: 'Τηγανητό ρύζι με λαχανικά',
+    nameEn: 'Fried rice with vegetables',
+    nameZh: '蔬菜炒饭',
+    price: '9.90',
+  },
+  {
+    number: '79',
+    categoryId: 'fried-rice',
+    nameEl: 'Τηγανητό ρύζι με πάπια',
+    nameEn: 'Fried rice with duck',
+    nameZh: '鸭肉炒饭',
+    price: '11.90',
+  },
+  {
+    number: '80',
+    categoryId: 'fried-rice',
+    nameEl: 'Τηγανητό ρύζι με κοτόπουλο',
+    nameEn: 'Fried rice with chicken',
+    nameZh: '鸡肉炒饭',
+    price: '10.90',
+  },
+  {
+    number: '81',
+    categoryId: 'fried-rice',
+    nameEl: 'Τηγανητό ρύζι με χοιρινό',
+    nameEn: 'Fried rice with pork',
+    nameZh: '猪肉炒饭',
+    price: '10.90',
+  },
+  {
+    number: '82',
+    categoryId: 'fried-rice',
+    nameEl: 'Τηγανητό ρύζι με θαλασσινά',
+    nameEn: 'Fried rice with seafood',
+    nameZh: '海鲜炒饭',
+    price: '12.90',
+  },
+  {
+    number: '83',
+    categoryId: 'fried-rice',
+    nameEl: 'Τηγανητό ρύζι με γαρίδες',
+    nameEn: 'Fried rice with shrimps',
+    nameZh: '虾炒饭',
+    price: '13.50',
+  },
+  {
+    number: '84',
+    categoryId: 'fried-rice',
+    nameEl: 'Τηγανητό ρύζι Yeung Chau',
+    nameEn: 'Fried rice Yeung Chau',
+    nameZh: '扬州炒饭',
+    price: '12.50',
+  },
+  {
+    number: '90',
+    categoryId: 'duck',
+    nameEl: 'Πάπια ψητή 1/2',
+    nameEn: 'Roasted duck 1/2',
+    nameZh: '烧鸭半只',
+    price: '26.90',
+  },
+  {
+    number: '91',
+    categoryId: 'duck',
+    nameEl: 'Πάπια ψητή με ανανά',
+    nameEn: 'Duck with pineapple',
+    nameZh: '菠萝鸭',
+    price: '16.50',
+  },
+  {
+    number: '92',
+    categoryId: 'duck',
+    nameEl: 'Πάπια ψητή με πορτοκάλι',
+    nameEn: 'Duck with orange',
+    nameZh: '香橙鸭',
+    price: '16.50',
+  },
+  {
+    number: '93',
+    categoryId: 'duck',
+    nameEl: 'Πάπια ψητή 1/4',
+    nameEn: 'Roasted duck 1/4',
+    nameZh: '烧鸭四分之一',
+    price: '14.90',
+  },
+  {
+    number: '94',
+    categoryId: 'duck',
+    nameEl: 'Πάπια Πεκίνου (6 πιτάκια, αγγούρι, κρεμμύδι, hoisin sauce)',
+    nameEn: 'Peking duck (6 pancakes, cucumber, onions, hoisin sauce)',
+    nameZh: '北京鸭（6张薄饼、青瓜、洋葱、海鲜酱）',
+    price: '17.90',
+  },
+  {
+    number: '95',
+    categoryId: 'duck',
+    nameEl: 'Πάπια Πεκίνου 1/2 (12 πιτάκια, αγγούρι, κρεμμύδι, hoisin sauce)',
+    nameEn: 'Peking duck 1/2 (12 pancakes, cucumber, onions, hoisin sauce)',
+    nameZh: '北京鸭半只（12张薄饼、青瓜、洋葱、海鲜酱）',
+    price: '34.90',
+  },
+  {
+    number: '96',
+    categoryId: 'duck',
+    nameEl: 'Πάπια Πεκίνου 1/1 (24 πιτάκια, αγγούρι, κρεμμύδι, hoisin sauce)',
+    nameEn: 'Peking duck 1/1 (24 pancakes, cucumber, onions, hoisin sauce)',
+    nameZh: '北京鸭一只（24张薄饼、青瓜、洋葱、海鲜酱）',
+    price: '65.00',
+  },
+  {
+    number: '97',
+    categoryId: 'duck',
+    nameEl: 'Ανάμεικτα ψητά (Tja Siew, τραγανό χοιρινό, ψητή πάπια)',
+    nameEn: 'Mixed roast platter (Tja Siew, crispy pork, roasted duck)',
+    nameZh: '烧味拼盘（叉烧、脆皮猪肉、烧鸭）',
+    price: '32.00',
+    needsReview: true,
+  },
+  {
+    number: '98',
+    categoryId: 'duck',
+    nameEl: 'Ανάμεικτα ψητά (Tja Siew, ψητή πάπια)',
+    nameEn: 'Mixed roast platter (Tja Siew, roasted duck)',
+    nameZh: '烧味拼盘（叉烧、烧鸭）',
+    price: '24.90',
+    needsReview: true,
+  },
+  {
+    number: '99',
+    categoryId: 'duck',
+    nameEl: 'Ανάμεικτα ψητά (τραγανό χοιρινό, ψητή πάπια)',
+    nameEn: 'Mixed roast platter (crispy pork, roasted duck)',
+    nameZh: '烧味拼盘（脆皮猪肉、烧鸭）',
+    price: '24.90',
+    needsReview: true,
+  },
+  {
+    number: '100',
+    categoryId: 'duck',
+    nameEl: 'Ανάμεικτα ψητά (Tja Siew, τραγανό χοιρινό)',
+    nameEn: 'Mixed roast platter (Tja Siew, crispy pork)',
+    nameZh: '烧味拼盘（叉烧、脆皮猪肉）',
+    price: '24.90',
+    needsReview: true,
   },
 ];
 
