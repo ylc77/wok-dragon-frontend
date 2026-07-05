@@ -19,10 +19,10 @@ const copy = {
     find: 'Find Us',
   },
   zh: {
-    kicker: '现炒热锅，风味浓郁。',
-    title: '总有一个来吃 Wok 的理由',
+    kicker: '龙城酒楼，现炒好味。',
+    title: '总有一个来龙城酒楼的理由',
     body: '大火快炒、新鲜蔬菜、浓郁酱汁和亚洲风味，适合快速午餐、轻松晚餐和朋友聚餐。',
-    support: 'Fresh flavors, bold aromas, and Asian dishes for every moment.',
+    support: '新鲜食材、浓郁香气，每一口都适合分享。',
     book: '预约餐桌',
     find: '查看位置',
   },

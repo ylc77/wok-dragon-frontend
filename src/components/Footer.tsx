@@ -24,7 +24,7 @@ const copy = {
   },
   zh: {
     slogan: site.sloganZh,
-    small: '雅典的现炒热锅、面饭、海鲜、饮品和快速预约入口。',
+    small: '龙城酒楼提供现炒热菜、面饭、海鲜、饮品和快速预约入口。',
     privacy: '隐私政策',
     terms: '服务条款',
     cookies: 'Cookie 政策',

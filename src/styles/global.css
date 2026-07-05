@@ -5335,6 +5335,11 @@ textarea {
   line-height: 1;
 }
 
+.language-switch .language-current strong {
+  font-size: 0.9rem;
+  font-weight: 1000;
+}
+
 .language-switch .language-current span,
 .language-menu button span {
   width: auto;
@@ -5343,6 +5348,12 @@ textarea {
   background: transparent;
   font-size: 1.05rem;
   line-height: 1;
+}
+
+.language-switch .language-flag {
+  display: inline-grid;
+  min-width: 22px;
+  place-items: center;
 }
 
 .language-menu {

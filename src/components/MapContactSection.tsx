@@ -30,8 +30,8 @@ const copy = {
   },
   zh: {
     kicker: '地图',
-    contactTitle: '联系 Wok Dragon',
-    locationTitle: 'Wok Dragon 地址',
+    contactTitle: '联系龙城酒楼',
+    locationTitle: '龙城酒楼地址',
     openMap: '打开 Google 地图',
     loadMap: '加载 Google 地图',
     mapTitle: 'Google 地图',

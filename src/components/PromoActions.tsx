@@ -5,7 +5,7 @@ const actions = [
   {
     titleEn: 'Our Menu',
     titleEl: 'Το μενού μας',
-    titleZh: '我们的菜单',
+    titleZh: '龙城酒楼菜单',
     textEn: 'Explore wok dishes, noodles, rice bowls, starters, and drinks.',
     textEl: 'Δείτε πιάτα wok, noodles, ρύζι, ορεκτικά και ποτά.',
     textZh: '查看热炒、面饭、前菜和饮品。',
@@ -23,7 +23,7 @@ const actions = [
   {
     titleEn: 'Find Us',
     titleEl: 'Βρείτε μας',
-    titleZh: '找到我们',
+    titleZh: '找到龙城酒楼',
     textEn: 'Check the address, contact details, and map before you visit.',
     textEl: 'Δείτε διεύθυνση, στοιχεία επικοινωνίας και χάρτη πριν την επίσκεψη.',
     textZh: '到店前查看地址、电话和地图。',

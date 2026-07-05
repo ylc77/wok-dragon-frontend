@@ -18,9 +18,9 @@ const heroCopy = {
     book: 'Book a Table',
   },
   zh: {
-    titleLines: ['总有一个', '来吃 Wok 的理由'],
+    titleLines: ['总有一个', '来龙城酒楼的理由'],
     body: site.sloganZh,
-    support: 'Fresh wok. Bold taste.',
+    support: '现炒热锅，浓郁风味。',
     menu: '查看菜单',
     book: '预约餐桌',
   },

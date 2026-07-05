@@ -56,8 +56,10 @@ export function Header() {
               aria-expanded={languageOpen}
               onClick={() => setLanguageOpen((current) => !current)}
             >
-              <span aria-hidden="true">{currentLanguage.flag}</span>
-              {currentLanguage.short}
+              <span className="language-flag" aria-hidden="true">
+                {currentLanguage.flag}
+              </span>
+              <strong>{currentLanguage.short}</strong>
               <ChevronDown size={15} aria-hidden="true" />
             </button>
             {languageOpen && (
@@ -74,7 +76,9 @@ export function Header() {
                       setLanguageOpen(false);
                     }}
                   >
-                    <span aria-hidden="true">{item.flag}</span>
+                    <span className="language-flag" aria-hidden="true">
+                      {item.flag}
+                    </span>
                     <strong>{item.name}</strong>
                     <em>{item.short}</em>
                     {language === item.code && <b aria-hidden="true">✓</b>}
