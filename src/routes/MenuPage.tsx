@@ -145,6 +145,8 @@ export function MenuPage() {
         ? (dishCountByCategory[activeStructuredCategory.id] ?? 0)
         : 0;
   const activeCategoryImages = (menuCategoryImages[activeCategory] ?? []).slice(0, 4);
+  const getSpiceIcons = (dish: { spicy?: boolean; spicyLevel?: 1 | 2 | 3 }) =>
+    dish.spicy ? '🌶'.repeat(dish.spicyLevel ?? 1) : '';
 
   return (
     <>
@@ -299,7 +301,7 @@ export function MenuPage() {
                               {getStructuredMenuDishName(dish, language)}
                               {dish.spicy && (
                                 <span className="structured-menu-spice" aria-label={text.spicy} title={text.spicy}>
-                                  🌶
+                                  {getSpiceIcons(dish)}
                                 </span>
                               )}
                             </strong>

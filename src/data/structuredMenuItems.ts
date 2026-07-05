@@ -38,6 +38,7 @@ export type StructuredMenuDish = {
   nameZh: string;
   price: string;
   spicy?: boolean;
+  spicyLevel?: 1 | 2 | 3;
   needsReview?: boolean;
 };
 
@@ -74,6 +75,7 @@ export const structuredMenuDishes: StructuredMenuDish[] = [
     nameZh: '酸辣汤',
     price: '4.90',
     spicy: true,
+    spicyLevel: 2,
   },
   {
     number: '2',
@@ -114,7 +116,6 @@ export const structuredMenuDishes: StructuredMenuDish[] = [
     nameEn: 'Tofu soup',
     nameZh: '豆腐汤',
     price: '4.50',
-    needsReview: true,
   },
   {
     number: '7',
@@ -467,7 +468,6 @@ export const structuredMenuDishes: StructuredMenuDish[] = [
     nameEn: 'Fried noodle Singapore',
     nameZh: '星洲炒面',
     price: '12.50',
-    needsReview: true,
   },
   {
     number: '60',
@@ -692,7 +692,6 @@ export const structuredMenuDishes: StructuredMenuDish[] = [
     nameEn: 'Mixed roast platter (Tja Siew, crispy pork, roasted duck)',
     nameZh: '烧味拼盘（叉烧、脆皮猪肉、烧鸭）',
     price: '32.00',
-    needsReview: true,
   },
   {
     number: '98',
@@ -701,7 +700,6 @@ export const structuredMenuDishes: StructuredMenuDish[] = [
     nameEn: 'Mixed roast platter (Tja Siew, roasted duck)',
     nameZh: '烧味拼盘（叉烧、烧鸭）',
     price: '24.90',
-    needsReview: true,
   },
   {
     number: '99',
@@ -710,7 +708,6 @@ export const structuredMenuDishes: StructuredMenuDish[] = [
     nameEn: 'Mixed roast platter (crispy pork, roasted duck)',
     nameZh: '烧味拼盘（脆皮猪肉、烧鸭）',
     price: '24.90',
-    needsReview: true,
   },
   {
     number: '100',
@@ -719,7 +716,6 @@ export const structuredMenuDishes: StructuredMenuDish[] = [
     nameEn: 'Mixed roast platter (Tja Siew, crispy pork)',
     nameZh: '烧味拼盘（叉烧、脆皮猪肉）',
     price: '24.90',
-    needsReview: true,
   },
   {
     number: '105',
@@ -738,6 +734,7 @@ export const structuredMenuDishes: StructuredMenuDish[] = [
     nameZh: '泰汁牛肉',
     price: '13.90',
     spicy: true,
+    spicyLevel: 2,
   },
   {
     number: '107',
@@ -764,6 +761,7 @@ export const structuredMenuDishes: StructuredMenuDish[] = [
     nameZh: '四川牛肉',
     price: '13.90',
     spicy: true,
+    spicyLevel: 3,
   },
   {
     number: '110',
@@ -813,6 +811,7 @@ export const structuredMenuDishes: StructuredMenuDish[] = [
     nameZh: '四川水煮牛肉汤（大份）',
     price: '29.90',
     spicy: true,
+    spicyLevel: 3,
   },
   {
     number: '120',
@@ -831,6 +830,7 @@ export const structuredMenuDishes: StructuredMenuDish[] = [
     nameZh: '泰汁鸡肉',
     price: '11.90',
     spicy: true,
+    spicyLevel: 2,
   },
   {
     number: '122',
@@ -857,6 +857,7 @@ export const structuredMenuDishes: StructuredMenuDish[] = [
     nameZh: '四川鸡肉',
     price: '12.90',
     spicy: true,
+    spicyLevel: 3,
   },
   {
     number: '125',
@@ -914,7 +915,7 @@ export const structuredMenuDishes: StructuredMenuDish[] = [
     nameZh: '辣椒鸡肉',
     price: '12.90',
     spicy: true,
-    needsReview: true,
+    spicyLevel: 3,
   },
   {
     number: '151',
@@ -933,6 +934,7 @@ export const structuredMenuDishes: StructuredMenuDish[] = [
     nameZh: '泰汁猪肉',
     price: '11.90',
     spicy: true,
+    spicyLevel: 2,
   },
   {
     number: '153',
@@ -959,6 +961,7 @@ export const structuredMenuDishes: StructuredMenuDish[] = [
     nameZh: '四川猪肉',
     price: '12.90',
     spicy: true,
+    spicyLevel: 3,
   },
   {
     number: '156',
@@ -1056,6 +1059,7 @@ export const structuredMenuDishes: StructuredMenuDish[] = [
     nameZh: '辣椒猪肉',
     price: '12.90',
     spicy: true,
+    spicyLevel: 3,
   },
   {
     number: '170',
@@ -1089,7 +1093,7 @@ export const structuredMenuDishes: StructuredMenuDish[] = [
     nameZh: '泰汁虾',
     price: '15.90',
     spicy: true,
-    needsReview: true,
+    spicyLevel: 3,
   },
   {
     number: '174',
@@ -1148,6 +1152,7 @@ export const structuredMenuDishes: StructuredMenuDish[] = [
     nameZh: '泰汁鱿鱼',
     price: '15.90',
     spicy: true,
+    spicyLevel: 2,
   },
   {
     number: '181',
@@ -1188,7 +1193,6 @@ export const structuredMenuDishes: StructuredMenuDish[] = [
     nameEn: 'Suan Cai Yu soup (big)',
     nameZh: '酸菜鱼汤（大份）',
     price: '35.00',
-    needsReview: true,
   },
   {
     number: '186',
@@ -1198,6 +1202,7 @@ export const structuredMenuDishes: StructuredMenuDish[] = [
     nameZh: '四川水煮鱼汤（大份）',
     price: '35.00',
     spicy: true,
+    spicyLevel: 3,
   },
   {
     number: '187',
@@ -1206,7 +1211,6 @@ export const structuredMenuDishes: StructuredMenuDish[] = [
     nameEn: 'Steamed Lobster',
     nameZh: '清蒸龙虾',
     price: '100.00',
-    needsReview: true,
   },
   {
     number: '188',
@@ -1215,7 +1219,6 @@ export const structuredMenuDishes: StructuredMenuDish[] = [
     nameEn: 'Lobster with ginger & onions',
     nameZh: '姜葱龙虾',
     price: '100.00',
-    needsReview: true,
   },
   {
     number: '189',
@@ -1347,6 +1350,7 @@ export const structuredMenuDishes: StructuredMenuDish[] = [
     nameZh: '泰汁杂菜',
     price: '8.90',
     spicy: true,
+    spicyLevel: 2,
   },
   {
     number: '222',
@@ -1444,6 +1448,7 @@ export const structuredMenuDishes: StructuredMenuDish[] = [
     nameZh: '麻婆豆腐（可选有肉或无肉）',
     price: '10.90',
     spicy: true,
+    spicyLevel: 3,
   },
   {
     number: '234',
@@ -1485,6 +1490,7 @@ export const structuredMenuDishes: StructuredMenuDish[] = [
     nameZh: '中式炒土豆丝',
     price: '9.90',
     spicy: true,
+    spicyLevel: 3,
   },
   {
     number: '239',
