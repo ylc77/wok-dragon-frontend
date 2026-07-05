@@ -2,13 +2,34 @@ import { Link } from 'react-router-dom';
 import { site } from '../data/site';
 import { useLanguage } from './languageContext';
 
+const heroCopy = {
+  el: {
+    titleLines: ['Πάντα υπάρχει', 'λόγος για Wok'],
+    body: site.sloganEl,
+    support: site.sloganEn,
+    menu: 'Δείτε το μενού',
+    book: 'Κράτηση τραπεζιού',
+  },
+  en: {
+    titleLines: ['There is', 'Always a', 'Reason to Wok'],
+    body: site.sloganEn,
+    support: site.sloganEl,
+    menu: 'View Menu',
+    book: 'Book a Table',
+  },
+  zh: {
+    titleLines: ['总有一个', '来吃 Wok 的理由'],
+    body: site.sloganZh,
+    support: 'Fresh wok. Bold taste.',
+    menu: '查看菜单',
+    book: '预约餐桌',
+  },
+};
+
 export function HeroCollage() {
   const { language } = useLanguage();
-  const isGreek = language === 'el';
-  const titleLines = isGreek
-    ? ['\u03a0\u03ac\u03bd\u03c4\u03b1 \u03c5\u03c0\u03ac\u03c1\u03c7\u03b5\u03b9', '\u03bb\u03cc\u03b3\u03bf\u03c2 \u03b3\u03b9\u03b1 Wok']
-    : ['There is', 'Always a', 'Reason to Wok'];
-  const title = titleLines.join(' ');
+  const text = heroCopy[language];
+  const title = text.titleLines.join(' ');
 
   return (
     <section className="hero-collage" aria-labelledby="hero-title">
@@ -26,20 +47,20 @@ export function HeroCollage() {
       </div>
       <div className="hero-copy">
         <h1 id="hero-title" key={language} className="hero-animated-title" aria-label={title}>
-          {titleLines.map((line, index) => (
+          {text.titleLines.map((line, index) => (
             <span key={line} className={`hero-title-line hero-title-line-${index + 1}`} aria-hidden="true">
               <span>{line}</span>
             </span>
           ))}
         </h1>
-        <p>{isGreek ? site.sloganEl : site.sloganEn}</p>
-        <p className="greek-line">{isGreek ? site.sloganEn : site.sloganEl}</p>
+        <p>{text.body}</p>
+        <p className="greek-line">{text.support}</p>
         <div className="hero-actions">
           <Link className="button button-dark" to="/menu">
-            {isGreek ? '\u0394\u03b5\u03af\u03c4\u03b5 \u03c4\u03bf \u03bc\u03b5\u03bd\u03bf\u03cd' : 'View Menu'}
+            {text.menu}
           </Link>
           <Link className="button button-light book-table-button" to="/reservation">
-            {isGreek ? '\u039a\u03c1\u03ac\u03c4\u03b7\u03c3\u03b7 \u03c4\u03c1\u03b1\u03c0\u03b5\u03b6\u03b9\u03bf\u03cd' : 'Book a Table'}
+            {text.book}
           </Link>
         </div>
       </div>

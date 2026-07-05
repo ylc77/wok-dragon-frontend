@@ -1,13 +1,13 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { MobileQuickNav } from '../components/MobileQuickNav';
 import { useLanguage } from '../components/languageContext';
-import { getMenuPhotoLabel, getMenuPhotoSummary, menuPhotoPages } from '../data/menuPhotos';
 import {
   getStructuredMenuCategoryLabel,
   getStructuredMenuDishName,
   structuredMenuCategories,
   structuredMenuDishes,
 } from '../data/structuredMenuItems';
+import type { StructuredMenuCategoryId } from '../data/structuredMenuItems';
 import { getStructuredSetMenuItemName, structuredSetMenus } from '../data/setMenusStructured';
 
 const copy = {
@@ -15,75 +15,82 @@ const copy = {
     kicker: 'Wok Dragon Express',
     title: 'Μενού',
     intro:
-      'Δείτε το ενημερωμένο μενού από τις φωτογραφίες του καταστήματος. Οι τιμές και τα πιάτα ισχύουν όπως εμφανίζονται στις εικόνες.',
+      'Δείτε το καθαρό μενού του Wok Dragon με κατηγορίες, ονόματα πιάτων και τιμές. Οι τιμές βασίζονται στις τελευταίες φωτογραφίες του έντυπου μενού.',
     choose: 'Επιλέξτε κατηγορία',
-    note: 'Οι φωτογραφίες εμφανίζονται με τη σειρά του φυσικού μενού.',
-    page: 'Σελίδα',
+    allCategories: 'Όλα',
     setMenuTitle: 'Set μενού',
-    setMenuIntro: 'Πρώτη καθαρή έκδοση για τα set menus. Παρακαλούμε ελέγξτε τα στοιχεία με τις φωτογραφίες.',
+    setMenuIntro: 'Πακέτα για 1, 2 ή 4 άτομα. Η τελική διαθεσιμότητα επιβεβαιώνεται από το εστιατόριο.',
     menuFor1: 'Μενού για 1',
     menuFor2: 'Μενού για 2',
-    review: 'Σε έλεγχο',
-    textMenuTitle: 'Καθαρό μενού',
-    textMenuIntro: 'Οι πρώτες κατηγορίες έχουν μετατραπεί σε ευανάγνωστο κείμενο. Οι φωτογραφίες παραμένουν παρακάτω για έλεγχο.',
+    review: 'Έλεγχος',
+    textMenuTitle: 'Κατάλογος πιάτων',
+    textMenuIntro: 'Χρησιμοποιήστε τις κατηγορίες για γρήγορη αναζήτηση. Τα σημεία με ένδειξη ελέγχου χρειάζονται τελική επιβεβαίωση.',
     spicy: 'Καυτερό',
     needsReview: 'Έλεγχος',
+    dishes: 'πιάτα',
   },
   en: {
     kicker: 'Wok Dragon Express',
     title: 'Menu',
     intro:
-      'Browse the updated restaurant menu from the latest photographed pages. Dishes and prices are shown exactly as they appear in the images.',
+      'Browse the cleaned Wok Dragon menu by category, dish name, and price. Prices follow the latest photographed printed menu.',
     choose: 'Choose a category',
-    note: 'Photos are shown in the same order as the printed menu.',
-    page: 'Page',
+    allCategories: 'All',
     setMenuTitle: 'Set menus',
-    setMenuIntro: 'First cleaned text version for set menus. Please verify against the photographed menu pages.',
+    setMenuIntro: 'Set options for 1, 2, or 4 people. Final availability is confirmed directly by the restaurant.',
     menuFor1: 'Menu for 1',
     menuFor2: 'Menu for 2',
     review: 'Under review',
-    textMenuTitle: 'Clean text menu',
-    textMenuIntro: 'The first categories have been converted into readable text. Original menu photos remain below for verification.',
+    textMenuTitle: 'Dish list',
+    textMenuIntro: 'Use the category buttons for quick browsing. Items marked for review still need final confirmation.',
     spicy: 'Spicy',
     needsReview: 'Review',
+    dishes: 'dishes',
   },
   zh: {
     kicker: 'Wok Dragon Express',
     title: '菜单',
-    intro: '以下菜单已按最新拍摄图片顺序展示。菜品和价格以图片内容为准。',
+    intro: '按分类查看 Wok Dragon 菜单、菜名和价格。价格以最新拍摄的实体菜单照片为准。',
     choose: '选择分类',
-    note: '菜单照片按实体菜单顺序排列。',
-    page: '第',
+    allCategories: '全部',
     setMenuTitle: '套餐菜单',
-    setMenuIntro: '这是第一版文字化套餐菜单，内容已根据照片整理，正式使用前请再核对一次。',
+    setMenuIntro: '包含单人、双人和四人套餐。最终供应情况由餐厅确认。',
     menuFor1: '单人套餐',
-    menuFor2: '双人/多人套餐',
+    menuFor2: '双人 / 多人套餐',
     review: '待核对',
-    textMenuTitle: '文字菜单',
-    textMenuIntro: '已先整理汤类、沙拉和前菜，下面仍保留原始照片方便核对。',
+    textMenuTitle: '菜品列表',
+    textMenuIntro: '可通过分类按钮快速查看。标记为待核对的菜品之后需要再确认。',
     spicy: '辣',
     needsReview: '待核对',
+    dishes: '道菜',
   },
 };
 
 export function MenuPage() {
   const { language } = useLanguage();
   const text = copy[language];
+  const [activeCategory, setActiveCategory] = useState<StructuredMenuCategoryId | 'all'>('all');
 
-  const primaryPages = useMemo(() => menuPhotoPages.slice(0, 6), []);
   const menuForOne = useMemo(() => structuredSetMenus.filter((menu) => menu.group === 'menu-for-1'), []);
   const menuForTwo = useMemo(() => structuredSetMenus.filter((menu) => menu.group === 'menu-for-2'), []);
+  const visibleCategories = useMemo(
+    () =>
+      activeCategory === 'all'
+        ? structuredMenuCategories
+        : structuredMenuCategories.filter((category) => category.id === activeCategory),
+    [activeCategory],
+  );
 
-  function scrollToPage(id: string) {
-    document.getElementById(`menu-photo-${id}`)?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
-    });
-  }
+  const dishCountByCategory = useMemo(() => {
+    return structuredMenuDishes.reduce<Record<string, number>>((counts, dish) => {
+      counts[dish.categoryId] = (counts[dish.categoryId] ?? 0) + 1;
+      return counts;
+    }, {});
+  }, []);
 
   return (
     <>
-      <section className="menu-photo-hero">
+      <section className="menu-photo-hero menu-text-hero">
         <div className="menu-photo-hero-inner">
           <span className="section-kicker">{text.kicker}</span>
           <h1>{text.title}</h1>
@@ -93,29 +100,47 @@ export function MenuPage() {
 
       <section className="menu-photo-menu">
         <div className="menu-photo-shell">
-          <aside className="menu-photo-picker" aria-label={text.choose}>
+          <section className="menu-text-filter" aria-label={text.choose}>
             <div className="menu-photo-picker-header">
               <strong>{text.choose}</strong>
-              <span>{text.note}</span>
+              <span>{text.textMenuIntro}</span>
             </div>
-            <div className="menu-photo-button-grid">
-              {menuPhotoPages.map((page, index) => (
-                <button key={page.id} type="button" onClick={() => scrollToPage(page.id)}>
-                  <span>{String(index + 1).padStart(2, '0')}</span>
-                  {getMenuPhotoLabel(page, language)}
+            <select
+              className="menu-mobile-category-select"
+              value={activeCategory}
+              aria-label={text.choose}
+              onChange={(event) => setActiveCategory(event.target.value as StructuredMenuCategoryId | 'all')}
+            >
+              <option value="all">{text.allCategories}</option>
+              {structuredMenuCategories.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {getStructuredMenuCategoryLabel(category, language)}
+                </option>
+              ))}
+            </select>
+            <div className="menu-text-filter-buttons">
+              <button
+                type="button"
+                className={activeCategory === 'all' ? 'active' : ''}
+                onClick={() => setActiveCategory('all')}
+              >
+                <span>{text.allCategories}</span>
+              </button>
+              {structuredMenuCategories.map((category) => (
+                <button
+                  key={category.id}
+                  type="button"
+                  className={activeCategory === category.id ? 'active' : ''}
+                  onClick={() => setActiveCategory(category.id)}
+                >
+                  <span>{getStructuredMenuCategoryLabel(category, language)}</span>
+                  <em>
+                    {dishCountByCategory[category.id] ?? 0} {text.dishes}
+                  </em>
                 </button>
               ))}
             </div>
-          </aside>
-
-          <div className="menu-photo-feature-grid" aria-label="Featured menu pages">
-            {primaryPages.map((page, index) => (
-              <button key={page.id} type="button" onClick={() => scrollToPage(page.id)}>
-                <img src={page.src} alt={getMenuPhotoLabel(page, language)} loading={index === 0 ? 'eager' : 'lazy'} />
-                <span>{getMenuPhotoLabel(page, language)}</span>
-              </button>
-            ))}
-          </div>
+          </section>
 
           <section className="structured-set-menus" aria-labelledby="structured-set-menus-title">
             <header className="structured-set-menus-header">
@@ -178,15 +203,15 @@ export function MenuPage() {
             </header>
 
             <div className="structured-menu-category-list">
-              {structuredMenuCategories.map((category) => {
+              {visibleCategories.map((category) => {
                 const dishes = structuredMenuDishes.filter((dish) => dish.categoryId === category.id);
 
                 return (
                   <article className="structured-menu-category" key={category.id}>
                     <h3>{getStructuredMenuCategoryLabel(category, language)}</h3>
                     <div className="structured-menu-dishes">
-                      {dishes.map((dish) => (
-                        <div className="structured-menu-dish" key={`${category.id}-${dish.number}`}>
+                      {dishes.map((dish, index) => (
+                        <div className="structured-menu-dish" key={`${category.id}-${dish.number}-${index}`}>
                           <span className="structured-menu-number">{dish.number}</span>
                           <div>
                             <strong>{getStructuredMenuDishName(dish, language)}</strong>
@@ -204,25 +229,6 @@ export function MenuPage() {
               })}
             </div>
           </section>
-
-          <div className="menu-photo-gallery">
-            {menuPhotoPages.map((page, index) => (
-              <article className="menu-photo-page" id={`menu-photo-${page.id}`} key={page.id}>
-                <header>
-                  <div>
-                    <span className="menu-photo-page-number">
-                      {language === 'zh' ? `${text.page}${index + 1}页` : `${text.page} ${index + 1}`}
-                    </span>
-                    <h2>{getMenuPhotoLabel(page, language)}</h2>
-                    <p>{getMenuPhotoSummary(page, language)}</p>
-                  </div>
-                </header>
-                <figure>
-                  <img src={page.src} alt={getMenuPhotoLabel(page, language)} loading={index < 2 ? 'eager' : 'lazy'} />
-                </figure>
-              </article>
-            ))}
-          </div>
         </div>
       </section>
       <MobileQuickNav />

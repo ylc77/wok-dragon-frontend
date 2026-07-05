@@ -1,30 +1,36 @@
 import { foodImages } from '../data/images';
+import { useLanguage } from './languageContext';
 
 const showcase = [
-  { src: foodImages.drinks, label: 'Drinks / \u03a0\u03bf\u03c4\u03ac' },
-  { src: foodImages.heroNoodles, label: 'Noodles / Noodles' },
-  { src: foodImages.riceBowl, label: 'Rice Bowls / \u03a1\u03cd\u03b6\u03b9' },
-  { src: foodImages.springRolls, label: 'Starters / \u039f\u03c1\u03b5\u03ba\u03c4\u03b9\u03ba\u03ac' },
-  { src: foodImages.pdfDuck, label: 'Duck / \u03a0\u03ac\u03c0\u03b9\u03b1' },
-  { src: foodImages.pdfChickenSweetSour, label: 'Chicken / \u039a\u03bf\u03c4\u03cc\u03c0\u03bf\u03c5\u03bb\u03bf' },
-  { src: foodImages.pdfSeafoodShrimp, label: 'Seafood / \u0398\u03b1\u03bb\u03b1\u03c3\u03c3\u03b9\u03bd\u03ac' },
-  { src: foodImages.pdfVegetables, label: 'Vegetables / \u039b\u03b1\u03c7\u03b1\u03bd\u03b9\u03ba\u03ac' },
-  { src: foodImages.pdfFriedRice, label: 'Fried Rice / \u03a1\u03cd\u03b6\u03b9' },
-  { src: foodImages.pdfAppetizersDumplings, label: 'Dumplings / Dumplings' },
+  { src: foodImages.drinks, labelEn: 'Drinks', labelEl: 'Ποτά', labelZh: '饮品' },
+  { src: foodImages.heroNoodles, labelEn: 'Noodles', labelEl: 'Noodles', labelZh: '面类' },
+  { src: foodImages.riceBowl, labelEn: 'Rice Bowls', labelEl: 'Ρύζι', labelZh: '米饭' },
+  { src: foodImages.springRolls, labelEn: 'Starters', labelEl: 'Ορεκτικά', labelZh: '前菜' },
+  { src: foodImages.pdfDuck, labelEn: 'Duck', labelEl: 'Πάπια', labelZh: '鸭类' },
+  { src: foodImages.pdfChickenSweetSour, labelEn: 'Chicken', labelEl: 'Κοτόπουλο', labelZh: '鸡肉' },
+  { src: foodImages.pdfSeafoodShrimp, labelEn: 'Seafood', labelEl: 'Θαλασσινά', labelZh: '海鲜' },
+  { src: foodImages.pdfVegetables, labelEn: 'Vegetables', labelEl: 'Λαχανικά', labelZh: '蔬菜' },
+  { src: foodImages.pdfFriedRice, labelEn: 'Fried Rice', labelEl: 'Ρύζι', labelZh: '炒饭' },
+  { src: foodImages.pdfAppetizersDumplings, labelEn: 'Dumplings', labelEl: 'Dumplings', labelZh: '点心' },
 ];
 
 export function FloatingFoodShowcase() {
+  const { language } = useLanguage();
   const marqueeItems = [...showcase, ...showcase];
 
   return (
     <section className="floating-showcase" aria-label="Food showcase">
       <div className="showcase-track">
-        {marqueeItems.map((item, index) => (
-          <figure key={`${item.label}-${index}`} aria-hidden={index >= showcase.length}>
-            <img src={item.src} alt={index < showcase.length ? item.label : ''} loading="lazy" />
-            <figcaption>{item.label}</figcaption>
-          </figure>
-        ))}
+        {marqueeItems.map((item, index) => {
+          const label = language === 'el' ? item.labelEl : language === 'zh' ? item.labelZh : item.labelEn;
+
+          return (
+            <figure key={`${item.labelEn}-${index}`} aria-hidden={index >= showcase.length}>
+              <img src={item.src} alt={index < showcase.length ? label : ''} loading="lazy" />
+              <figcaption>{label}</figcaption>
+            </figure>
+          );
+        })}
       </div>
     </section>
   );

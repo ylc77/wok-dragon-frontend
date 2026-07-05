@@ -101,6 +101,7 @@ function formatDisplayDate(value: string) {
 export function ReservationSection() {
   const { language } = useLanguage();
   const isGreek = language === 'el';
+  const isChinese = language === 'zh';
   const phone = contactInfo.phone ?? '+30 210 323 8424';
   const openingHours = contactInfo.openingHours?.length ? contactInfo.openingHours : ['Daily: 12:00 - 23:30'];
   const dateOptions = useMemo(() => createDateOptions(), []);
@@ -168,6 +169,43 @@ export function ReservationSection() {
     and: isGreek ? '\u03ba\u03b1\u03b9 \u03c4\u03b7\u03bd' : 'and',
     privacy: isGreek ? '\u03a0\u03bf\u03bb\u03b9\u03c4\u03b9\u03ba\u03ae \u0391\u03c0\u03bf\u03c1\u03c1\u03ae\u03c4\u03bf\u03c5' : 'Privacy Policy',
   };
+
+  if (isChinese) {
+    Object.assign(text, {
+      title: '预约',
+      intro: '提交预约请求后，最终确认由餐厅直接联系你。',
+      phone: '电话',
+      address: '地址',
+      hours: '营业时间',
+      note: '最终确认由餐厅直接联系你。',
+      headline: '预约 Wok Dragon',
+      formTitle: '预约餐桌',
+      formIntro: '请选择人数、日期和时间。餐厅会电话联系你确认。',
+      diningDetails: '用餐信息',
+      contactDetails: '联系方式',
+      name: '姓名',
+      phoneField: '电话',
+      date: '日期',
+      time: '时间',
+      guests: '人数',
+      notes: '备注',
+      namePlaceholder: '你的姓名',
+      phonePlaceholder: '电话号码',
+      dateHelper: '仅可预约未来 7 天内',
+      timeHelper: '每 30 分钟一档，12:00 - 23:30。周三休息。',
+      notesPlaceholder: '座位偏好、过敏信息或其他备注。',
+      requiredError: '请先填写所有必填信息。',
+      sendError: '预约请求未能发送，请直接致电餐厅预约。',
+      successTitle: '预约请求已提交',
+      successBody: '餐厅会联系你进行确认。',
+      sending: '发送中...',
+      submit: '发送预约请求',
+      submitAgreement: '提交即表示你同意我们的',
+      terms: '服务条款',
+      and: '和',
+      privacy: '隐私政策',
+    });
+  }
 
   function updateField(field: keyof ReservationForm, value: string) {
     setForm((current) => ({ ...current, [field]: value }));

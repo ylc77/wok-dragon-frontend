@@ -1,29 +1,52 @@
-import { Mail, MapPin, Phone, Clock } from 'lucide-react';
+import { Clock, Mail, MapPin, Phone } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { MobileQuickNav } from '../components/MobileQuickNav';
-import { contactInfo } from '../data/contact';
 import { useLanguage } from '../components/languageContext';
+import { contactInfo } from '../data/contact';
+
+const copy = {
+  el: {
+    kicker: 'Επικοινωνία',
+    title: 'Μιλήστε με το Wok Dragon',
+    body: 'Για κρατήσεις, ερωτήσεις ή πληροφορίες, επικοινωνήστε απευθείας με το εστιατόριο.',
+    details: 'Στοιχεία επικοινωνίας',
+    book: 'Κράτηση',
+    map: 'Δείτε τον χάρτη',
+  },
+  en: {
+    kicker: 'Contact',
+    title: 'Contact Wok Dragon',
+    body: 'For bookings, questions, or visit details, contact the restaurant directly.',
+    details: 'Contact Details',
+    book: 'Book a Table',
+    map: 'View Map',
+  },
+  zh: {
+    kicker: '联系',
+    title: '联系 Wok Dragon',
+    body: '如需预约、咨询菜单或了解地址，请直接联系餐厅。',
+    details: '联系方式',
+    book: '预约餐桌',
+    map: '查看地图',
+  },
+};
 
 export function ContactPage() {
   const { language } = useLanguage();
-  const isGreek = language === 'el';
+  const text = copy[language];
   const phoneHref = contactInfo.phone ? `tel:${contactInfo.phone.replace(/\s/g, '')}` : '';
 
   return (
     <>
       <section className="reservation-hero page-hero-contact">
-        <span className="section-kicker">{isGreek ? 'Επικοινωνία' : 'Contact'}</span>
-        <h1>{isGreek ? 'Μιλήστε με το Wok Dragon' : 'Contact Wok Dragon'}</h1>
-        <p>
-          {isGreek
-            ? 'Για κρατήσεις, ερωτήσεις ή πληροφορίες, επικοινωνήστε απευθείας με το εστιατόριο.'
-            : 'For bookings, questions, or visit details, contact the restaurant directly.'}
-        </p>
+        <span className="section-kicker">{text.kicker}</span>
+        <h1>{text.title}</h1>
+        <p>{text.body}</p>
       </section>
 
       <section className="contact-page">
         <div className="contact-card-large">
-          <h2>{isGreek ? 'Στοιχεία επικοινωνίας' : 'Contact Details'}</h2>
+          <h2>{text.details}</h2>
           <ul>
             <li>
               <MapPin size={22} />
@@ -50,10 +73,10 @@ export function ContactPage() {
           </ul>
           <div className="contact-actions">
             <Link className="button button-red" to="/reservation">
-              {isGreek ? 'Κράτηση' : 'Book a Table'}
+              {text.book}
             </Link>
             <Link className="button button-outline" to="/location">
-              {isGreek ? 'Δείτε τον χάρτη' : 'View Map'}
+              {text.map}
             </Link>
           </div>
         </div>

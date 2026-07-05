@@ -1,36 +1,49 @@
 import { Link } from 'react-router-dom';
 import { useLanguage } from './languageContext';
 
+const copy = {
+  el: {
+    kicker: 'Φρέσκο wok. Έντονη γεύση.',
+    title: 'Πάντα υπάρχει λόγος για Wok',
+    body: 'Δυνατή φωτιά, φρέσκα λαχανικά, πλούσιες σάλτσες και ασιατικές γεύσεις για γρήγορο lunch ή βραδινό με παρέα.',
+    support: 'Fresh flavors, bold aromas, and Asian dishes for every moment.',
+    book: 'Κράτηση τραπεζιού',
+    find: 'Βρείτε μας',
+  },
+  en: {
+    kicker: 'Fresh wok. Bold taste.',
+    title: 'There is Always a Reason to Wok',
+    body: 'Fast flames, bright vegetables, rich sauces, and Asian-inspired comfort made for quick lunches, casual dinners, and table-sharing nights.',
+    support: 'Φρέσκες γεύσεις, έντονα αρώματα και ασιατικά πιάτα για κάθε στιγμή.',
+    book: 'Book a Table',
+    find: 'Find Us',
+  },
+  zh: {
+    kicker: '现炒热锅，风味浓郁。',
+    title: '总有一个来吃 Wok 的理由',
+    body: '大火快炒、新鲜蔬菜、浓郁酱汁和亚洲风味，适合快速午餐、轻松晚餐和朋友聚餐。',
+    support: 'Fresh flavors, bold aromas, and Asian dishes for every moment.',
+    book: '预约餐桌',
+    find: '查看位置',
+  },
+};
+
 export function ReasonSection() {
   const { language } = useLanguage();
-  const isGreek = language === 'el';
+  const text = copy[language];
 
   return (
     <section className="reason-section">
-      <div className="section-kicker">
-        {isGreek ? '\u03a6\u03c1\u03ad\u03c3\u03ba\u03bf wok. \u0388\u03bd\u03c4\u03bf\u03bd\u03b7 \u03b3\u03b5\u03cd\u03c3\u03b7.' : 'Fresh wok. Bold taste.'}
-      </div>
-      <h2>
-        {isGreek
-          ? '\u03a0\u03ac\u03bd\u03c4\u03b1 \u03c5\u03c0\u03ac\u03c1\u03c7\u03b5\u03b9 \u03bb\u03cc\u03b3\u03bf\u03c2 \u03b3\u03b9\u03b1 Wok'
-          : 'There is Always a Reason to Wok'}
-      </h2>
-      <p>
-        {isGreek
-          ? '\u0394\u03c5\u03bd\u03b1\u03c4\u03ae \u03c6\u03c9\u03c4\u03b9\u03ac, \u03c6\u03c1\u03ad\u03c3\u03ba\u03b1 \u03bb\u03b1\u03c7\u03b1\u03bd\u03b9\u03ba\u03ac, \u03c0\u03bb\u03bf\u03cd\u03c3\u03b9\u03b5\u03c2 \u03c3\u03ac\u03bb\u03c4\u03c3\u03b5\u03c2 \u03ba\u03b1\u03b9 \u03b1\u03c3\u03b9\u03b1\u03c4\u03b9\u03ba\u03ad\u03c2 \u03b3\u03b5\u03cd\u03c3\u03b5\u03b9\u03c2 \u03b3\u03b9\u03b1 \u03b3\u03c1\u03ae\u03b3\u03bf\u03c1\u03bf lunch \u03ae \u03b2\u03c1\u03b1\u03b4\u03b9\u03bd\u03cc \u03bc\u03b5 \u03c0\u03b1\u03c1\u03ad\u03b1.'
-          : 'Fast flames, bright vegetables, rich sauces, and Asian-inspired comfort made for quick lunches, casual dinners, and table-sharing nights.'}
-      </p>
-      <p className="greek-line">
-        {isGreek
-          ? 'Fresh flavors, bold aromas, and Asian dishes for every moment.'
-          : '\u03a6\u03c1\u03ad\u03c3\u03ba\u03b5\u03c2 \u03b3\u03b5\u03cd\u03c3\u03b5\u03b9\u03c2, \u03ad\u03bd\u03c4\u03bf\u03bd\u03b1 \u03b1\u03c1\u03ce\u03bc\u03b1\u03c4\u03b1 \u03ba\u03b1\u03b9 \u03b1\u03c3\u03b9\u03b1\u03c4\u03b9\u03ba\u03ac \u03c0\u03b9\u03ac\u03c4\u03b1 \u03b3\u03b9\u03b1 \u03ba\u03ac\u03b8\u03b5 \u03c3\u03c4\u03b9\u03b3\u03bc\u03ae.'}
-      </p>
+      <div className="section-kicker">{text.kicker}</div>
+      <h2>{text.title}</h2>
+      <p>{text.body}</p>
+      <p className="greek-line">{text.support}</p>
       <div className="reason-actions">
         <Link className="button button-red book-table-button" to="/reservation">
-          {isGreek ? '\u039a\u03c1\u03ac\u03c4\u03b7\u03c3\u03b7 \u03c4\u03c1\u03b1\u03c0\u03b5\u03b6\u03b9\u03bf\u03cd' : 'Book a Table'}
+          {text.book}
         </Link>
         <a className="button button-outline" href="#location">
-          {isGreek ? '\u0392\u03c1\u03b5\u03af\u03c4\u03b5 \u03bc\u03b1\u03c2' : 'Find Us'}
+          {text.find}
         </a>
       </div>
     </section>

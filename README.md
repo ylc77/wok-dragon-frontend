@@ -1,120 +1,86 @@
-# Wok Dragon 前台网站
+# Wok Dragon Frontend
 
-这是 Wok Dragon 餐厅前台展示项目，使用 React、Vite 和 TypeScript 构建。
-
-项目定位是一个轻量餐厅官网，用来展示首页、菜单、地图、联系方式和预约请求。当前只做前台展示，不包含后台管理、数据库、在线点餐或支付。
-
-## 当前功能
-
-- 首页：红白黑品牌风格，移动端参考 Fridays.gr 的节奏。
-- 菜单页：按分类展示菜品、价格和分类图片，不为每道菜生成假图片。
-- 预约页：前端预约表单，支持必填校验和成功提示。
-- 地图页：嵌入 Google Maps，并提供外部地图链接。
-- 联系页：展示地址、电话和营业时间。
-- 双语切换：默认希腊语，可切换英文。
-- 响应式布局：桌面端和移动端都可使用。
+Wok Dragon Express 前台展示项目。项目用于顾客查看菜单、预约、查看地图和联系方式，不包含后台、数据库、支付或在线点餐。
 
 ## 技术栈
 
 - React
 - Vite
 - TypeScript
-- React Router
-- Plain CSS
-- lucide-react
+- CSS
+- Vercel 部署
 
-## 本地运行
+## 当前功能
 
-安装依赖：
+- 首页：品牌视觉、菜品展示、菜单入口、预约入口、地图入口
+- 菜单页：文字菜单、套餐菜单、分类筛选、希腊语 / 英语 / 中文切换
+- 预约页：前端预约请求表单、日期和时间选择、提交提示
+- 地图页：Google Maps 链接和地址信息
+- 联系页：电话、地址、营业时间和联系入口
+- 法律页面：Privacy Policy、Terms of Service、Cookie Policy、Contact、Cancellation Policy
+- Cookie Banner：基础同意弹窗结构
+- 开屏动画：轻量 Canvas 粒子动画
+
+## 运行命令
 
 ```bash
 npm install
-```
-
-启动前台预览：
-
-```bash
 npm run dev
-```
-
-生产构建：
-
-```bash
 npm run build
-```
-
-代码检查：
-
-```bash
 npm run lint
 ```
 
-预览生产构建：
+本地预览默认地址：
 
-```bash
-npm run preview
+```txt
+http://127.0.0.1:5173/
 ```
 
-## 预约功能说明
+## 菜单数据
 
-当前预约表单默认是前端演示模式，不会真正发送数据。
+当前菜单已经从用户提供的新菜单照片整理为结构化文字数据：
 
-如果后续要把预约发送到 Telegram，可以使用项目里的本地 API 示例：
+- 套餐菜单：`src/data/setMenusStructured.ts`
+- 单点菜单：`src/data/structuredMenuItems.ts`
 
-```bash
-npm run dev:api
+菜单页现在只展示文字菜单，不再展示整页菜单照片。原始照片文件保留在 `public/menu-photos/`，仅作为人工核对和后续 OCR 校验资料，不在菜单页面渲染。
+
+## 语言
+
+默认语言为希腊语，顶部可切换：
+
+- 希腊语
+- 英语
+- 中文
+
+目前页面框架、导航、按钮和主要模块支持三语。菜单菜名的中文翻译会按照片和人工核对继续补全，标记为待核对的价格或菜名需要正式上线前确认。
+
+## 联系信息
+
+店铺信息位于：
+
+```txt
+src/data/contact.ts
 ```
 
-需要配置环境变量：
+当前营业时间规则：
 
-```env
-VITE_RESERVATION_API_ENABLED=true
-TELEGRAM_BOT_TOKEN=你的 Telegram Bot Token
-TELEGRAM_CHAT_ID=接收预约消息的 Chat ID
-LOCAL_API_PORT=8787
-```
+- 周三休息
+- 其他日期：12:00 - 23:30
 
-不要把真实的 `TELEGRAM_BOT_TOKEN` 或其他密钥提交到 GitHub。
+## 预约说明
 
-## 环境变量
-
-项目提供了 `.env.example`：
-
-```env
-VITE_RESERVATION_API_ENABLED=false
-TELEGRAM_BOT_TOKEN=
-TELEGRAM_CHAT_ID=
-LOCAL_API_PORT=8787
-```
-
-本地真实配置请新建 `.env`，该文件已经被 `.gitignore` 忽略。
-
-## 数据来源
-
-菜单内容来自用户最新提供的 16 张实体菜单照片：
-
-- 菜单照片：`public/menu-photos/page-01.jpg` 至 `public/menu-photos/page-16.jpg`
-- 照片菜单数据：`src/data/menuPhotos.ts`
-- 已文字化套餐数据：`src/data/setMenusStructured.ts`
-- OCR 初稿：`docs/MENU_OCR_DRAFT.md`
-- 人工校对底稿：`docs/MENU_TEXT_REVIEW.md`
-- 联系信息：`src/data/contact.ts`
-
-Google Maps 链接已使用用户提供的 Wok Dragon EXPRESS 地图链接。
+当前预约表单是前端演示版本，不会真正发送到手机或 Telegram。上线后如需要 Telegram 通知，可增加 Vercel API Route / Serverless Function，并配置 Telegram Bot Token 与 Chat ID。
 
 ## 是否需要 Supabase
 
-当前阶段不需要 Supabase。
+当前前台项目不需要 Supabase。只有后续增加以下功能时才建议接入数据库：
 
-只有在后续要做这些功能时，才建议接入数据库：
-
-- 后台查看预约记录
-- 菜单后台编辑
+- 后台管理预约记录
+- 后台编辑菜单
 - 会员登录
 - 在线点餐
-- 订单或支付记录
-
-当前推荐部署方式是 GitHub + Vercel。预约通知如果需要上线，可以后续接 Telegram Bot + Vercel API。
+- 订单与支付记录
 
 ## 目录结构
 
@@ -135,15 +101,17 @@ src/
   data/
     contact.ts
     images.ts
-    menuPhotos.ts
     setMenusStructured.ts
     site.ts
+    structuredMenuItems.ts
   routes/
     HomePage.tsx
     MenuPage.tsx
     ReservationPage.tsx
     LocationPage.tsx
     ContactPage.tsx
+    LegalPage.tsx
+    PrivacyPage.tsx
   styles/
     global.css
   types/
@@ -156,42 +124,17 @@ src/
 
 推荐部署到 Vercel：
 
-1. 上传项目到 GitHub。
+1. 推送项目到 GitHub。
 2. 在 Vercel 导入 GitHub 仓库。
 3. Framework 选择 Vite。
 4. Build Command 使用 `npm run build`。
 5. Output Directory 使用 `dist`。
-6. 如果暂时不用真实 Telegram 通知，保持 `VITE_RESERVATION_API_ENABLED=false`。
+6. 如果暂时不启用真实预约通知，保持 `VITE_RESERVATION_API_ENABLED=false`。
 
-## 第一版范围
+## 后续待办
 
-已包含：
-
-- 首页
-- 菜单页
-- 预约页
-- 地图页
-- 联系页
-- 双语切换
-- 移动端适配
-- 前端预约表单
-
-暂未包含：
-
-- Supabase 数据库
-- 后台管理
-- 真实预约存储
-- 在线点餐
-- 支付
-- CMS 内容管理
-
-## 上传 GitHub 前检查
-
-建议每次上传前运行：
-
-```bash
-npm run build
-npm run lint
-```
-
-并确认没有提交 `.env`、`node_modules/`、`dist/`、`tmp/` 等本地文件。
+- 继续人工核对所有 OCR 菜名和价格
+- 补全菜单中文翻译
+- 上线前确认电话、地址、营业时间和法律页面正式文案
+- 如需要真实预约通知，接入 Telegram Bot 或邮件通知
+- 如需要后台管理，再考虑 Supabase 或其他数据库

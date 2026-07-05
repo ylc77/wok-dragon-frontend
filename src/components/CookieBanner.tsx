@@ -28,6 +28,17 @@ const copy = {
     save: 'Save choices',
     title: 'Cookies & Privacy',
   },
+  zh: {
+    accept: '全部接受',
+    body: '我们使用必要 Cookie 支持网站功能。Google 地图只有在你同意或手动加载后才会显示。',
+    manage: '管理偏好',
+    maps: 'Google 地图',
+    necessary: '必要 Cookie',
+    policy: 'Cookie 政策',
+    reject: '拒绝非必要',
+    save: '保存选择',
+    title: 'Cookie 与隐私',
+  },
 };
 
 export function CookieBanner() {
@@ -35,7 +46,7 @@ export function CookieBanner() {
   const { language } = useLanguage();
   const [showPreferences, setShowPreferences] = useState(false);
   const [allowMaps, setAllowMaps] = useState(false);
-  const text = copy[language === 'el' ? 'el' : 'en'];
+  const text = copy[language];
 
   if (status !== null) return null;
 

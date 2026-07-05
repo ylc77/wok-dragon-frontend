@@ -28,12 +28,23 @@ const text = {
     status: 'Current choice',
     title: 'Privacy & Cookies',
   },
+  zh: {
+    accept: '接受',
+    back: '返回菜单',
+    body:
+      'Wok Dragon 仅使用简单的本地数据来保存语言偏好、表单状态和基础网站功能。我们没有接入 Google Analytics 或广告追踪像素。',
+    maps: '嵌入式 Google 地图只有在你选择加载或接受可选 Cookie 后才会显示。',
+    reject: '拒绝',
+    reset: '重置选择',
+    status: '当前选择',
+    title: '隐私与 Cookie',
+  },
 };
 
 export function PrivacyPage() {
   const { language } = useLanguage();
   const { status, accept, reject, reset } = useCookieConsent();
-  const copy = text[language === 'el' ? 'el' : 'en'];
+  const copy = text[language];
 
   return (
     <>

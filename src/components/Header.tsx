@@ -1,13 +1,27 @@
-import { MapPin, Menu, X } from 'lucide-react';
+import { ChevronDown, MapPin, Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { site } from '../data/site';
+import type { Language } from './languageContext';
 import { useLanguage } from './languageContext';
 import { Logo } from './Logo';
 
+const languages: Array<{
+  code: Language;
+  short: string;
+  name: string;
+  flag: string;
+}> = [
+  { code: 'el', short: 'EL', name: 'Ελληνικά', flag: '🇬🇷' },
+  { code: 'en', short: 'EN', name: 'English', flag: '🇬🇧' },
+  { code: 'zh', short: '中文', name: '中文', flag: '🇨🇳' },
+];
+
 export function Header() {
   const [open, setOpen] = useState(false);
+  const [languageOpen, setLanguageOpen] = useState(false);
   const { language, setLanguage } = useLanguage();
+  const currentLanguage = languages.find((item) => item.code === language) ?? languages[0];
 
   const labelFor = (item: (typeof site.nav)[number]) => {
     if (language === 'el') return item.labelEl;
@@ -36,31 +50,38 @@ export function Header() {
         <div className="header-actions">
           <div className="language-switch" aria-label="Language switcher">
             <button
-              className={language === 'el' ? 'active' : ''}
+              className="language-current"
               type="button"
-              onClick={() => setLanguage('el')}
+              aria-haspopup="menu"
+              aria-expanded={languageOpen}
+              onClick={() => setLanguageOpen((current) => !current)}
             >
-              <span aria-hidden="true">🇬🇷</span>
-              EL
+              <span aria-hidden="true">{currentLanguage.flag}</span>
+              {currentLanguage.short}
+              <ChevronDown size={15} aria-hidden="true" />
             </button>
-            <span />
-            <button
-              className={language === 'en' ? 'active' : ''}
-              type="button"
-              onClick={() => setLanguage('en')}
-            >
-              <span aria-hidden="true">🇬🇧</span>
-              EN
-            </button>
-            <span />
-            <button
-              className={language === 'zh' ? 'active' : ''}
-              type="button"
-              onClick={() => setLanguage('zh')}
-            >
-              <span aria-hidden="true">🇨🇳</span>
-              ZH
-            </button>
+            {languageOpen && (
+              <div className="language-menu" role="menu">
+                {languages.map((item) => (
+                  <button
+                    key={item.code}
+                    type="button"
+                    role="menuitemradio"
+                    aria-checked={language === item.code}
+                    className={language === item.code ? 'active' : ''}
+                    onClick={() => {
+                      setLanguage(item.code);
+                      setLanguageOpen(false);
+                    }}
+                  >
+                    <span aria-hidden="true">{item.flag}</span>
+                    <strong>{item.name}</strong>
+                    <em>{item.short}</em>
+                    {language === item.code && <b aria-hidden="true">✓</b>}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
           <NavLink className="icon-button" to="/location" aria-label={language === 'el' ? 'Χάρτης' : language === 'zh' ? '地图' : 'Find us'}>
             <MapPin size={20} />

@@ -1,22 +1,36 @@
 import { MapContactSection } from '../components/MapContactSection';
 import { MobileQuickNav } from '../components/MobileQuickNav';
-import { contactInfo } from '../data/contact';
 import { useLanguage } from '../components/languageContext';
+import { contactInfo } from '../data/contact';
+
+const copy = {
+  el: {
+    kicker: 'Χάρτης',
+    title: 'Βρείτε το Wok Dragon',
+    body: `Επισκεφθείτε μας στη διεύθυνση ${contactInfo.address}.`,
+  },
+  en: {
+    kicker: 'Find Us',
+    title: 'Find Wok Dragon',
+    body: `Visit us at ${contactInfo.address}.`,
+  },
+  zh: {
+    kicker: '地图',
+    title: '找到 Wok Dragon',
+    body: `欢迎到店用餐，地址：${contactInfo.address}。`,
+  },
+};
 
 export function LocationPage() {
   const { language } = useLanguage();
-  const isGreek = language === 'el';
+  const text = copy[language];
 
   return (
     <>
       <section className="reservation-hero page-hero-location">
-        <span className="section-kicker">{isGreek ? 'Χάρτης' : 'Find Us'}</span>
-        <h1>{isGreek ? 'Βρείτε το Wok Dragon' : 'Find Wok Dragon'}</h1>
-        <p>
-          {isGreek
-            ? `Επισκεφθείτε μας στη διεύθυνση ${contactInfo.address}.`
-            : `Visit us at ${contactInfo.address}.`}
-        </p>
+        <span className="section-kicker">{text.kicker}</span>
+        <h1>{text.title}</h1>
+        <p>{text.body}</p>
       </section>
       <MapContactSection mode="map" />
       <MobileQuickNav />
