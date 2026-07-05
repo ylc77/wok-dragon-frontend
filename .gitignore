@@ -12,6 +12,9 @@ dist
 dist-ssr
 tmp
 render-*.png
+docs/menu-ocr/preprocessed/
+__pycache__/
+*.py[cod]
 *.local
 .env
 .env.*
