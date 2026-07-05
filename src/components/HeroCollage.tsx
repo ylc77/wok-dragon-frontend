@@ -8,21 +8,18 @@ const heroCopy = {
     body: site.sloganEl,
     support: site.sloganEn,
     menu: 'Δείτε το μενού',
-    book: 'Κράτηση τραπεζιού',
   },
   en: {
     titleLines: ['There is', 'Always a', 'Reason to Wok'],
     body: site.sloganEn,
     support: site.sloganEl,
     menu: 'View Menu',
-    book: 'Book a Table',
   },
   zh: {
     titleLines: ['总有一个', '来龙城酒楼的理由'],
     body: site.sloganZh,
     support: '现炒热锅，浓郁风味。',
     menu: '查看菜单',
-    book: '预约餐桌',
   },
 };
 
@@ -58,9 +55,6 @@ export function HeroCollage() {
         <div className="hero-actions">
           <Link className="button button-dark" to="/menu">
             {text.menu}
-          </Link>
-          <Link className="button button-light book-table-button" to="/reservation">
-            {text.book}
           </Link>
         </div>
       </div>

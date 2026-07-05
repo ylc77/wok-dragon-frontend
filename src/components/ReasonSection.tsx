@@ -33,12 +33,12 @@ export function ReasonSection() {
   const text = copy[language];
 
   return (
-    <section className="reason-section">
-      <div className="section-kicker">{text.kicker}</div>
-      <h2>{text.title}</h2>
-      <p>{text.body}</p>
-      <p className="greek-line">{text.support}</p>
-      <div className="reason-actions">
+    <section className="reason-section reason-animated" key={language}>
+      <div className="section-kicker reason-reveal reason-reveal-1">{text.kicker}</div>
+      <h2 className="reason-reveal reason-reveal-2">{text.title}</h2>
+      <p className="reason-reveal reason-reveal-3">{text.body}</p>
+      <p className="greek-line reason-reveal reason-reveal-4">{text.support}</p>
+      <div className="reason-actions reason-reveal reason-reveal-5">
         <Link className="button button-red book-table-button" to="/reservation">
           {text.book}
         </Link>
