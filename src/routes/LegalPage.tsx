@@ -182,7 +182,8 @@ export function LegalPage({ page }: LegalPageProps) {
   const { language } = useLanguage();
   const { accept, reject, reset, status } = useCookieConsent();
   const isGreek = language === 'el';
-  const title = pageTitles[page][language];
+  const legalLanguage = language === 'el' ? 'el' : 'en';
+  const title = pageTitles[page][legalLanguage];
   const sections = isGreek ? greekSections(page) : englishSections(page);
 
   return (

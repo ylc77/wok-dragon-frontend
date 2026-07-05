@@ -9,8 +9,11 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const { language, setLanguage } = useLanguage();
 
-  const labelFor = (item: (typeof site.nav)[number]) =>
-    language === 'el' ? item.labelEl : item.labelEn;
+  const labelFor = (item: (typeof site.nav)[number]) => {
+    if (language === 'el') return item.labelEl;
+    if (language === 'zh') return item.labelZh;
+    return item.labelEn;
+  };
 
   return (
     <header className="site-header">
@@ -37,6 +40,7 @@ export function Header() {
               type="button"
               onClick={() => setLanguage('el')}
             >
+              <span aria-hidden="true">🇬🇷</span>
               EL
             </button>
             <span />
@@ -45,10 +49,20 @@ export function Header() {
               type="button"
               onClick={() => setLanguage('en')}
             >
+              <span aria-hidden="true">🇬🇧</span>
               EN
             </button>
+            <span />
+            <button
+              className={language === 'zh' ? 'active' : ''}
+              type="button"
+              onClick={() => setLanguage('zh')}
+            >
+              <span aria-hidden="true">🇨🇳</span>
+              ZH
+            </button>
           </div>
-          <NavLink className="icon-button" to="/location" aria-label={language === 'el' ? 'Χάρτης' : 'Find us'}>
+          <NavLink className="icon-button" to="/location" aria-label={language === 'el' ? 'Χάρτης' : language === 'zh' ? '地图' : 'Find us'}>
             <MapPin size={20} />
           </NavLink>
           <button

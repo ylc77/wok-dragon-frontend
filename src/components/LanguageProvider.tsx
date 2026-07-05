@@ -6,7 +6,7 @@ import type { Language } from './languageContext';
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguageState] = useState<Language>(() => {
     const stored = window.localStorage.getItem('wok-dragon-language');
-    return stored === 'en' ? 'en' : 'el';
+    return stored === 'en' || stored === 'zh' ? stored : 'el';
   });
 
   function setLanguage(nextLanguage: Language) {
@@ -18,7 +18,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     () => ({
       language,
       setLanguage,
-      toggleLanguage: () => setLanguage(language === 'el' ? 'en' : 'el'),
+      toggleLanguage: () => setLanguage(language === 'el' ? 'en' : language === 'en' ? 'zh' : 'el'),
     }),
     [language],
   );

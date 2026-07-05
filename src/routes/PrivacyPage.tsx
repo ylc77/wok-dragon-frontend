@@ -33,7 +33,7 @@ const text = {
 export function PrivacyPage() {
   const { language } = useLanguage();
   const { status, accept, reject, reset } = useCookieConsent();
-  const copy = text[language];
+  const copy = text[language === 'el' ? 'el' : 'en'];
 
   return (
     <>

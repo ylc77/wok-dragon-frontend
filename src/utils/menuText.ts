@@ -92,6 +92,10 @@ export function getCategoryLabel(category: MenuCategory, language: Language) {
     return categoryLabelsEl[category.id] || cleanGreek(category.nameEl) || cleanEnglish(category.nameEn);
   }
 
+  if (language === 'zh') {
+    return cleanEnglish(category.nameEn) || cleanEnglish(category.nameEl) || category.nameEn;
+  }
+
   return cleanEnglish(category.nameEn) || cleanEnglish(category.nameEl) || category.nameEn;
 }
 

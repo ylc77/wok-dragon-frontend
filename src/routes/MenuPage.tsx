@@ -1,114 +1,103 @@
-import { useMemo, useState } from 'react';
-import { MenuCategoryTabs } from '../components/MenuCategoryTabs';
-import { MenuList } from '../components/MenuList';
+import { useMemo } from 'react';
 import { MobileQuickNav } from '../components/MobileQuickNav';
 import { useLanguage } from '../components/languageContext';
-import { menuCategories, menuItems } from '../data/menu';
-import { menuCategoryImageOverrides } from '../data/menuCategoryImages';
-import { getCategoryLabel } from '../utils/menuText';
+import { getMenuPhotoLabel, getMenuPhotoSummary, menuPhotoPages } from '../data/menuPhotos';
 
-const featuredCategoryIds = new Set([
-  'soups',
-  'appetizers',
-  'soup-noodles',
-  'fried-noodles',
-  'fried-rice',
-  'duck',
-  'beef',
-  'chicken',
-  'pork',
-  'seafood',
-  'claypots',
-  'dishes-with-rice',
-  'vegetables',
-]);
-
-const elText = {
-  menu: '\u039c\u03b5\u03bd\u03bf\u03cd',
-  title: 'Wok Dragon',
-  intro:
-    '\u0394\u03b5\u03af\u03c4\u03b5 set menus, noodles, \u03c1\u03cd\u03b6\u03b9, \u03ba\u03c1\u03b5\u03b1\u03c4\u03b9\u03ba\u03ac, seafood, \u03bb\u03b1\u03c7\u03b1\u03bd\u03b9\u03ba\u03ac \u03ba\u03b1\u03b9 \u03c0\u03bf\u03c4\u03ac.',
-  category: '\u039a\u03b1\u03c4\u03b7\u03b3\u03bf\u03c1\u03af\u03b1',
-  countSuffix:
-    '\u03b5\u03c0\u03b9\u03bb\u03bf\u03b3\u03ad\u03c2 \u03c3\u03b5 \u03b1\u03c5\u03c4\u03ae \u03c4\u03b7\u03bd \u03ba\u03b1\u03c4\u03b7\u03b3\u03bf\u03c1\u03af\u03b1.',
-  prices: '\u03a4\u03b9\u03bc\u03ad\u03c2 \u03c3\u03b5 \u20ac',
+const copy = {
+  el: {
+    kicker: 'Wok Dragon Express',
+    title: 'Μενού',
+    intro:
+      'Δείτε το ενημερωμένο μενού από τις φωτογραφίες του καταστήματος. Οι τιμές και τα πιάτα ισχύουν όπως εμφανίζονται στις εικόνες.',
+    choose: 'Επιλέξτε κατηγορία',
+    note: 'Οι φωτογραφίες εμφανίζονται με τη σειρά του φυσικού μενού.',
+    page: 'Σελίδα',
+  },
+  en: {
+    kicker: 'Wok Dragon Express',
+    title: 'Menu',
+    intro:
+      'Browse the updated restaurant menu from the latest photographed pages. Dishes and prices are shown exactly as they appear in the images.',
+    choose: 'Choose a category',
+    note: 'Photos are shown in the same order as the printed menu.',
+    page: 'Page',
+  },
+  zh: {
+    kicker: 'Wok Dragon Express',
+    title: '菜单',
+    intro: '以下菜单已按最新拍摄图片顺序展示。菜品和价格以图片内容为准。',
+    choose: '选择分类',
+    note: '菜单照片按实体菜单顺序排列。',
+    page: '第',
+  },
 };
 
 export function MenuPage() {
   const { language } = useLanguage();
-  const isGreek = language === 'el';
-  const sortedCategories = [...menuCategories].sort((a, b) => a.sortOrder - b.sortOrder);
-  const [activeCategory, setActiveCategory] = useState(sortedCategories[0]?.id ?? '');
-  const active = sortedCategories.find((category) => category.id === activeCategory) ?? sortedCategories[0];
-  const activeLabel = active ? getCategoryLabel(active, language) : '';
-  const imageOverride = active ? menuCategoryImageOverrides[active.id] : undefined;
-  const galleryImages = (imageOverride?.galleryImages ?? active?.galleryImages ?? []).filter(Boolean);
-  const shouldFeaturePhotos = Boolean(active && featuredCategoryIds.has(active.id) && galleryImages.length);
+  const text = copy[language];
 
-  const activeItems = useMemo(
-    () =>
-      menuItems
-        .filter((item) => item.categoryId === active?.id)
-        .sort((a, b) => a.sortOrder - b.sortOrder),
-    [active?.id],
-  );
+  const primaryPages = useMemo(() => menuPhotoPages.slice(0, 6), []);
+
+  function scrollToPage(id: string) {
+    document.getElementById(`menu-photo-${id}`)?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
+  }
 
   return (
     <>
-      <section className="menu-hero menu-hero-polished">
-        <div>
-          <span className="section-kicker">{isGreek ? elText.menu : 'Menu'}</span>
-          <h1>{isGreek ? elText.title : 'Wok Dragon'}</h1>
-          <p>
-            {isGreek
-              ? elText.intro
-              : 'Browse set menus, noodles, rice, meat, seafood, vegetables, and drinks.'}
-          </p>
+      <section className="menu-photo-hero">
+        <div className="menu-photo-hero-inner">
+          <span className="section-kicker">{text.kicker}</span>
+          <h1>{text.title}</h1>
+          <p>{text.intro}</p>
         </div>
       </section>
 
-      <section className="menu-page menu-page-refined">
-        <div className="menu-shell">
-          <div className="menu-topbar">
-            <MenuCategoryTabs categories={sortedCategories} activeCategory={active?.id} onChange={setActiveCategory} />
+      <section className="menu-photo-menu">
+        <div className="menu-photo-shell">
+          <aside className="menu-photo-picker" aria-label={text.choose}>
+            <div className="menu-photo-picker-header">
+              <strong>{text.choose}</strong>
+              <span>{text.note}</span>
+            </div>
+            <div className="menu-photo-button-grid">
+              {menuPhotoPages.map((page, index) => (
+                <button key={page.id} type="button" onClick={() => scrollToPage(page.id)}>
+                  <span>{String(index + 1).padStart(2, '0')}</span>
+                  {getMenuPhotoLabel(page, language)}
+                </button>
+              ))}
+            </div>
+          </aside>
+
+          <div className="menu-photo-feature-grid" aria-label="Featured menu pages">
+            {primaryPages.map((page, index) => (
+              <button key={page.id} type="button" onClick={() => scrollToPage(page.id)}>
+                <img src={page.src} alt={getMenuPhotoLabel(page, language)} loading={index === 0 ? 'eager' : 'lazy'} />
+                <span>{getMenuPhotoLabel(page, language)}</span>
+              </button>
+            ))}
           </div>
 
-          {active && (
-            <header className={`menu-category-showcase ${shouldFeaturePhotos ? 'with-photos' : 'text-only'}`}>
-              <div className="menu-category-copy">
-                <span>{isGreek ? elText.category : 'Category'}</span>
-                <h2>{activeLabel}</h2>
-                <p>
-                  {isGreek
-                    ? `${activeItems.length} ${elText.countSuffix}`
-                    : `${activeItems.length} dishes in this category.`}
-                </p>
-              </div>
-
-              {shouldFeaturePhotos && (
-                <div className={`menu-photo-mosaic photo-count-${Math.min(galleryImages.length, 5)}`} aria-label={activeLabel}>
-                  {galleryImages.map((image, index) => (
-                    <figure key={`${image}-${index}`}>
-                      <img
-                        src={image}
-                        alt={`${activeLabel} ${index + 1}`}
-                        onError={(event) => {
-                          event.currentTarget.closest('figure')?.setAttribute('hidden', '');
-                        }}
-                      />
-                    </figure>
-                  ))}
-                </div>
-              )}
-            </header>
-          )}
-
-          <div className="menu-board">
-            <div className="menu-board-heading">
-              <strong>{activeLabel}</strong>
-              <span>{isGreek ? elText.prices : 'Prices in \u20ac'}</span>
-            </div>
-            <MenuList items={activeItems} />
+          <div className="menu-photo-gallery">
+            {menuPhotoPages.map((page, index) => (
+              <article className="menu-photo-page" id={`menu-photo-${page.id}`} key={page.id}>
+                <header>
+                  <div>
+                    <span className="menu-photo-page-number">
+                      {language === 'zh' ? `${text.page}${index + 1}页` : `${text.page} ${index + 1}`}
+                    </span>
+                    <h2>{getMenuPhotoLabel(page, language)}</h2>
+                    <p>{getMenuPhotoSummary(page, language)}</p>
+                  </div>
+                </header>
+                <figure>
+                  <img src={page.src} alt={getMenuPhotoLabel(page, language)} loading={index < 2 ? 'eager' : 'lazy'} />
+                </figure>
+              </article>
+            ))}
           </div>
         </div>
       </section>

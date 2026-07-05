@@ -35,7 +35,7 @@ export function CookieBanner() {
   const { language } = useLanguage();
   const [showPreferences, setShowPreferences] = useState(false);
   const [allowMaps, setAllowMaps] = useState(false);
-  const text = copy[language];
+  const text = copy[language === 'el' ? 'el' : 'en'];
 
   if (status !== null) return null;
 
