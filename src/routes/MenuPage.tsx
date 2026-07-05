@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { MobileQuickNav } from '../components/MobileQuickNav';
 import { useLanguage } from '../components/languageContext';
 import { getMenuPhotoLabel, getMenuPhotoSummary, menuPhotoPages } from '../data/menuPhotos';
+import { getStructuredSetMenuItemName, structuredSetMenus } from '../data/setMenusStructured';
 
 const copy = {
   el: {
@@ -12,6 +13,11 @@ const copy = {
     choose: 'Επιλέξτε κατηγορία',
     note: 'Οι φωτογραφίες εμφανίζονται με τη σειρά του φυσικού μενού.',
     page: 'Σελίδα',
+    setMenuTitle: 'Set μενού',
+    setMenuIntro: 'Πρώτη καθαρή έκδοση για τα set menus. Παρακαλούμε ελέγξτε τα στοιχεία με τις φωτογραφίες.',
+    menuFor1: 'Μενού για 1',
+    menuFor2: 'Μενού για 2',
+    review: 'Σε έλεγχο',
   },
   en: {
     kicker: 'Wok Dragon Express',
@@ -21,6 +27,11 @@ const copy = {
     choose: 'Choose a category',
     note: 'Photos are shown in the same order as the printed menu.',
     page: 'Page',
+    setMenuTitle: 'Set menus',
+    setMenuIntro: 'First cleaned text version for set menus. Please verify against the photographed menu pages.',
+    menuFor1: 'Menu for 1',
+    menuFor2: 'Menu for 2',
+    review: 'Under review',
   },
   zh: {
     kicker: 'Wok Dragon Express',
@@ -29,6 +40,11 @@ const copy = {
     choose: '选择分类',
     note: '菜单照片按实体菜单顺序排列。',
     page: '第',
+    setMenuTitle: '套餐菜单',
+    setMenuIntro: '这是第一版文字化套餐菜单，内容已根据照片整理，正式使用前请再核对一次。',
+    menuFor1: '单人套餐',
+    menuFor2: '双人/多人套餐',
+    review: '待核对',
   },
 };
 
@@ -37,6 +53,8 @@ export function MenuPage() {
   const text = copy[language];
 
   const primaryPages = useMemo(() => menuPhotoPages.slice(0, 6), []);
+  const menuForOne = useMemo(() => structuredSetMenus.filter((menu) => menu.group === 'menu-for-1'), []);
+  const menuForTwo = useMemo(() => structuredSetMenus.filter((menu) => menu.group === 'menu-for-2'), []);
 
   function scrollToPage(id: string) {
     document.getElementById(`menu-photo-${id}`)?.scrollIntoView({
@@ -80,6 +98,57 @@ export function MenuPage() {
               </button>
             ))}
           </div>
+
+          <section className="structured-set-menus" aria-labelledby="structured-set-menus-title">
+            <header className="structured-set-menus-header">
+              <div>
+                <span className="section-kicker">{text.review}</span>
+                <h2 id="structured-set-menus-title">{text.setMenuTitle}</h2>
+                <p>{text.setMenuIntro}</p>
+              </div>
+            </header>
+
+            <div className="structured-set-menu-group">
+              <h3>{text.menuFor1}</h3>
+              <div className="structured-set-menu-grid compact">
+                {menuForOne.map((menu) => (
+                  <article className="structured-set-menu-card" key={menu.id}>
+                    <div className="structured-set-menu-card-head">
+                      <strong>{menu.title}</strong>
+                      <span>{menu.price} €</span>
+                    </div>
+                    <ol>
+                      {menu.items.map((item) => (
+                        <li key={`${menu.id}-${item.nameEn}`}>{getStructuredSetMenuItemName(item, language)}</li>
+                      ))}
+                    </ol>
+                  </article>
+                ))}
+              </div>
+            </div>
+
+            <div className="structured-set-menu-group">
+              <h3>{text.menuFor2}</h3>
+              <div className="structured-set-menu-grid">
+                {menuForTwo.map((menu) => (
+                  <article className="structured-set-menu-card" key={menu.id}>
+                    <div className="structured-set-menu-card-head">
+                      <div>
+                        <strong>{menu.title}</strong>
+                        {menu.people && <em>{menu.people}</em>}
+                      </div>
+                      <span>{menu.price} €</span>
+                    </div>
+                    <ol>
+                      {menu.items.map((item) => (
+                        <li key={`${menu.id}-${item.nameEn}`}>{getStructuredSetMenuItemName(item, language)}</li>
+                      ))}
+                    </ol>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </section>
 
           <div className="menu-photo-gallery">
             {menuPhotoPages.map((page, index) => (
