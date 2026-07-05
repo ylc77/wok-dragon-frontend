@@ -153,7 +153,7 @@ export const structuredMenuDishes: StructuredMenuDish[] = [
     categoryId: 'salads',
     nameEl: 'Σπέσιαλ σαλάτα Wok Dragon',
     nameEn: 'Special Wok Dragon salad',
-    nameZh: 'Wok Dragon 招牌沙拉',
+    nameZh: '龙城酒楼招牌沙拉',
     price: '9.90',
   },
   {

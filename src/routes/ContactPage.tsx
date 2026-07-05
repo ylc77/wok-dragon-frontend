@@ -23,7 +23,7 @@ const copy = {
   },
   zh: {
     kicker: '联系',
-    title: '联系 Wok Dragon',
+    title: '联系龙城酒楼',
     body: '如需预约、咨询菜单或了解地址，请直接联系餐厅。',
     details: '联系方式',
     book: '预约餐桌',

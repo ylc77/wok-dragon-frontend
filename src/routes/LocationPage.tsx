@@ -16,7 +16,7 @@ const copy = {
   },
   zh: {
     kicker: '地图',
-    title: '找到 Wok Dragon',
+    title: '找到龙城酒楼',
     body: `欢迎到店用餐，地址：${contactInfo.address}。`,
   },
 };
