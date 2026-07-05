@@ -4102,24 +4102,71 @@ textarea {
 /* Desktop homepage food showcase sizing */
 @media (min-width: 981px) {
   .floating-showcase {
-    grid-template-columns: repeat(4, minmax(190px, 300px));
-    justify-content: center;
-    gap: clamp(18px, 2vw, 30px);
-    padding: 34px clamp(24px, 4vw, 70px) 72px;
+    display: block;
+    overflow: hidden;
+    width: 100%;
+    max-width: 100vw;
+    contain: paint;
+    padding: 34px 0 72px;
+    background: #fff;
   }
 
+  .showcase-track {
+    display: flex;
+    width: max-content;
+    gap: 0;
+    padding-inline: 0;
+    animation: foodMarqueeLeft 42s linear infinite;
+    will-change: transform;
+  }
+
+  .showcase-group,
+  .showcase-group[aria-hidden='true'] {
+    display: flex;
+    flex: 0 0 auto;
+    gap: clamp(18px, 2vw, 30px);
+    padding-right: clamp(18px, 2vw, 30px);
+  }
+
+  .floating-showcase:hover .showcase-track,
+  .floating-showcase:active .showcase-track {
+    animation-play-state: paused;
+  }
+
+  .floating-showcase figure,
   .floating-showcase figure:nth-child(even) {
-    margin-top: 24px;
+    display: block;
+    width: clamp(220px, 22vw, 310px);
+    flex: 0 0 clamp(220px, 22vw, 310px);
+    margin: 0;
+    overflow: hidden;
+    animation: none;
+    transform: none;
+    transition:
+      transform 180ms ease,
+      filter 180ms ease;
+  }
+
+  .floating-showcase figure:hover,
+  .floating-showcase figure:active {
+    z-index: 2;
+    transform: scale(1.035);
+    filter: saturate(1.08);
   }
 
   .floating-showcase img {
-    aspect-ratio: 1.16;
+    aspect-ratio: 1.32;
+    border-radius: 7px;
     box-shadow: 0 12px 26px rgba(0, 0, 0, 0.14);
   }
 
   .floating-showcase figcaption {
+    overflow: hidden;
     margin-top: 9px;
     font-size: 1rem;
+    line-height: 1;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
 
@@ -5480,6 +5527,27 @@ textarea {
   line-height: 1;
 }
 
+@media (min-width: 721px) {
+  .site-header .language-switch {
+    min-height: 42px;
+    align-items: center;
+  }
+
+  .site-header .language-switch .language-current {
+    min-width: 86px;
+    justify-content: center;
+    padding: 0 14px;
+  }
+
+  .site-header .language-switch .language-current svg {
+    transition: transform 160ms ease;
+  }
+
+  .site-header .language-switch .language-current[aria-expanded='true'] svg {
+    transform: rotate(180deg);
+  }
+}
+
 .language-switch .language-current strong {
   font-size: 0.9rem;
   font-weight: 1000;
@@ -5499,6 +5567,36 @@ textarea {
   display: inline-grid;
   min-width: 22px;
   place-items: center;
+}
+
+.flag-icon {
+  position: relative;
+  display: inline-block;
+  width: 22px !important;
+  height: 15px !important;
+  min-width: 22px;
+  overflow: hidden;
+  border-radius: 2px;
+  background: #ddd;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.12);
+}
+
+.language-switch .flag-icon.flag-el,
+.flag-el {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 18'%3E%3Cpath fill='%230d5eaf' d='M0 0h27v18H0z'/%3E%3Cpath stroke='%23fff' stroke-width='2' d='M0 3h27M0 7h27M0 11h27M0 15h27'/%3E%3Cpath fill='%230d5eaf' d='M0 0h10v10H0z'/%3E%3Cpath stroke='%23fff' stroke-width='2' d='M5 0v10M0 5h10'/%3E%3C/svg%3E");
+  background-size: cover;
+}
+
+.language-switch .flag-icon.flag-en,
+.flag-en {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 36'%3E%3Cpath fill='%23012169' d='M0 0h60v36H0z'/%3E%3Cpath stroke='%23fff' stroke-width='7.2' d='m0 0 60 36m0-36L0 36'/%3E%3Cpath stroke='%23c8102e' stroke-width='4.2' d='m0 0 60 36m0-36L0 36'/%3E%3Cpath stroke='%23fff' stroke-width='12' d='M30 0v36M0 18h60'/%3E%3Cpath stroke='%23c8102e' stroke-width='7.2' d='M30 0v36M0 18h60'/%3E%3C/svg%3E");
+  background-size: cover;
+}
+
+.language-switch .flag-icon.flag-zh,
+.flag-zh {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 20'%3E%3Cpath fill='%23de2910' d='M0 0h30v20H0z'/%3E%3Cpath fill='%23ffde00' d='m5 2 1 3h3L6.5 6.8l1 3L5 8 2.5 9.8l1-3L1 5h3z'/%3E%3C/svg%3E");
+  background-size: cover;
 }
 
 .language-menu {

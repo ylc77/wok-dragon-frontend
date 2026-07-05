@@ -10,11 +10,11 @@ const languages: Array<{
   code: Language;
   short: string;
   name: string;
-  flag: string;
+  flagClass: string;
 }> = [
-  { code: 'el', short: 'EL', name: 'Ελληνικά', flag: '🇬🇷' },
-  { code: 'en', short: 'EN', name: 'English', flag: '🇬🇧' },
-  { code: 'zh', short: '中文', name: '中文', flag: '🇨🇳' },
+  { code: 'el', short: 'EL', name: 'Ελληνικά', flagClass: 'flag-el' },
+  { code: 'en', short: 'EN', name: 'English', flagClass: 'flag-en' },
+  { code: 'zh', short: '中文', name: '中文', flagClass: 'flag-zh' },
 ];
 
 export function Header() {
@@ -56,9 +56,7 @@ export function Header() {
               aria-expanded={languageOpen}
               onClick={() => setLanguageOpen((current) => !current)}
             >
-              <span className="language-flag" aria-hidden="true">
-                {currentLanguage.flag}
-              </span>
+              <span className={`language-flag flag-icon ${currentLanguage.flagClass}`} aria-hidden="true" />
               <strong>{currentLanguage.short}</strong>
               <ChevronDown size={15} aria-hidden="true" />
             </button>
@@ -76,9 +74,7 @@ export function Header() {
                       setLanguageOpen(false);
                     }}
                   >
-                    <span className="language-flag" aria-hidden="true">
-                      {item.flag}
-                    </span>
+                    <span className={`language-flag flag-icon ${item.flagClass}`} aria-hidden="true" />
                     <strong>{item.name}</strong>
                     <em>{item.short}</em>
                     {language === item.code && <b aria-hidden="true">✓</b>}
