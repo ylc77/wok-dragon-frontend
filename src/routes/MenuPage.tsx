@@ -14,7 +14,6 @@ import { getStructuredSetMenuItemName, structuredSetMenus } from '../data/setMen
 type MenuCategorySelection = StructuredMenuCategoryId | 'set-menus';
 
 const menuCategoryImages: Partial<Record<MenuCategorySelection, string[]>> = {
-  'set-menus': [foodImages.pdfChickenSweetSour, foodImages.pdfFriedRice, foodImages.pdfDuck, foodImages.pdfAppetizers],
   soups: [foodImages.pdfSoups, foodImages.pdfSoupCorn, foodImages.pdfSoupDumpling, foodImages.pdfSoupRice],
   salads: [foodImages.pdfSalads, foodImages.pdfVegetables, foodImages.pdfVegetablesBeans],
   appetizers: [
