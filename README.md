@@ -91,11 +91,13 @@ LOCAL_API_PORT=8787
 
 ## 数据来源
 
-菜单内容来自项目内保存的 Wok Dragon 菜单 PDF：
+菜单内容来自用户最新提供的 16 张实体菜单照片：
 
-- PDF 文件：`assets/source/dragonwok-greekeng.pdf`
-- 提取文本：`assets/source/dragonwok-greekeng.txt`
-- 菜单数据：`src/data/menu.ts`
+- 菜单照片：`public/menu-photos/page-01.jpg` 至 `public/menu-photos/page-16.jpg`
+- 照片菜单数据：`src/data/menuPhotos.ts`
+- 已文字化套餐数据：`src/data/setMenusStructured.ts`
+- OCR 初稿：`docs/MENU_OCR_DRAFT.md`
+- 人工校对底稿：`docs/MENU_TEXT_REVIEW.md`
 - 联系信息：`src/data/contact.ts`
 
 Google Maps 链接已使用用户提供的 Wok Dragon EXPRESS 地图链接。
@@ -128,16 +130,13 @@ src/
     ReservationSection.tsx
     MapContactSection.tsx
     Footer.tsx
-    MenuCategoryTabs.tsx
-    MenuList.tsx
     MobileQuickNav.tsx
     languageContext.ts
   data/
     contact.ts
     images.ts
-    menu.ts
-    menuCategoryImages.ts
-    setMenuGreek.ts
+    menuPhotos.ts
+    setMenusStructured.ts
     site.ts
   routes/
     HomePage.tsx

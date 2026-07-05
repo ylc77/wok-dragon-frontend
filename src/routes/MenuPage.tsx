@@ -2,6 +2,12 @@ import { useMemo } from 'react';
 import { MobileQuickNav } from '../components/MobileQuickNav';
 import { useLanguage } from '../components/languageContext';
 import { getMenuPhotoLabel, getMenuPhotoSummary, menuPhotoPages } from '../data/menuPhotos';
+import {
+  getStructuredMenuCategoryLabel,
+  getStructuredMenuDishName,
+  structuredMenuCategories,
+  structuredMenuDishes,
+} from '../data/structuredMenuItems';
 import { getStructuredSetMenuItemName, structuredSetMenus } from '../data/setMenusStructured';
 
 const copy = {
@@ -18,6 +24,10 @@ const copy = {
     menuFor1: 'Μενού για 1',
     menuFor2: 'Μενού για 2',
     review: 'Σε έλεγχο',
+    textMenuTitle: 'Καθαρό μενού',
+    textMenuIntro: 'Οι πρώτες κατηγορίες έχουν μετατραπεί σε ευανάγνωστο κείμενο. Οι φωτογραφίες παραμένουν παρακάτω για έλεγχο.',
+    spicy: 'Καυτερό',
+    needsReview: 'Έλεγχος',
   },
   en: {
     kicker: 'Wok Dragon Express',
@@ -32,6 +42,10 @@ const copy = {
     menuFor1: 'Menu for 1',
     menuFor2: 'Menu for 2',
     review: 'Under review',
+    textMenuTitle: 'Clean text menu',
+    textMenuIntro: 'The first categories have been converted into readable text. Original menu photos remain below for verification.',
+    spicy: 'Spicy',
+    needsReview: 'Review',
   },
   zh: {
     kicker: 'Wok Dragon Express',
@@ -45,6 +59,10 @@ const copy = {
     menuFor1: '单人套餐',
     menuFor2: '双人/多人套餐',
     review: '待核对',
+    textMenuTitle: '文字菜单',
+    textMenuIntro: '已先整理汤类、沙拉和前菜，下面仍保留原始照片方便核对。',
+    spicy: '辣',
+    needsReview: '待核对',
   },
 };
 
@@ -147,6 +165,43 @@ export function MenuPage() {
                   </article>
                 ))}
               </div>
+            </div>
+          </section>
+
+          <section className="structured-menu-items" aria-labelledby="structured-menu-items-title">
+            <header className="structured-set-menus-header">
+              <div>
+                <span className="section-kicker">{text.review}</span>
+                <h2 id="structured-menu-items-title">{text.textMenuTitle}</h2>
+                <p>{text.textMenuIntro}</p>
+              </div>
+            </header>
+
+            <div className="structured-menu-category-list">
+              {structuredMenuCategories.map((category) => {
+                const dishes = structuredMenuDishes.filter((dish) => dish.categoryId === category.id);
+
+                return (
+                  <article className="structured-menu-category" key={category.id}>
+                    <h3>{getStructuredMenuCategoryLabel(category, language)}</h3>
+                    <div className="structured-menu-dishes">
+                      {dishes.map((dish) => (
+                        <div className="structured-menu-dish" key={`${category.id}-${dish.number}`}>
+                          <span className="structured-menu-number">{dish.number}</span>
+                          <div>
+                            <strong>{getStructuredMenuDishName(dish, language)}</strong>
+                            <div className="structured-menu-flags">
+                              {dish.spicy && <span>{text.spicy}</span>}
+                              {dish.needsReview && <span>{text.needsReview}</span>}
+                            </div>
+                          </div>
+                          <b>{dish.price} €</b>
+                        </div>
+                      ))}
+                    </div>
+                  </article>
+                );
+              })}
             </div>
           </section>
 
