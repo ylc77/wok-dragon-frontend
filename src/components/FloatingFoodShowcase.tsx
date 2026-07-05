@@ -1,3 +1,5 @@
+import { useEffect, useRef, useState } from 'react';
+import type { CSSProperties } from 'react';
 import { foodImages } from '../data/images';
 import { useLanguage } from './languageContext';
 
@@ -16,13 +18,44 @@ const showcase = [
 
 export function FloatingFoodShowcase() {
   const { language } = useLanguage();
-  const marqueeGroups = [showcase, showcase, showcase];
+  const trackRef = useRef<HTMLDivElement>(null);
+  const firstGroupRef = useRef<HTMLDivElement>(null);
+  const [loopDistance, setLoopDistance] = useState(0);
+  const marqueeGroups = [showcase, showcase];
+
+  useEffect(() => {
+    const group = firstGroupRef.current;
+    if (!group) return;
+
+    const updateDistance = () => {
+      setLoopDistance(Math.ceil(group.getBoundingClientRect().width));
+    };
+
+    updateDistance();
+    const observer = new ResizeObserver(updateDistance);
+    observer.observe(group);
+    window.addEventListener('resize', updateDistance);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', updateDistance);
+    };
+  }, [language]);
 
   return (
     <section className="floating-showcase" aria-label="Food showcase">
-      <div className="showcase-track">
+      <div
+        className="showcase-track"
+        ref={trackRef}
+        style={{ '--showcase-loop-distance': `${loopDistance}px` } as CSSProperties}
+      >
         {marqueeGroups.map((group, groupIndex) => (
-          <div className="showcase-group" key={`showcase-group-${groupIndex}`} aria-hidden={groupIndex > 0}>
+          <div
+            className="showcase-group"
+            key={`showcase-group-${groupIndex}`}
+            ref={groupIndex === 0 ? firstGroupRef : undefined}
+            aria-hidden={groupIndex > 0}
+          >
             {group.map((item, itemIndex) => {
               const label = language === 'el' ? item.labelEl : language === 'zh' ? item.labelZh : item.labelEn;
               const isPrimary = groupIndex === 0;

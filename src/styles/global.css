@@ -3671,7 +3671,7 @@ textarea {
   }
 
   to {
-    transform: translate3d(-33.333333%, 0, 0);
+    transform: translate3d(calc(-1 * var(--showcase-loop-distance, 0px)), 0, 0);
   }
 }
 
@@ -3821,7 +3821,7 @@ textarea {
     box-shadow: none;
     opacity: 0;
     overflow: hidden;
-    animation: wokHeroMobileSlide 16s ease-in-out infinite;
+    animation: wokHeroMobileSlide 12s ease-in-out infinite;
   }
 
   .hero-collage .tile-one {
@@ -3829,15 +3829,15 @@ textarea {
   }
 
   .hero-collage .tile-two {
-    animation-delay: 4s;
+    animation-delay: 3s;
   }
 
   .hero-collage .tile-three {
-    animation-delay: 8s;
+    animation-delay: 6s;
   }
 
   .hero-collage .tile-four {
-    animation-delay: 12s;
+    animation-delay: 9s;
   }
 
   .hero-collage .hero-image img {
@@ -3885,9 +3885,11 @@ textarea {
   .floating-showcase figure,
   .floating-showcase figure:nth-child(even) {
     display: block;
+    width: min(70vw, 292px);
+    min-width: 0;
     flex: 0 0 min(70vw, 292px);
-    min-width: min(70vw, 292px);
     margin: 0;
+    overflow: hidden;
     animation: none;
     transform: none;
     transition: transform 180ms ease, filter 180ms ease;
@@ -3905,9 +3907,12 @@ textarea {
   }
 
   .floating-showcase figcaption {
+    overflow: hidden;
     margin-top: 10px;
     font-size: 1.08rem;
     line-height: 1;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .reservation-form .booking-primary-field,
