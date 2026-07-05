@@ -276,14 +276,6 @@ export function MenuPage() {
 
           {activeCategory !== 'set-menus' && (
           <section className="structured-menu-items" aria-labelledby="structured-menu-items-title">
-            <header className="structured-set-menus-header">
-              <div>
-                <span className="section-kicker">{text.review}</span>
-                <h2 id="structured-menu-items-title">{text.textMenuTitle}</h2>
-                <p>{text.textMenuIntro}</p>
-              </div>
-            </header>
-
             <div className="structured-menu-category-list">
               {visibleCategories.map((category) => {
                 const dishes = structuredMenuDishes.filter((dish) => dish.categoryId === category.id);
