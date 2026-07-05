@@ -8,9 +8,9 @@ import { CookieBanner } from './components/CookieBanner';
 import { CookieConsentProvider } from './components/CookieConsentProvider';
 import { ContactPage } from './routes/ContactPage';
 import { HomePage } from './routes/HomePage';
+import { LegalPage } from './routes/LegalPage';
 import { LocationPage } from './routes/LocationPage';
 import { MenuPage } from './routes/MenuPage';
-import { PrivacyPage } from './routes/PrivacyPage';
 import { ReservationPage } from './routes/ReservationPage';
 import './styles/global.css';
 
@@ -39,7 +39,11 @@ export default function App() {
             <Route path="/reservation" element={<ReservationPage />} />
             <Route path="/location" element={<LocationPage />} />
             <Route path="/contact" element={<ContactPage />} />
-            <Route path="/privacy" element={<PrivacyPage />} />
+            <Route path="/privacy" element={<LegalPage page="privacy" />} />
+            <Route path="/privacy-policy" element={<LegalPage page="privacy" />} />
+            <Route path="/terms-of-service" element={<LegalPage page="terms" />} />
+            <Route path="/cookie-policy" element={<LegalPage page="cookies" />} />
+            <Route path="/cancellation-policy" element={<LegalPage page="cancellation" />} />
           </Routes>
         </main>
         <Footer />

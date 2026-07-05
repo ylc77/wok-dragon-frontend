@@ -1,6 +1,7 @@
 import { ArrowRight, CalendarDays, CheckCircle2, Clock3, MapPin, Phone } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import type { FormEvent } from 'react';
+import { Link } from 'react-router-dom';
 import { contactInfo } from '../data/contact';
 import type { ReservationForm } from '../types/reservation';
 import { useLanguage } from './languageContext';
@@ -160,6 +161,12 @@ export function ReservationSection() {
       : 'The restaurant will contact you to confirm.',
     sending: isGreek ? '\u0391\u03c0\u03bf\u03c3\u03c4\u03bf\u03bb\u03ae...' : 'Sending...',
     submit: isGreek ? '\u0391\u03c0\u03bf\u03c3\u03c4\u03bf\u03bb\u03ae \u03b1\u03b9\u03c4\u03ae\u03bc\u03b1\u03c4\u03bf\u03c2 \u03ba\u03c1\u03ac\u03c4\u03b7\u03c3\u03b7\u03c2' : 'Send Reservation Request',
+    submitAgreement: isGreek
+      ? '\u039c\u03b5 \u03c4\u03b7\u03bd \u03b1\u03c0\u03bf\u03c3\u03c4\u03bf\u03bb\u03ae, \u03c3\u03c5\u03bc\u03c6\u03c9\u03bd\u03b5\u03af\u03c4\u03b5 \u03bc\u03b5 \u03c4\u03bf\u03c5\u03c2'
+      : 'By submitting, you agree to our',
+    terms: isGreek ? '\u038c\u03c1\u03bf\u03c5\u03c2 \u03a7\u03c1\u03ae\u03c3\u03b7\u03c2' : 'Terms of Service',
+    and: isGreek ? '\u03ba\u03b1\u03b9 \u03c4\u03b7\u03bd' : 'and',
+    privacy: isGreek ? '\u03a0\u03bf\u03bb\u03b9\u03c4\u03b9\u03ba\u03ae \u0391\u03c0\u03bf\u03c1\u03c1\u03ae\u03c4\u03bf\u03c5' : 'Privacy Policy',
   };
 
   function updateField(field: keyof ReservationForm, value: string) {
@@ -359,6 +366,12 @@ export function ReservationSection() {
               </span>
             </p>
           )}
+
+          <p className="form-legal-note full-field">
+            {text.submitAgreement}{' '}
+            <Link to="/terms-of-service">{text.terms}</Link> {text.and}{' '}
+            <Link to="/privacy-policy">{text.privacy}</Link>.
+          </p>
 
           <button className="button button-red reservation-submit full-field" type="submit" disabled={isSending}>
             {isSending ? text.sending : text.submit}
