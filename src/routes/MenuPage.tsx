@@ -13,7 +13,7 @@ import { getStructuredSetMenuItemName, structuredSetMenus } from '../data/setMen
 
 type MenuCategorySelection = StructuredMenuCategoryId | 'set-menus';
 
-const menuCategoryImages: Record<MenuCategorySelection, string[]> = {
+const menuCategoryImages: Partial<Record<MenuCategorySelection, string[]>> = {
   'set-menus': [foodImages.pdfChickenSweetSour, foodImages.pdfFriedRice, foodImages.pdfDuck, foodImages.pdfAppetizers],
   soups: [foodImages.pdfSoups, foodImages.pdfSoupCorn, foodImages.pdfSoupDumpling, foodImages.pdfSoupRice],
   salads: [foodImages.pdfSalads, foodImages.pdfVegetables, foodImages.pdfVegetablesBeans],
@@ -37,7 +37,7 @@ const menuCategoryImages: Record<MenuCategorySelection, string[]> = {
   ],
   'fried-rice': [foodImages.pdfFriedRice, foodImages.pdfFriedRiceSeafood, foodImages.pdfFriedRiceMixed],
   duck: [foodImages.pdfDuck, foodImages.pdfDuckWhole, foodImages.pdfDuckOrange],
-  beef: [foodImages.pdfBeef, foodImages.pdfBeefMixed, foodImages.pdfBeefBroccoli, foodImages.pdfBeefPepper],
+  beef: [foodImages.pdfBeef, foodImages.pdfBeefBroccoli, foodImages.pdfBeefPepper],
   chicken: [foodImages.pdfChicken, foodImages.pdfChickenSweetSour, foodImages.pdfChickenLemon, foodImages.pdfChickenChilli],
   pork: [foodImages.pdfPork, foodImages.pdfPorkSauce, foodImages.pdfPorkMeiCai, foodImages.pdfPorkRibs],
   seafood: [foodImages.pdfSeafood, foodImages.pdfSeafoodShrimp, foodImages.pdfSeafoodFish, foodImages.pdfSeafoodLobster],
@@ -50,12 +50,6 @@ const menuCategoryImages: Record<MenuCategorySelection, string[]> = {
     foodImages.pdfVegetablesMapo,
   ],
   'kids-meals': [foodImages.pdfFriedNoodles, foodImages.pdfFriedRice],
-  sweets: [foodImages.pdfBanner],
-  'soft-drinks': [foodImages.drinks],
-  'hot-tea': [foodImages.drinks],
-  beers: [foodImages.drinks],
-  wines: [foodImages.drinks],
-  drinks: [foodImages.drinks],
 };
 
 const copy = {
@@ -70,9 +64,9 @@ const copy = {
     setMenuIntro: 'Πακέτα για 1, 2 ή 4 άτομα. Η τελική διαθεσιμότητα επιβεβαιώνεται από το εστιατόριο.',
     menuFor1: 'Μενού για 1',
     menuFor2: 'Μενού για 2',
-    review: 'Έλεγχος',
+    review: 'Μενού',
     textMenuTitle: 'Κατάλογος πιάτων',
-    textMenuIntro: 'Χρησιμοποιήστε τις κατηγορίες για γρήγορη αναζήτηση. Τα σημεία με ένδειξη ελέγχου χρειάζονται τελική επιβεβαίωση.',
+    textMenuIntro: 'Χρησιμοποιήστε τις κατηγορίες για γρήγορη αναζήτηση.',
     spicy: 'Καυτερό',
     needsReview: 'Έλεγχος',
     dishes: 'πιάτα',
@@ -88,9 +82,9 @@ const copy = {
     setMenuIntro: 'Set options for 1, 2, or 4 people. Final availability is confirmed directly by the restaurant.',
     menuFor1: 'Menu for 1',
     menuFor2: 'Menu for 2',
-    review: 'Under review',
+    review: 'Menu',
     textMenuTitle: 'Dish list',
-    textMenuIntro: 'Use the category buttons for quick browsing. Items marked for review still need final confirmation.',
+    textMenuIntro: 'Use the category buttons for quick browsing.',
     spicy: 'Spicy',
     needsReview: 'Review',
     dishes: 'dishes',
@@ -105,9 +99,9 @@ const copy = {
     setMenuIntro: '包含单人、双人和四人套餐。最终供应情况由餐厅确认。',
     menuFor1: '单人套餐',
     menuFor2: '双人 / 多人套餐',
-    review: '待核对',
+    review: '菜单',
     textMenuTitle: '菜品列表',
-    textMenuIntro: '可通过分类快速查看。标记为待核对的菜品之后需要再确认。',
+    textMenuIntro: '可通过分类快速查看。',
     spicy: '辣',
     needsReview: '待核对',
     dishes: '道菜',
@@ -150,7 +144,7 @@ export function MenuPage() {
       : activeStructuredCategory
         ? (dishCountByCategory[activeStructuredCategory.id] ?? 0)
         : 0;
-  const activeCategoryImages = menuCategoryImages[activeCategory].slice(0, 4);
+  const activeCategoryImages = (menuCategoryImages[activeCategory] ?? []).slice(0, 4);
 
   return (
     <>
@@ -207,22 +201,24 @@ export function MenuPage() {
             </div>
           </section>
 
-          <section className="menu-category-visual" aria-label={activeCategoryLabel}>
-            <div className="menu-category-visual-copy">
-              <span>{activeCategory === 'set-menus' ? text.review : text.choose}</span>
-              <h2>{activeCategoryLabel}</h2>
-              <p>
-                {activeCategoryCount} {activeCategory === 'set-menus' ? text.setMenuTitle : text.dishes}
-              </p>
-            </div>
-            <div className="menu-category-visual-images">
-              {activeCategoryImages.map((image, index) => (
-                <figure key={`${activeCategory}-${image}-${index}`}>
-                  <img src={image} alt="" loading={index === 0 ? 'eager' : 'lazy'} />
-                </figure>
-              ))}
-            </div>
-          </section>
+          {activeCategoryImages.length > 0 && (
+            <section className="menu-category-visual" aria-label={activeCategoryLabel}>
+              <div className="menu-category-visual-copy">
+                <span>{activeCategory === 'set-menus' ? text.review : text.choose}</span>
+                <h2>{activeCategoryLabel}</h2>
+                <p>
+                  {activeCategoryCount} {activeCategory === 'set-menus' ? text.setMenuTitle : text.dishes}
+                </p>
+              </div>
+              <div className="menu-category-visual-images">
+                {activeCategoryImages.map((image, index) => (
+                  <figure key={`${activeCategory}-${image}-${index}`}>
+                    <img src={image} alt="" loading={index === 0 ? 'eager' : 'lazy'} />
+                  </figure>
+                ))}
+              </div>
+            </section>
+          )}
 
           {activeCategory === 'set-menus' && (
           <section className="structured-set-menus" aria-labelledby="structured-set-menus-title">
@@ -299,11 +295,14 @@ export function MenuPage() {
                         <div className="structured-menu-dish" key={`${category.id}-${dish.number}-${index}`}>
                           <span className="structured-menu-number">{dish.number}</span>
                           <div>
-                            <strong>{getStructuredMenuDishName(dish, language)}</strong>
-                            <div className="structured-menu-flags">
-                              {dish.spicy && <span>{text.spicy}</span>}
-                              {dish.needsReview && <span>{text.needsReview}</span>}
-                            </div>
+                            <strong>
+                              {getStructuredMenuDishName(dish, language)}
+                              {dish.spicy && (
+                                <span className="structured-menu-spice" aria-label={text.spicy} title={text.spicy}>
+                                  🌶
+                                </span>
+                              )}
+                            </strong>
                           </div>
                           <b>{dish.price} €</b>
                         </div>

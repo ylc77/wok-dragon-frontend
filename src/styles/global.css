@@ -5164,6 +5164,15 @@ textarea {
   line-height: 1.25;
 }
 
+.structured-menu-spice {
+  display: inline-block;
+  margin-left: 7px;
+  color: var(--red);
+  font-size: 1em;
+  line-height: 1;
+  vertical-align: -0.08em;
+}
+
 .structured-menu-dish b {
   color: var(--red);
   font-size: 1.15rem;
