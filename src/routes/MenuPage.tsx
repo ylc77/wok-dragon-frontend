@@ -8,7 +8,55 @@ import {
   structuredMenuDishes,
 } from '../data/structuredMenuItems';
 import type { StructuredMenuCategoryId } from '../data/structuredMenuItems';
+import { foodImages } from '../data/images';
 import { getStructuredSetMenuItemName, structuredSetMenus } from '../data/setMenusStructured';
+
+type MenuCategorySelection = StructuredMenuCategoryId | 'set-menus';
+
+const menuCategoryImages: Record<MenuCategorySelection, string[]> = {
+  'set-menus': [foodImages.pdfChickenSweetSour, foodImages.pdfFriedRice, foodImages.pdfDuck, foodImages.pdfAppetizers],
+  soups: [foodImages.pdfSoups, foodImages.pdfSoupCorn, foodImages.pdfSoupDumpling, foodImages.pdfSoupRice],
+  salads: [foodImages.pdfSalads, foodImages.pdfVegetables, foodImages.pdfVegetablesBeans],
+  appetizers: [
+    foodImages.pdfAppetizers,
+    foodImages.pdfAppetizersDumplings,
+    foodImages.pdfAppetizersFried,
+    foodImages.pdfAppetizersShrimp,
+  ],
+  'soup-noodles': [
+    foodImages.pdfNoodleSoup,
+    foodImages.pdfNoodleSoupDumpling,
+    foodImages.pdfNoodleSoupDuck,
+    foodImages.pdfNoodleSoupWonton,
+  ],
+  'fried-noodles': [
+    foodImages.pdfFriedNoodles,
+    foodImages.pdfFriedNoodlesBeef,
+    foodImages.pdfFriedNoodlesSingapore,
+    foodImages.pdfFriedNoodlesShrimp,
+  ],
+  'fried-rice': [foodImages.pdfFriedRice, foodImages.pdfFriedRiceSeafood, foodImages.pdfFriedRiceMixed],
+  duck: [foodImages.pdfDuck, foodImages.pdfDuckWhole, foodImages.pdfDuckOrange],
+  beef: [foodImages.pdfBeef, foodImages.pdfBeefMixed, foodImages.pdfBeefBroccoli, foodImages.pdfBeefPepper],
+  chicken: [foodImages.pdfChicken, foodImages.pdfChickenSweetSour, foodImages.pdfChickenLemon, foodImages.pdfChickenChilli],
+  pork: [foodImages.pdfPork, foodImages.pdfPorkSauce, foodImages.pdfPorkMeiCai, foodImages.pdfPorkRibs],
+  seafood: [foodImages.pdfSeafood, foodImages.pdfSeafoodShrimp, foodImages.pdfSeafoodFish, foodImages.pdfSeafoodLobster],
+  claypots: [foodImages.pdfClaypot, foodImages.pdfClaypotTofu, foodImages.pdfClaypotEggplant],
+  'dishes-with-rice': [foodImages.pdfRiceDish, foodImages.pdfRiceDishDuck, foodImages.pdfFriedRice],
+  vegetables: [
+    foodImages.pdfVegetables,
+    foodImages.pdfVegetablesSpinach,
+    foodImages.pdfVegetablesBeans,
+    foodImages.pdfVegetablesMapo,
+  ],
+  'kids-meals': [foodImages.pdfFriedNoodles, foodImages.pdfFriedRice],
+  sweets: [foodImages.pdfBanner],
+  'soft-drinks': [foodImages.drinks],
+  'hot-tea': [foodImages.drinks],
+  beers: [foodImages.drinks],
+  wines: [foodImages.drinks],
+  drinks: [foodImages.drinks],
+};
 
 const copy = {
   el: {
@@ -69,16 +117,18 @@ const copy = {
 export function MenuPage() {
   const { language } = useLanguage();
   const text = copy[language];
-  const [activeCategory, setActiveCategory] = useState<StructuredMenuCategoryId | 'all'>('all');
+  const [activeCategory, setActiveCategory] = useState<MenuCategorySelection>('set-menus');
 
   const menuForOne = useMemo(() => structuredSetMenus.filter((menu) => menu.group === 'menu-for-1'), []);
   const menuForTwo = useMemo(() => structuredSetMenus.filter((menu) => menu.group === 'menu-for-2'), []);
-  const visibleCategories = useMemo(
-    () =>
-      activeCategory === 'all'
-        ? structuredMenuCategories
-        : structuredMenuCategories.filter((category) => category.id === activeCategory),
+  const activeStructuredCategory = useMemo(
+    () => structuredMenuCategories.find((category) => category.id === activeCategory),
     [activeCategory],
+  );
+
+  const visibleCategories = useMemo(
+    () => (activeStructuredCategory ? [activeStructuredCategory] : []),
+    [activeStructuredCategory],
   );
 
   const dishCountByCategory = useMemo(() => {
@@ -87,6 +137,20 @@ export function MenuPage() {
       return counts;
     }, {});
   }, []);
+
+  const activeCategoryLabel =
+    activeCategory === 'set-menus'
+      ? text.setMenuTitle
+      : activeStructuredCategory
+        ? getStructuredMenuCategoryLabel(activeStructuredCategory, language)
+        : text.setMenuTitle;
+  const activeCategoryCount =
+    activeCategory === 'set-menus'
+      ? structuredSetMenus.length
+      : activeStructuredCategory
+        ? (dishCountByCategory[activeStructuredCategory.id] ?? 0)
+        : 0;
+  const activeCategoryImages = menuCategoryImages[activeCategory].slice(0, 4);
 
   return (
     <>
@@ -109,9 +173,9 @@ export function MenuPage() {
               className="menu-mobile-category-select"
               value={activeCategory}
               aria-label={text.choose}
-              onChange={(event) => setActiveCategory(event.target.value as StructuredMenuCategoryId | 'all')}
+              onChange={(event) => setActiveCategory(event.target.value as MenuCategorySelection)}
             >
-              <option value="all">{text.allCategories}</option>
+              <option value="set-menus">{text.setMenuTitle}</option>
               {structuredMenuCategories.map((category) => (
                 <option key={category.id} value={category.id}>
                   {getStructuredMenuCategoryLabel(category, language)}
@@ -121,10 +185,11 @@ export function MenuPage() {
             <div className="menu-text-filter-buttons">
               <button
                 type="button"
-                className={activeCategory === 'all' ? 'active' : ''}
-                onClick={() => setActiveCategory('all')}
+                className={activeCategory === 'set-menus' ? 'active' : ''}
+                onClick={() => setActiveCategory('set-menus')}
               >
-                <span>{text.allCategories}</span>
+                <span>{text.setMenuTitle}</span>
+                <em>{structuredSetMenus.length}</em>
               </button>
               {structuredMenuCategories.map((category) => (
                 <button
@@ -142,6 +207,24 @@ export function MenuPage() {
             </div>
           </section>
 
+          <section className="menu-category-visual" aria-label={activeCategoryLabel}>
+            <div className="menu-category-visual-copy">
+              <span>{activeCategory === 'set-menus' ? text.review : text.choose}</span>
+              <h2>{activeCategoryLabel}</h2>
+              <p>
+                {activeCategoryCount} {activeCategory === 'set-menus' ? text.setMenuTitle : text.dishes}
+              </p>
+            </div>
+            <div className="menu-category-visual-images">
+              {activeCategoryImages.map((image, index) => (
+                <figure key={`${activeCategory}-${image}-${index}`}>
+                  <img src={image} alt="" loading={index === 0 ? 'eager' : 'lazy'} />
+                </figure>
+              ))}
+            </div>
+          </section>
+
+          {activeCategory === 'set-menus' && (
           <section className="structured-set-menus" aria-labelledby="structured-set-menus-title">
             <header className="structured-set-menus-header">
               <div>
@@ -192,7 +275,9 @@ export function MenuPage() {
               </div>
             </div>
           </section>
+          )}
 
+          {activeCategory !== 'set-menus' && (
           <section className="structured-menu-items" aria-labelledby="structured-menu-items-title">
             <header className="structured-set-menus-header">
               <div>
@@ -229,6 +314,7 @@ export function MenuPage() {
               })}
             </div>
           </section>
+          )}
         </div>
       </section>
       <MobileQuickNav />
