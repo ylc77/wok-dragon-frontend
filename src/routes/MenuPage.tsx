@@ -15,7 +15,6 @@ type MenuCategorySelection = StructuredMenuCategoryId | 'set-menus';
 
 const menuCategoryImages: Partial<Record<MenuCategorySelection, string[]>> = {
   soups: [foodImages.pdfSoups, foodImages.pdfSoupCorn, foodImages.pdfSoupDumpling, foodImages.pdfSoupRice],
-  salads: [foodImages.pdfSalads, foodImages.pdfVegetables, foodImages.pdfVegetablesBeans],
   appetizers: [
     foodImages.pdfAppetizers,
     foodImages.pdfAppetizersDumplings,
