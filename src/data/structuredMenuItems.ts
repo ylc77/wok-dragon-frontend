@@ -666,7 +666,7 @@ export const structuredMenuDishes: StructuredMenuDish[] = [
     categoryId: 'duck',
     nameEl: 'Πάπια Πεκίνου (6 πιτάκια, αγγούρι, κρεμμύδι, hoisin sauce)',
     nameEn: 'Peking duck (6 pancakes, cucumber, onions, hoisin sauce)',
-    nameZh: '北京鸭（6张薄饼、青瓜、洋葱、海鲜酱）',
+    nameZh: '北京烤鸭（6张薄饼、青瓜、洋葱、海鲜酱）',
     price: '17.90',
   },
   {
@@ -674,7 +674,7 @@ export const structuredMenuDishes: StructuredMenuDish[] = [
     categoryId: 'duck',
     nameEl: 'Πάπια Πεκίνου 1/2 (12 πιτάκια, αγγούρι, κρεμμύδι, hoisin sauce)',
     nameEn: 'Peking duck 1/2 (12 pancakes, cucumber, onions, hoisin sauce)',
-    nameZh: '北京鸭半只（12张薄饼、青瓜、洋葱、海鲜酱）',
+    nameZh: '北京烤鸭半只（12张薄饼、青瓜、洋葱、海鲜酱）',
     price: '34.90',
   },
   {
@@ -682,7 +682,7 @@ export const structuredMenuDishes: StructuredMenuDish[] = [
     categoryId: 'duck',
     nameEl: 'Πάπια Πεκίνου 1/1 (24 πιτάκια, αγγούρι, κρεμμύδι, hoisin sauce)',
     nameEn: 'Peking duck 1/1 (24 pancakes, cucumber, onions, hoisin sauce)',
-    nameZh: '北京鸭一只（24张薄饼、青瓜、洋葱、海鲜酱）',
+    nameZh: '北京烤鸭一只（24张薄饼、青瓜、洋葱、海鲜酱）',
     price: '65.00',
   },
   {
