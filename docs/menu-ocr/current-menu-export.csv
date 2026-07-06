@@ -1,6 +1,6 @@
 ﻿number,categoryId,nameEl,nameEn,nameZh,price,spicyLevel
 1,soups,Σούπα καυτερή και ξινή,Hot and sour soup,酸辣汤,4.90,2
-2,soups,Σούπα κοτόπουλο - καλαμπόκι,Chicken corn soup,鸡蓉玉米汤,4.90,
+2,soups,Σούπα κοτόπουλο - καλαμπόκι,Chicken corn soup,鸡肉玉米汤,4.90,
 3,soups,Σούπα με WonTon (χοιρινό & γαρίδα),WonTon soup (pork & shrimp),云吞汤（猪肉虾）,5.90,
 4,soups,Σούπα με dumplings γαρίδας,Shrimp dumpling soup,虾饺汤,6.90,
 5,soups,Σούπα με θαλασσινά,Seafood soup,海鲜汤,5.90,
@@ -46,7 +46,7 @@
 49,fried-noodles,Τηγανητά noodle με κοτόπουλο,Fried noodle with chicken,鸡肉炒面,10.90,
 50,fried-noodles,Τηγανητά noodle με χοιρινό,Fried noodle with pork,猪肉炒面,10.90,
 51,fried-noodles,Τηγανητά noodle με θαλασσινά,Fried noodle with seafood,海鲜炒面,12.90,
-52,fried-noodles,Τηγανητά noodle με γαρίδες,Fried noodle with shrimps,虾炒面,13.50,
+52,fried-noodles,Τηγανητά noodle με γαρίδες,Fried noodle with shrimps,虾仁炒面,13.50,
 53,fried-noodles,Τηγανητά noodle με καλαμάρι,Fried noodle with squid,鱿鱼炒面,12.90,
 54,fried-noodles,Τηγανητά noodle Σιγκαπούρη,Fried noodle Singapore,星洲炒面,12.50,
 60,fried-noodles,Τηγανητά noodle ρυζιού με αυγό,Fried rice noodle with egg,鸡蛋炒米粉,9.50,
@@ -56,7 +56,7 @@
 64,fried-noodles,Τηγανητά noodle ρυζιού με κοτόπουλο,Fried rice noodle with chicken,鸡肉炒米粉,11.50,
 65,fried-noodles,Τηγανητά noodle ρυζιού με χοιρινό,Fried rice noodle with pork,猪肉炒米粉,11.90,
 66,fried-noodles,Τηγανητά noodle ρυζιού με θαλασσινά,Fried rice noodle with seafood,海鲜炒米粉,13.50,
-67,fried-noodles,Τηγανητά noodle ρυζιού με γαρίδες,Fried rice noodle with shrimps,虾炒米粉,13.90,
+67,fried-noodles,Τηγανητά noodle ρυζιού με γαρίδες,Fried rice noodle with shrimps,虾仁炒米粉,13.90,
 68,fried-noodles,Τηγανητά noodle ρυζιού με καλαμάρι,Fried rice noodle with squid,鱿鱼炒米粉,13.50,
 69,fried-noodles,Τηγανητά noodle ρυζιού Σιγκαπούρη,Fried rice noodle Singapore,星洲炒米粉,12.90,
 75,fried-rice,Ρύζι ατμού,Steamed rice,白饭,3.00,
@@ -67,7 +67,7 @@
 80,fried-rice,Τηγανητό ρύζι με κοτόπουλο,Fried rice with chicken,鸡肉炒饭,10.90,
 81,fried-rice,Τηγανητό ρύζι με χοιρινό,Fried rice with pork,猪肉炒饭,10.90,
 82,fried-rice,Τηγανητό ρύζι με θαλασσινά,Fried rice with seafood,海鲜炒饭,12.90,
-83,fried-rice,Τηγανητό ρύζι με γαρίδες,Fried rice with shrimps,虾炒饭,13.50,
+83,fried-rice,Τηγανητό ρύζι με γαρίδες,Fried rice with shrimps,虾仁炒饭,13.50,
 84,fried-rice,Τηγανητό ρύζι Yeung Chau,Fried rice Yeung Chau,扬州炒饭,12.50,
 90,duck,Πάπια ψητή 1/2,Roasted duck 1/2,烧鸭半只,26.90,
 91,duck,Πάπια ψητή με ανανά,Duck with pineapple,菠萝鸭,16.50,
@@ -90,7 +90,7 @@
 112,beef,Μοσχάρι με σάλτσα στρειδιών,Beef with oyster sauce,蚝油牛肉,13.90,
 113,beef,Μοσχάρι με μπρόκολο,Beef with broccoli,西兰花牛肉,13.90,
 114,beef,Μοσχάρι με πιπερόριζα & κρεμμύδια,Beef with ginger & onions,姜葱牛肉,17.90,
-115,beef,Σούπα μοσχαριού με chilli,Sichuan beef chilli soup (big),四川水煮牛肉汤（大份）,29.90,3
+115,beef,Σούπα μοσχαριού με chilli,Sichuan beef chilli soup (big),四川水煮牛肉（大份）,29.90,3
 120,chicken,Κοτόπουλο με σάλτσα Kung Pao,Chicken with Kung Pao sauce,宫保鸡肉,11.90,1
 121,chicken,Κοτόπουλο με σάλτσα Thai,Chicken with Thai sauce,泰汁鸡肉,11.90,2
 122,chicken,Κοτόπουλο με σάλτσα μαύρων φασολιών,Chicken with black bean sauce,豆豉鸡肉,11.90,
@@ -120,13 +120,13 @@
 165,pork,Τηγανητά χοιρινά παϊδάκια,Fried pork spare ribs,炸猪排骨,13.50,
 166,pork,Χοιρινό Mei Cai Kou Rou,Pork Mei Cai Kou Rou,梅菜扣肉,18.90,
 167,pork,Χοιρινό με τσίλι,Pork with chilli,辣椒猪肉,12.90,3
-170,seafood,Γαρίδες με μπρόκολο,Shrimps with broccoli,西兰花虾,15.90,
+170,seafood,Γαρίδες με μπρόκολο,Shrimps with broccoli,西兰花虾仁,15.90,
 171,seafood,Ομελέτα με γαρίδες,Shrimps omelette,虾仁煎蛋,16.90,
-172,seafood,Γαρίδες με ανάμεικτα λαχανικά,Shrimps with mixed vegetables,杂菜虾,15.90,
-173,seafood,Γαρίδες με σάλτσα Thai,Shrimps with Thai sauce,泰汁虾,15.90,3
-174,seafood,Γαρίδες με σάλτσα κάρυ,Shrimps with curry sauce,咖喱虾,15.90,
+172,seafood,Γαρίδες με ανάμεικτα λαχανικά,Shrimps with mixed vegetables,杂菜虾仁,15.90,
+173,seafood,Γαρίδες με σάλτσα Thai,Shrimps with Thai sauce,泰汁虾仁,15.90,3
+174,seafood,Γαρίδες με σάλτσα κάρυ,Shrimps with curry sauce,咖喱虾仁,15.90,
 175,seafood,Γαρίδες γλυκόξινες,Sweet & sour King prawns,甜酸大虾,15.90,
-176,seafood,Γαρίδες με αλάτι & πιπέρι,Shrimps with salt & pepper,椒盐虾,18.90,1
+176,seafood,Γαρίδες με αλάτι & πιπέρι,Shrimps with salt & pepper,椒盐虾仁,18.90,1
 177,seafood,Γαρίδες στον ατμό με σκόρδο,Steamed King prawns with garlic,蒜蓉蒸大虾,18.90,
 178,seafood,Γαρίδες στον ατμό,Steamed King prawns,清蒸大虾,18.90,
 179,seafood,Καλαμάρι με σάλτσα κάρυ,Squid with curry sauce,咖喱鱿鱼,15.90,
@@ -136,7 +136,7 @@
 183,seafood,Λαβράκι τηγανητό,Fried Sea Bass,炸海鲈鱼,29.00,
 184,seafood,Λαβράκι στον ατμό,Steamed Sea Bass,清蒸海鲈鱼,29.00,
 185,seafood,Suan Cai Yu soup,Suan Cai Yu soup (big),酸菜鱼汤（大份）,35.00,
-186,seafood,Σούπα ψαριού με chilli,Sichuan fish chilli soup (big),四川水煮鱼汤（大份）,35.00,3
+186,seafood,Σούπα ψαριού με chilli,Sichuan fish chilli soup (big),四川水煮鱼（大份）,35.00,3
 187,seafood,Αστακός στον ατμό,Steamed Lobster,清蒸龙虾,100.00,
 188,seafood,Αστακός με πιπερόριζα & κρεμμύδια,Lobster with ginger & onions,姜葱龙虾,100.00,
 189,seafood,Καλαμάρι με αλάτι & πιπέρι,Squid with salt & pepper,椒盐鱿鱼,15.90,1

@@ -22,7 +22,7 @@ export const structuredSetMenus: StructuredSetMenu[] = [
     title: 'A',
     price: '18.90',
     items: [
-      { nameEl: 'Σούπα κοτόπουλο καλαμπόκι', nameEn: 'Chicken corn soup', nameZh: '鸡蓉玉米汤' },
+      { nameEl: 'Σούπα κοτόπουλο καλαμπόκι', nameEn: 'Chicken corn soup', nameZh: '鸡肉玉米汤' },
       { nameEl: 'Ανοιξιάτικα ρολά λαχανικών', nameEn: 'Spring rolls (vegetables)', nameZh: '蔬菜春卷' },
       { nameEl: 'Τηγανητό ρύζι με αυγό', nameEn: 'Egg fried rice', nameZh: '鸡蛋炒饭' },
       { nameEl: 'Γλυκόξινο κοτόπουλο', nameEn: 'Sweet & sour chicken', nameZh: '咕噜鸡' },
@@ -46,7 +46,7 @@ export const structuredSetMenus: StructuredSetMenu[] = [
     title: 'C',
     price: '19.90',
     items: [
-      { nameEl: 'Σούπα κοτόπουλο καλαμπόκι', nameEn: 'Chicken corn soup', nameZh: '鸡蓉玉米汤' },
+      { nameEl: 'Σούπα κοτόπουλο καλαμπόκι', nameEn: 'Chicken corn soup', nameZh: '鸡肉玉米汤' },
       { nameEl: 'Ανοιξιάτικα ρολά λαχανικών', nameEn: 'Spring rolls (vegetables)', nameZh: '蔬菜春卷' },
       { nameEl: 'Τηγανητό ρύζι με αυγό', nameEn: 'Egg fried rice', nameZh: '鸡蛋炒饭' },
       { nameEl: 'Μοσχάρι με σάλτσα κάρυ', nameEn: 'Beef with curry sauce', nameZh: '咖喱牛肉' },
@@ -58,7 +58,7 @@ export const structuredSetMenus: StructuredSetMenu[] = [
     title: 'D',
     price: '20.90',
     items: [
-      { nameEl: 'Σούπα κοτόπουλο καλαμπόκι', nameEn: 'Chicken corn soup', nameZh: '鸡蓉玉米汤' },
+      { nameEl: 'Σούπα κοτόπουλο καλαμπόκι', nameEn: 'Chicken corn soup', nameZh: '鸡肉玉米汤' },
       { nameEl: 'Ανοιξιάτικα ρολά λαχανικών', nameEn: 'Spring rolls (vegetables)', nameZh: '蔬菜春卷' },
       { nameEl: 'Τηγανητό ρύζι με αυγό', nameEn: 'Egg fried rice', nameZh: '鸡蛋炒饭' },
       { nameEl: 'Πάπια ψητή', nameEn: 'Roasted duck', nameZh: '烧鸭' },
@@ -84,7 +84,7 @@ export const structuredSetMenus: StructuredSetMenu[] = [
     title: '2',
     price: '36.90',
     items: [
-      { nameEl: 'Σούπα κοτόπουλο καλαμπόκι x2', nameEn: 'Chicken corn soup x2', nameZh: '鸡蓉玉米汤 x2' },
+      { nameEl: 'Σούπα κοτόπουλο καλαμπόκι x2', nameEn: 'Chicken corn soup x2', nameZh: '鸡肉玉米汤 x2' },
       { nameEl: 'Ανοιξιάτικα ρολά λαχανικών', nameEn: 'Spring rolls (vegetables)', nameZh: '蔬菜春卷' },
       { nameEl: 'Τηγανητά WonTon', nameEn: 'Fried WonTon', nameZh: '炸云吞' },
       { nameEl: 'Τηγανητά noodles με αυγό', nameEn: 'Fried noodles with egg', nameZh: '鸡蛋炒面' },
@@ -99,7 +99,7 @@ export const structuredSetMenus: StructuredSetMenu[] = [
     people: '4 person',
     price: '81.50',
     items: [
-      { nameEl: 'Σούπα κοτόπουλο καλαμπόκι x4', nameEn: 'Chicken corn soup x4', nameZh: '鸡蓉玉米汤 x4' },
+      { nameEl: 'Σούπα κοτόπουλο καλαμπόκι x4', nameEn: 'Chicken corn soup x4', nameZh: '鸡肉玉米汤 x4' },
       { nameEl: 'Ανοιξιάτικα ρολά λαχανικών', nameEn: 'Spring rolls (vegetables)', nameZh: '蔬菜春卷' },
       { nameEl: 'Τηγανητά WonTon', nameEn: 'Fried WonTon', nameZh: '炸云吞' },
       { nameEl: 'Τηγανητές φτερούγες κοτόπουλου', nameEn: 'Fried chicken wings', nameZh: '炸鸡翅' },
