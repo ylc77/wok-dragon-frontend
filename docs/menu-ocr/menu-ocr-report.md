@@ -1,16 +1,16 @@
-# Wok Dragon Menu OCR Audit
+# Wok Dragon 菜单 OCR 核对报告
 
-Generated with Pillow preprocessing and Tesseract OCR using `ell+eng --psm 6`. The script tries 0/90/180/270 degree rotations and keeps the highest-scoring result.
+本报告由 Pillow 预处理图片，并通过 Tesseract OCR 使用 `ell+eng --psm 6` 识别生成。脚本会分别尝试 0/90/180/270 度旋转，并保留评分最高的识别结果。
 
-## Output Files
+## 输出文件
 
-- `docs/menu-ocr/raw-text/ocr-page-XX.txt`: raw OCR text for each menu photo
-- `docs/menu-ocr/preprocessed/page-XX-rot-*.png`: local preprocessed rotation candidates, ignored by git
-- `docs/menu-ocr/current-menu-export.csv`: current website menu export
+- `docs/menu-ocr/raw-text/ocr-page-XX.txt`：每张菜单照片的 OCR 原始文本
+- `docs/menu-ocr/preprocessed/page-XX-rot-*.png`：本地预处理后的旋转候选图片，已被 git 忽略
+- `docs/menu-ocr/current-menu-export.csv`：当前网页菜单数据导出
 
-## OCR Page Results
+## OCR 页面识别结果
 
-| Page | Best rotation | Price token count | Word count | OCR price preview |
+| 页码 | 最佳旋转角度 | 识别价格数量 | 词数 | OCR 价格预览 |
 | ---: | ---: | ---: | ---: | --- |
 | 01 | 0 | 1 | 195 | 18.90 |
 | 02 | 0 | 1 | 371 | 36.90 |
@@ -29,24 +29,24 @@ Generated with Pillow preprocessing and Tesseract OCR using `ell+eng --psm 6`. T
 | 15 | 270 | 7 | 344 | 10.00, 5.50, 6.00, 6.00, 5.00, 6.50, 3.00 |
 | 16 | 270 | 35 | 348 | 2.50, 2.50, 2.50, 2.50, 2.50, 2.50, 3.50, 3.50, 1.00, 2.50, 5.50, 4.00, 4.00, 4.00, 3.50, 3.50, 3.50, 6.50, 4.50, 9.90, 4.50, 6.00, 9.90, 25.00, ... |
 
-## Rough Price Set Check
+## 价格集合粗略核对
 
-- Current website menu rows: 217
-- Current website distinct prices: 50
-- OCR distinct price tokens: 62
+- 当前网页菜单条目数：217
+- 当前网页菜单不同价格数量：50
+- OCR 识别出的不同价格数量：62
 
-OCR can misread prices such as `8.90` as `8.99` or `6.90` as `6.99`, so this section is only a rough filter and not a final menu conclusion.
+OCR 可能会把 `8.90` 误识别成 `8.99`，或把 `6.90` 误识别成 `6.99`。因此这里仅作为粗略筛选，不能直接当作最终菜单结论。
 
-### Website prices not found by OCR
+### 网页菜单中存在，但 OCR 未识别到的价格
 
 29.90, 34.90, 100.00
 
-### OCR prices not present on website
+### OCR 识别到，但网页菜单中不存在的价格
 
 5.96, 6.98, 8.96, 9.96, 11.98, 11.99, 12.99, 14.96, 14.98, 15.98, 17.98, 18.98, 19.90, 36.90, 712.99
 
-## Suggested Next Step
+## 建议下一步
 
-1. Inspect noisy OCR pages in `raw-text`, especially where prices were read as `x.99`.
-2. Use the OCR text as a candidate source only; final dish names and prices still need human confirmation.
-3. Keep this workflow for future menu-photo audits instead of manually retyping every photo from scratch.
+1. 先人工查看 `raw-text` 中识别噪声较多的页面，尤其是价格被识别成 `x.99` 的位置。
+2. OCR 文本只作为候选来源；最终菜名和价格仍建议人工确认。
+3. 后续如果菜单照片更新，可以继续使用这个流程辅助核对，减少完全手动录入的工作量。
