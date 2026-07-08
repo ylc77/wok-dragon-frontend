@@ -13,6 +13,7 @@ type LegalSection = {
   title: string;
   body?: string;
   items?: string[];
+  links?: Array<{ href: string; label: string }>;
 };
 
 type LegalCopy = {
@@ -20,6 +21,7 @@ type LegalCopy = {
   address: string;
   aiProviders: string;
   allergenTitle: string;
+  automatedDecisionTitle: string;
   analyticsCookiesBody: string;
   analyticsCookiesTitle: string;
   analyticsProviders: string;
@@ -34,12 +36,15 @@ type LegalCopy = {
   currentChoice: string;
   customerConfirmationBody: string;
   customerConfirmationTitle: string;
+  complaintTitle: string;
   dataControllerTitle: string;
   dataRetentionTitle: string;
+  dpo: string;
   email: string;
   gemi: string;
   infoUseBody: string;
   infoUseTitle: string;
+  internationalTransfersTitle: string;
   lateArrivalBody: string;
   lateArrivalTitle: string;
   lastUpdated: string;
@@ -61,6 +66,8 @@ type LegalCopy = {
   onlineRefundsTitle: string;
   paymentProviders: string;
   phone: string;
+  privacyContact: string;
+  processingLegalBasisTitle: string;
   privacyRequestInstructionsTitle: string;
   privacyRequests: string;
   receiptTitle: string;
@@ -70,11 +77,13 @@ type LegalCopy = {
   reservationNotificationProviders: string;
   reservationsTitle: string;
   restaurantContactTitle: string;
+  rightsTitle: string;
   retentionTitle: string;
   serviceProviders: string;
   temporaryChangesBody: string;
   temporaryChangesTitle: string;
   vat: string;
+  website: string;
   websitePurposeBody: string;
   websitePurposeTitle: string;
   pageTitles: Record<LegalPageKey, string>;
@@ -82,6 +91,14 @@ type LegalCopy = {
 
 const copy: Record<'el' | 'en' | 'zh', LegalCopy> = {
   el: {
+    automatedDecisionTitle: '\u0391\u03c5\u03c4\u03bf\u03bc\u03b1\u03c4\u03bf\u03c0\u03bf\u03b9\u03b7\u03bc\u03ad\u03bd\u03b7 \u03bb\u03ae\u03c8\u03b7 \u03b1\u03c0\u03bf\u03c6\u03ac\u03c3\u03b5\u03c9\u03bd',
+    complaintTitle: '\u039a\u03b1\u03c4\u03b1\u03b3\u03b3\u03b5\u03bb\u03af\u03b1 \u03c3\u03c4\u03b7\u03bd \u03b5\u03c0\u03bf\u03c0\u03c4\u03b9\u03ba\u03ae \u03b1\u03c1\u03c7\u03ae',
+    dpo: '\u03a5\u03c0\u03b5\u03cd\u03b8\u03c5\u03bd\u03bf\u03c2 \u03a0\u03c1\u03bf\u03c3\u03c4\u03b1\u03c3\u03af\u03b1\u03c2 \u0394\u03b5\u03b4\u03bf\u03bc\u03ad\u03bd\u03c9\u03bd',
+    internationalTransfersTitle: '\u0394\u03b9\u03b1\u03b2\u03b9\u03b2\u03ac\u03c3\u03b5\u03b9\u03c2 \u03b5\u03ba\u03c4\u03cc\u03c2 \u0395\u039f\u03a7',
+    processingLegalBasisTitle: '\u039d\u03bf\u03bc\u03b9\u03ba\u03ae \u03b2\u03ac\u03c3\u03b7 \u03b5\u03c0\u03b5\u03be\u03b5\u03c1\u03b3\u03b1\u03c3\u03af\u03b1\u03c2',
+    privacyContact: '\u0395\u03c0\u03b1\u03c6\u03ae \u03b3\u03b9\u03b1 \u03b8\u03ad\u03bc\u03b1\u03c4\u03b1 \u03b1\u03c0\u03bf\u03c1\u03c1\u03ae\u03c4\u03bf\u03c5',
+    rightsTitle: '\u03a4\u03b1 \u03b4\u03b9\u03ba\u03b1\u03b9\u03ce\u03bc\u03b1\u03c4\u03ac \u03c3\u03b1\u03c2',
+    website: '\u0399\u03c3\u03c4\u03cc\u03c4\u03bf\u03c0\u03bf\u03c2',
     acceptAll: 'Αποδοχή όλων',
     address: 'Διεύθυνση',
     aiProviders: 'Πάροχοι AI',
@@ -163,6 +180,14 @@ const copy: Record<'el' | 'en' | 'zh', LegalCopy> = {
     },
   },
   en: {
+    automatedDecisionTitle: 'Automated decision-making',
+    complaintTitle: 'Complaint to the supervisory authority',
+    dpo: 'Data Protection Officer',
+    internationalTransfersTitle: 'Transfers outside the EEA',
+    processingLegalBasisTitle: 'Legal basis for processing',
+    privacyContact: 'Privacy contact',
+    rightsTitle: 'Your data-protection rights',
+    website: 'Website',
     acceptAll: 'Accept all',
     address: 'Address',
     aiProviders: 'AI providers',
@@ -242,6 +267,14 @@ const copy: Record<'el' | 'en' | 'zh', LegalCopy> = {
     },
   },
   zh: {
+    automatedDecisionTitle: '自动化决策',
+    complaintTitle: '向监管机构投诉',
+    dpo: '数据保护官',
+    internationalTransfersTitle: '欧洲经济区以外的数据传输',
+    processingLegalBasisTitle: '数据处理的法律依据',
+    privacyContact: '隐私联系人',
+    rightsTitle: '你的数据保护权利',
+    website: '网站',
     acceptAll: '全部接受',
     address: '地址',
     aiProviders: 'AI 服务商',
@@ -316,17 +349,27 @@ function providerLines(providers: LegalServiceProvider[]) {
   return providers.map((provider) => `${provider.name}: ${provider.purpose}`);
 }
 
+function configuredLine(label: string, value: string) {
+  const cleanValue = value.trim();
+  return cleanValue ? `${label}: ${cleanValue}` : null;
+}
+
+function configuredLines(lines: Array<string | null>) {
+  return lines.filter((line): line is string => Boolean(line));
+}
+
 function configuredBusinessDetails(text: LegalCopy) {
-  return [
-    `${legalConfig.businessName}`,
-    `${text.legalName}: ${legalConfig.legalName}`,
-    `${text.address}: ${legalConfig.businessAddress}`,
-    `${text.vat}: ${legalConfig.vatNumber}`,
-    `${text.gemi}: ${legalConfig.gemiNumber}`,
-    `${text.email}: ${legalConfig.contactEmail}`,
-    `${text.phone}: ${legalConfig.phone}`,
-    `${text.country}: ${legalConfig.country}`,
-  ];
+  return configuredLines([
+    legalConfig.businessName,
+    configuredLine(text.legalName, legalConfig.legalName),
+    configuredLine(text.address, legalConfig.businessAddress),
+    configuredLine(text.vat, legalConfig.vatNumber),
+    configuredLine(text.gemi, legalConfig.gemiNumber),
+    configuredLine(text.website, legalConfig.websiteUrl),
+    configuredLine(text.email, legalConfig.contactEmail),
+    configuredLine(text.phone, legalConfig.phone),
+    configuredLine(text.country, legalConfig.country),
+  ]);
 }
 
 function configuredProviderSections(text: LegalCopy): LegalSection[] {
@@ -369,11 +412,14 @@ function privacySections(text: LegalCopy): LegalSection[] {
   return [
     {
       title: text.dataControllerTitle,
-      items: [
-        `${text.name}: ${legalConfig.dataControllerName}`,
-        `${text.address}: ${legalConfig.dataControllerAddress}`,
-        `${text.privacyRequests}: ${legalConfig.privacyRequestEmail}`,
-      ],
+      items: configuredLines([
+        configuredLine(text.name, legalConfig.dataControllerName),
+        configuredLine(text.address, legalConfig.dataControllerAddress),
+        configuredLine(text.privacyContact, legalConfig.privacyContactName),
+        configuredLine(text.privacyRequests, legalConfig.privacyRequestEmail),
+        configuredLine(text.dpo, legalConfig.dpoContact),
+        configuredLine(text.phone, legalConfig.phone),
+      ]),
     },
     {
       title: text.businessDetails,
@@ -387,7 +433,29 @@ function privacySections(text: LegalCopy): LegalSection[] {
       title: text.infoUseTitle,
       body: text.infoUseBody,
     },
+    {
+      title: text.processingLegalBasisTitle,
+      body: legalConfig.processingLegalBasis,
+    },
     ...configuredProviderSections(text),
+    {
+      title: text.internationalTransfersTitle,
+      body: legalConfig.internationalTransfers,
+    },
+    {
+      title: text.automatedDecisionTitle,
+      body: legalConfig.automatedDecisionMaking,
+    },
+    {
+      title: text.rightsTitle,
+      body: legalConfig.dataSubjectRights,
+    },
+    {
+      title: text.complaintTitle,
+      links: legalConfig.complaintAuthorityUrl
+        ? [{ href: legalConfig.complaintAuthorityUrl, label: legalConfig.complaintAuthorityName }]
+        : [],
+    },
     {
       title: text.privacyRequestInstructionsTitle,
       body: legalConfig.privacyRequestInstructions,
@@ -424,6 +492,7 @@ function termsSections(text: LegalCopy): LegalSection[] {
     {
       title: text.allergenTitle,
       body: legalConfig.allergenDisclaimer,
+      items: legalConfig.allergenInformationMethod ? [legalConfig.allergenInformationMethod] : [],
     },
     {
       title: text.receiptTitle,
@@ -499,11 +568,11 @@ function cancellationSections(text: LegalCopy): LegalSection[] {
     },
     {
       title: text.restaurantContactTitle,
-      items: [
-        `${text.phone}: ${legalConfig.phone}`,
-        `${text.email}: ${legalConfig.contactEmail}`,
-        `${text.address}: ${legalConfig.businessAddress}`,
-      ],
+      items: configuredLines([
+        configuredLine(text.phone, legalConfig.phone),
+        configuredLine(text.email, legalConfig.contactEmail),
+        configuredLine(text.address, legalConfig.businessAddress),
+      ]),
     },
   ];
 }
@@ -541,6 +610,17 @@ export function LegalPage({ page }: LegalPageProps) {
                   <ul>
                     {section.items.map((item) => (
                       <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                )}
+                {section.links && section.links.length > 0 && (
+                  <ul>
+                    {section.links.map((link) => (
+                      <li key={link.href}>
+                        <a href={link.href} target="_blank" rel="noreferrer">
+                          {link.label}
+                        </a>
+                      </li>
                     ))}
                   </ul>
                 )}
