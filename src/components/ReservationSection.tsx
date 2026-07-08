@@ -370,10 +370,6 @@ export function ReservationSection() {
               {text.date} <b>*</b>
             </span>
             <div className="native-field-shell reservation-select-shell has-value">
-              <span className="reservation-date-display" aria-hidden="true">
-                <strong>{formatDisplayDate(form.date)}</strong>
-                <small>{formatWeekday(form.date, language)}</small>
-              </span>
               <select
                 aria-label={text.date}
                 className="reservation-card-select reservation-date-select"
@@ -387,6 +383,9 @@ export function ReservationSection() {
                   </option>
                 ))}
               </select>
+              <span className="reservation-date-weekday" aria-hidden="true">
+                {formatWeekday(form.date, language)}
+              </span>
               <CalendarDays size={18} />
             </div>
             <small>{text.dateHelper}</small>
