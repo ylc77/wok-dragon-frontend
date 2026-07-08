@@ -11,35 +11,61 @@ const OPENING_END_MINUTES = 23 * 60 + 30;
 const TIME_STEP_MINUTES = 30;
 const RESERVATION_DAYS = 7;
 const CLOSED_WEEKDAY = 3;
+const ATHENS_TIME_ZONE = 'Europe/Athens';
+
+type AthensDate = {
+  year: number;
+  month: number;
+  day: number;
+};
+
+type DateOption = {
+  label: string;
+  value: string;
+};
 
 function pad(value: number) {
   return String(value).padStart(2, '0');
 }
 
-function toDateValue(date: Date) {
-  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+function getAthensNow(date = new Date()) {
+  const parts = new Intl.DateTimeFormat('en-GB', {
+    timeZone: ATHENS_TIME_ZONE,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hourCycle: 'h23',
+  }).formatToParts(date);
+  const values = Object.fromEntries(parts.map((part) => [part.type, part.value]));
+
+  return {
+    year: Number(values.year),
+    month: Number(values.month),
+    day: Number(values.day),
+    hour: Number(values.hour),
+    minute: Number(values.minute),
+    second: Number(values.second),
+  };
 }
 
-function addDays(date: Date, days: number) {
-  const next = new Date(date);
-  next.setDate(next.getDate() + days);
-  return next;
+function toDateValue(date: AthensDate) {
+  return `${date.year}-${pad(date.month)}-${pad(date.day)}`;
 }
 
-function isClosedDate(date: Date) {
-  return date.getDay() === CLOSED_WEEKDAY;
+function addDays(date: AthensDate, days: number): AthensDate {
+  const next = new Date(Date.UTC(date.year, date.month - 1, date.day + days));
+  return {
+    year: next.getUTCFullYear(),
+    month: next.getUTCMonth() + 1,
+    day: next.getUTCDate(),
+  };
 }
 
-function getDefaultReservationDate() {
-  const today = new Date();
-  for (let offset = 0; offset < RESERVATION_DAYS; offset += 1) {
-    const candidate = addDays(today, offset);
-    if (!isClosedDate(candidate)) {
-      return toDateValue(candidate);
-    }
-  }
-
-  return toDateValue(today);
+function isClosedDate(date: AthensDate) {
+  return new Date(Date.UTC(date.year, date.month - 1, date.day)).getUTCDay() === CLOSED_WEEKDAY;
 }
 
 function formatTimeFromMinutes(totalMinutes: number) {
@@ -50,37 +76,26 @@ function roundUpToStep(totalMinutes: number) {
   return Math.ceil(totalMinutes / TIME_STEP_MINUTES) * TIME_STEP_MINUTES;
 }
 
-function getDefaultTime() {
-  const now = new Date();
-  const roundedNow = roundUpToStep(now.getHours() * 60 + now.getMinutes());
-  const clamped = Math.min(Math.max(roundedNow, OPENING_START_MINUTES), OPENING_END_MINUTES);
-  return formatTimeFromMinutes(clamped);
-}
-
-function createInitialForm(): ReservationForm {
-  return {
-    name: '',
-    phone: '',
-    date: getDefaultReservationDate(),
-    time: getDefaultTime(),
-    guests: '2',
-    notes: '',
-  };
-}
-
-function createTimeOptions() {
+function createTimeOptions(dateValue: string, athensNow = getAthensNow()) {
+  const todayValue = toDateValue(athensNow);
+  const currentMinutes = athensNow.hour * 60 + athensNow.minute + (athensNow.second > 0 ? 1 : 0);
+  const earliestMinutes =
+    dateValue === todayValue
+      ? Math.max(OPENING_START_MINUTES, roundUpToStep(currentMinutes))
+      : OPENING_START_MINUTES;
   const options: string[] = [];
-  for (let minutes = OPENING_START_MINUTES; minutes <= OPENING_END_MINUTES; minutes += TIME_STEP_MINUTES) {
+  for (let minutes = earliestMinutes; minutes <= OPENING_END_MINUTES; minutes += TIME_STEP_MINUTES) {
     options.push(formatTimeFromMinutes(minutes));
   }
   return options;
 }
 
-function createDateOptions() {
-  const today = new Date();
+function createDateOptions(athensNow = getAthensNow()): DateOption[] {
+  const today = { year: athensNow.year, month: athensNow.month, day: athensNow.day };
 
   return Array.from({ length: RESERVATION_DAYS }, (_, index) => addDays(today, index))
     .filter((date) => !isClosedDate(date))
+    .filter((date) => createTimeOptions(toDateValue(date), athensNow).length > 0)
     .map((date) => {
       const value = toDateValue(date);
 
@@ -91,11 +106,36 @@ function createDateOptions() {
     });
 }
 
+function createInitialForm(athensNow = getAthensNow()): ReservationForm {
+  const date = createDateOptions(athensNow)[0]?.value ?? toDateValue(athensNow);
+  const time = createTimeOptions(date, athensNow)[0] ?? formatTimeFromMinutes(OPENING_START_MINUTES);
+
+  return {
+    name: '',
+    phone: '',
+    date,
+    time,
+    guests: '2',
+    notes: '',
+  };
+}
+
 function formatDisplayDate(value: string) {
   if (!value) return '';
 
   const [year, month, day] = value.split('-');
   return year && month && day ? `${day}/${month}/${year}` : value;
+}
+
+function formatWeekday(value: string, language: 'el' | 'en' | 'zh') {
+  const [year, month, day] = value.split('-').map(Number);
+  if (!year || !month || !day) return '';
+
+  const locale = language === 'el' ? 'el-GR' : language === 'zh' ? 'zh-CN' : 'en-GB';
+  return new Intl.DateTimeFormat(locale, {
+    weekday: 'long',
+    timeZone: 'UTC',
+  }).format(new Date(Date.UTC(year, month - 1, day)));
 }
 
 export function ReservationSection() {
@@ -104,9 +144,10 @@ export function ReservationSection() {
   const isChinese = language === 'zh';
   const phone = contactInfo.phone ?? '+30 210 323 8424';
   const openingHours = contactInfo.openingHours?.length ? contactInfo.openingHours : ['Daily: 12:00 - 23:30'];
-  const dateOptions = useMemo(() => createDateOptions(), []);
-  const timeOptions = useMemo(() => createTimeOptions(), []);
-  const [form, setForm] = useState<ReservationForm>(createInitialForm);
+  const athensNow = useMemo(() => getAthensNow(), []);
+  const dateOptions = useMemo(() => createDateOptions(athensNow), [athensNow]);
+  const [form, setForm] = useState<ReservationForm>(() => createInitialForm(athensNow));
+  const timeOptions = useMemo(() => createTimeOptions(form.date, athensNow), [athensNow, form.date]);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
   const [isSending, setIsSending] = useState(false);
@@ -209,15 +250,25 @@ export function ReservationSection() {
   }
 
   function updateField(field: keyof ReservationForm, value: string) {
-    setForm((current) => ({ ...current, [field]: value }));
+    setForm((current) => {
+      if (field !== 'date') return { ...current, [field]: value };
+
+      const validTimes = createTimeOptions(value, athensNow);
+      return {
+        ...current,
+        date: value,
+        time: validTimes.includes(current.time) ? current.time : (validTimes[0] ?? ''),
+      };
+    });
     setSubmitted(false);
     setError('');
   }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const isValidDate = dateOptions.some((option) => option.value === form.date);
-    const isValidTime = timeOptions.includes(form.time);
+    const latestAthensNow = getAthensNow();
+    const isValidDate = createDateOptions(latestAthensNow).some((option) => option.value === form.date);
+    const isValidTime = createTimeOptions(form.date, latestAthensNow).includes(form.time);
 
     if (!form.name.trim() || !form.phone.trim() || !isValidDate || !isValidTime || !form.guests) {
       setError(text.requiredError);
@@ -247,7 +298,7 @@ export function ReservationSection() {
       }
 
       setSubmitted(true);
-      setForm(createInitialForm());
+      setForm(createInitialForm(getAthensNow()));
     } catch {
       setError(text.sendError);
     } finally {
@@ -319,9 +370,13 @@ export function ReservationSection() {
               {text.date} <b>*</b>
             </span>
             <div className="native-field-shell reservation-select-shell has-value">
+              <span className="reservation-date-display" aria-hidden="true">
+                <strong>{formatDisplayDate(form.date)}</strong>
+                <small>{formatWeekday(form.date, language)}</small>
+              </span>
               <select
                 aria-label={text.date}
-                className="reservation-card-select"
+                className="reservation-card-select reservation-date-select"
                 required
                 value={form.date}
                 onChange={(event) => updateField('date', event.target.value)}

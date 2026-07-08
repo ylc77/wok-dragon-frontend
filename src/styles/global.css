@@ -3757,8 +3757,46 @@ textarea {
 }
 
 .reservation-form .reservation-select-shell {
+  position: relative;
   min-height: 56px;
   height: 56px;
+}
+
+.reservation-date-display {
+  position: absolute;
+  inset: 0 46px 0 15px;
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.reservation-date-display strong,
+.reservation-date-display small {
+  display: block;
+  overflow: hidden;
+  min-width: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.reservation-date-display strong {
+  color: #202124;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 0.94rem;
+  font-weight: 850;
+  line-height: 1.1;
+}
+
+.reservation-date-display small {
+  min-height: 0;
+  margin-top: 3px;
+  color: #6f7378;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.05;
 }
 
 .reservation-form .reservation-card-select {
@@ -3781,6 +3819,16 @@ textarea {
 
 .reservation-form .reservation-card-select:focus {
   box-shadow: none;
+}
+
+.reservation-form .reservation-date-select {
+  position: relative;
+  z-index: 2;
+  color: transparent;
+}
+
+.reservation-form .reservation-date-select option {
+  color: #202124;
 }
 
 .reservation-form .guest-field select {
@@ -3945,6 +3993,14 @@ textarea {
   .reservation-form .booking-primary-field {
     padding: 12px;
     border-radius: 16px;
+  }
+
+  .reservation-date-display strong {
+    font-size: 0.9rem;
+  }
+
+  .reservation-date-display small {
+    font-size: 0.69rem;
   }
 }
 
