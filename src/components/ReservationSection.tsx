@@ -20,7 +20,6 @@ type AthensDate = {
 };
 
 type DateOption = {
-  label: string;
   value: string;
 };
 
@@ -100,7 +99,6 @@ function createDateOptions(athensNow = getAthensNow()): DateOption[] {
       const value = toDateValue(date);
 
       return {
-        label: formatDisplayDate(value),
         value,
       };
     });
@@ -133,9 +131,13 @@ function formatWeekday(value: string, language: 'el' | 'en' | 'zh') {
 
   const locale = language === 'el' ? 'el-GR' : language === 'zh' ? 'zh-CN' : 'en-GB';
   return new Intl.DateTimeFormat(locale, {
-    weekday: 'long',
+    weekday: 'short',
     timeZone: 'UTC',
   }).format(new Date(Date.UTC(year, month - 1, day)));
+}
+
+function formatDateWithWeekday(value: string, language: 'el' | 'en' | 'zh') {
+  return `${formatDisplayDate(value)} · ${formatWeekday(value, language)}`;
 }
 
 export function ReservationSection() {
@@ -379,13 +381,10 @@ export function ReservationSection() {
               >
                 {dateOptions.map((option) => (
                   <option key={option.value} value={option.value}>
-                    {option.label}
+                    {formatDateWithWeekday(option.value, language)}
                   </option>
                 ))}
               </select>
-              <span className="reservation-date-weekday" aria-hidden="true">
-                {formatWeekday(form.date, language)}
-              </span>
               <CalendarDays size={18} />
             </div>
             <small>{text.dateHelper}</small>
@@ -404,7 +403,7 @@ export function ReservationSection() {
               >
                 {timeOptions.map((time) => (
                   <option key={time} value={time}>
-                    {time}
+                    {time} · {formatWeekday(form.date, language)}
                   </option>
                 ))}
               </select>
