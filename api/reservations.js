@@ -29,18 +29,52 @@ function validateReservation(data) {
   return '';
 }
 
+function formatDateWithWeekday(rawDate) {
+  const fallback = '未填写';
+  const text = String(rawDate ?? '').trim();
+  if (!text) {
+    return fallback;
+  }
+
+  const dateMatch = /^(\d{4})-(\d{2})-(\d{2})$/.exec(text);
+  if (!dateMatch) {
+    return fallback;
+  }
+
+  const [, year, month, day] = dateMatch;
+  const parsed = new Date(Number(year), Number(month) - 1, Number(day));
+  if (Number.isNaN(parsed.getTime())) {
+    return fallback;
+  }
+
+  const weekDays = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+  return `${text} ${weekDays[parsed.getDay()]}`;
+}
+
+function formatTextWithFallback(value, fallback) {
+  const text = String(value ?? '').trim();
+  return text || fallback;
+}
+
 function formatTelegramMessage(data) {
+  const dateText = formatDateWithWeekday(data?.date);
+  const name = formatTextWithFallback(data?.name, '未填写');
+  const phone = formatTextWithFallback(data?.phone, '未填写');
+  const time = formatTextWithFallback(data?.time, '未填写');
+  const guests = formatTextWithFallback(data?.guests, '未填写');
+  const notes = formatTextWithFallback(data?.notes, '无');
+
   return [
-    'New Wok Dragon reservation request',
+    '🍽️ 新预约通知',
     '',
-    `Name: ${data.name}`,
-    `Phone: ${data.phone}`,
-    `Date: ${data.date}`,
-    `Time: ${data.time}`,
-    `Guests: ${data.guests}`,
-    `Notes: ${data.notes || '-'}`,
+    `👤 姓名：${name}`,
+    `📞 电话：${phone}`,
+    `📅 日期：${dateText}`,
+    `🕒 时间：${time}`,
+    `👥 人数：${guests}`,
+    `📝 备注：${notes}`,
     '',
-    'Please contact the guest directly to confirm.',
+    '请直接与顾客联系确认预约。',
   ].join('\n');
 }
 

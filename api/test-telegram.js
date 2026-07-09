@@ -56,7 +56,7 @@ export default async function handler(request, response) {
     return;
   }
 
-  let message = '🧪 Telegram test message from Wok Dragon website.';
+  let message = '✅ Telegram 测试消息发送成功，这是来自 Wok Dragon 预约系统的测试通知。';
   if (request.method === 'POST') {
     const customMessage = await readMessageFromBody(request);
     if (customMessage) {
@@ -72,7 +72,10 @@ export default async function handler(request, response) {
 
   try {
     await sendTelegramMessage(message, token, chatId);
-    response.status(200).json({ ok: true, message: 'Telegram test message sent' });
+    response.status(200).json({
+      ok: true,
+      message: '✅ Telegram 测试消息发送成功，这是来自 Wok Dragon 预约系统的测试通知。',
+    });
   } catch (error) {
     response.status(500).json({
       ok: false,
