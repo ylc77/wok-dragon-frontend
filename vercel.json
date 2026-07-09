@@ -1,5 +1,14 @@
 {
+  "version": 2,
   "rewrites": [
+    {
+      "source": "/api/test-telegram",
+      "destination": "/api/test-telegram.js"
+    },
+    {
+      "source": "/api/reservations",
+      "destination": "/api/reservations.js"
+    },
     {
       "source": "/(.*)",
       "destination": "/index.html"
