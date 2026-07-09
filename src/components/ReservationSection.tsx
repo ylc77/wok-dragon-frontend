@@ -196,7 +196,9 @@ export function ReservationSection() {
       ? '\u03a3\u03c5\u03bc\u03c0\u03bb\u03b7\u03c1\u03ce\u03c3\u03c4\u03b5 \u03c4\u03b1 \u03c5\u03c0\u03bf\u03c7\u03c1\u03b5\u03c9\u03c4\u03b9\u03ba\u03ac \u03c0\u03b5\u03b4\u03af\u03b1 \u03c0\u03c1\u03b9\u03bd \u03c3\u03c4\u03b5\u03af\u03bb\u03b5\u03c4\u03b5 \u03c4\u03bf \u03b1\u03af\u03c4\u03b7\u03bc\u03b1.'
       : 'Please complete the required fields before sending your request.',
     sendError: isGreek
-      ? '\u0394\u03b5\u03bd \u03ae\u03c4\u03b1\u03bd \u03b4\u03c5\u03bd\u03b1\u03c4\u03ae \u03b7 \u03b1\u03c0\u03bf\u03c3\u03c4\u03bf\u03bb\u03ae. \u039a\u03b1\u03bb\u03ad\u03c3\u03c4\u03b5 \u03c4\u03bf \u03b5\u03c3\u03c4\u03b9\u03b1\u03c4\u03cc\u03c1\u03b9\u03bf \u03b3\u03b9\u03b1 \u03ba\u03c1\u03ac\u03c4\u03b7\u03c3\u03b7.'
+      ? '\u0394\u03b5\u03bd \u03ae\u03c4\u03b1\u03bd \u03c3\u03c4\u03b1\u03bb\u03b8\u03bf\u03cd\u03bd \u03b7 \u03b1\u03c0\u03bf\u03c3\u03c4\u03bf\u03bb\u03ae. \u03a0\u03b1\u03c1\u03ac\u03ba\u03b1\u03bb\u03c9 \u03b5\u03c0\u03b9\u03ba\u03bf\u03af\u03bd\u03bf\u03c5 \u03c4\u03bf \u03b5\u03c3\u03c4\u03b9\u03b1\u03c4\u03cc\u03c1\u03b9\u03bf \u03c3\u03b1\u03c2 \u03b5\u03c0\u03af\u03ba\u03bf\u03b9\u03bd\u03c9\u03bd\u03b7\u03c8\u03b5.'
+      : isChinese
+      ? '\u9884\u7ea6\u8bf7\u6c42\u53d1\u9001\u5931\u8d25\uff0c\u8bf7\u7a0d\u540e\u518d\u8bd5\u3002'
       : 'Reservation request could not be sent. Please call the restaurant to book.',
     successTitle: isGreek ? '\u03a4\u03bf \u03b1\u03af\u03c4\u03b7\u03bc\u03b1 \u03ba\u03c1\u03ac\u03c4\u03b7\u03c3\u03b7\u03c2 \u03c3\u03c4\u03ac\u03bb\u03b8\u03b7\u03ba\u03b5' : 'Reservation request sent',
     successBody: isGreek
@@ -205,8 +207,10 @@ export function ReservationSection() {
     sending: isGreek ? '\u0391\u03c0\u03bf\u03c3\u03c4\u03bf\u03bb\u03ae...' : 'Sending...',
     submit: isGreek ? '\u0391\u03c0\u03bf\u03c3\u03c4\u03bf\u03bb\u03ae \u03b1\u03b9\u03c4\u03ae\u03bc\u03b1\u03c4\u03bf\u03c2 \u03ba\u03c1\u03ac\u03c4\u03b7\u03c3\u03b7\u03c2' : 'Send Reservation Request',
     sendSuccess: isGreek
-      ? '\u03a4\u03bf \u03b1\u03af\u03c4\u03b7\u03bc\u03b1 \u03ba\u03c1\u03ac\u03c4\u03b7\u03c3\u03b7\u03c2 \u03c3\u03c4\u03ac\u03bb\u03b8\u03b7\u03ba\u03b5 / \u039f \u03b1\u03af\u03c4\u03b7\u03bc\u03b1 \u03ba\u03c1\u03ac\u03c4\u03b7\u03c3\u03b7\u03c2 \u03c3\u03c4\u03ac\u03bb\u03b8\u03b7\u03ba\u03b5'
-      : 'Reservation request sent successfully / \u03a4\u03bf \u03b1\u03af\u03c4\u03b7\u03bc\u03b1 \u03ba\u03c1\u03ac\u03c4\u03b7\u03c3\u03b7\u03c2 \u03c3\u03c4\u03ac\u03bb\u03b8\u03b7\u03ba\u03b5',
+      ? '\u039f \u03b1\u03af\u03c4\u03b7\u03bc\u03b1 \u03ba\u03c1\u03ac\u03c4\u03b7\u03c3\u03b7\u03c2 \u03c3\u03c4\u03ac\u03bb\u03b8\u03b7\u03ba\u03b5.'
+      : isChinese
+      ? '\u9884\u7ea6\u8bf7\u6c42\u5df2\u53d1\u9001\u6210\u529f\u3002'
+      : 'Reservation request sent successfully.',
     submitAgreement: isGreek
       ? '\u039c\u03b5 \u03c4\u03b7\u03bd \u03b1\u03c0\u03bf\u03c3\u03c4\u03bf\u03bb\u03ae, \u03c3\u03c5\u03bc\u03c6\u03c9\u03bd\u03b5\u03af\u03c4\u03b5 \u03bc\u03b5 \u03c4\u03bf\u03c5\u03c2'
       : 'By submitting, you agree to our',
@@ -241,7 +245,7 @@ export function ReservationSection() {
       timeHelper: '每 30 分钟一档，12:00 - 23:30。周三休息。',
       notesPlaceholder: '座位偏好、过敏信息或其他备注。',
       requiredError: '请先填写所有必填信息。',
-      sendError: '预约请求未能发送，请直接致电餐厅预约。',
+      sendError: '预约请求发送失败，请稍后再试。',
       successTitle: '预约请求已提交',
       successBody: '餐厅会联系你进行确认。',
       sending: '发送中...',
@@ -298,8 +302,7 @@ export function ReservationSection() {
       setSubmitted(true);
       setForm(createInitialForm(getAthensNow()));
     } catch (err) {
-      const message = err instanceof Error ? err.message : text.sendError;
-      setError(message);
+      setError(text.sendError);
     } finally {
       setIsSending(false);
     }
