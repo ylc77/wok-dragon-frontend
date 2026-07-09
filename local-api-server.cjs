@@ -108,18 +108,52 @@ async function sendTelegramMessage(text) {
   }
 }
 
+function isTestTelegramRoute(url, method) {
+  return url === '/api/test-telegram' && (method === 'GET' || method === 'POST');
+}
+
+async function handleTestTelegram(request, response) {
+  const url = new URL(request.url || '/', 'http://127.0.0.1:8787');
+  let message = '🧪 Telegram test message from Wok Dragon website.';
+
+  if (request.method === 'GET') {
+    message = url.searchParams.get('message') || message;
+  } else {
+    const body = await readJson(request);
+    if (typeof body.message === 'string' && body.message.trim().length > 0) {
+      message = body.message;
+    }
+  }
+
+  await sendTelegramMessage(message);
+  sendJson(response, 200, { ok: true, message });
+}
+
 const server = http.createServer(async (request, response) => {
   if (request.method === 'OPTIONS') {
     sendJson(response, 204, {});
     return;
   }
 
-  if (request.url !== '/api/reservation' || request.method !== 'POST') {
+  const isReservationRoute = request.url === '/api/reservation' || request.url === '/api/reservations';
+  const isTestRoute = isTestTelegramRoute(request.url, request.method);
+
+  if (!isReservationRoute && !isTestRoute) {
     sendJson(response, 404, { ok: false, error: 'Not found.' });
     return;
   }
 
   try {
+    if (isTestRoute) {
+      await handleTestTelegram(request, response);
+      return;
+    }
+
+    if (request.method !== 'POST') {
+      sendJson(response, 405, { ok: false, error: 'Method not allowed. Use POST.' });
+      return;
+    }
+
     const reservation = await readJson(request);
     const validationError = validateReservation(reservation);
     if (validationError) {

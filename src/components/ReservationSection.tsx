@@ -153,7 +153,6 @@ export function ReservationSection() {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
   const [isSending, setIsSending] = useState(false);
-  const sendToApi = import.meta.env.VITE_RESERVATION_API_ENABLED === 'true';
 
   const text = {
     title: isGreek ? '\u039a\u03c1\u03b1\u03c4\u03ae\u03c3\u03b5\u03b9\u03c2' : 'Reservations',
@@ -205,6 +204,9 @@ export function ReservationSection() {
       : 'The restaurant will contact you to confirm.',
     sending: isGreek ? '\u0391\u03c0\u03bf\u03c3\u03c4\u03bf\u03bb\u03ae...' : 'Sending...',
     submit: isGreek ? '\u0391\u03c0\u03bf\u03c3\u03c4\u03bf\u03bb\u03ae \u03b1\u03b9\u03c4\u03ae\u03bc\u03b1\u03c4\u03bf\u03c2 \u03ba\u03c1\u03ac\u03c4\u03b7\u03c3\u03b7\u03c2' : 'Send Reservation Request',
+    sendSuccess: isGreek
+      ? '\u03a4\u03bf \u03b1\u03af\u03c4\u03b7\u03bc\u03b1 \u03ba\u03c1\u03ac\u03c4\u03b7\u03c3\u03b7\u03c2 \u03c3\u03c4\u03ac\u03bb\u03b8\u03b7\u03ba\u03b5 / \u039f \u03b1\u03af\u03c4\u03b7\u03bc\u03b1 \u03ba\u03c1\u03ac\u03c4\u03b7\u03c3\u03b7\u03c2 \u03c3\u03c4\u03ac\u03bb\u03b8\u03b7\u03ba\u03b5'
+      : 'Reservation request sent successfully / \u03a4\u03bf \u03b1\u03af\u03c4\u03b7\u03bc\u03b1 \u03ba\u03c1\u03ac\u03c4\u03b7\u03c3\u03b7\u03c2 \u03c3\u03c4\u03ac\u03bb\u03b8\u03b7\u03ba\u03b5',
     submitAgreement: isGreek
       ? '\u039c\u03b5 \u03c4\u03b7\u03bd \u03b1\u03c0\u03bf\u03c3\u03c4\u03bf\u03bb\u03ae, \u03c3\u03c5\u03bc\u03c6\u03c9\u03bd\u03b5\u03af\u03c4\u03b5 \u03bc\u03b5 \u03c4\u03bf\u03c5\u03c2'
       : 'By submitting, you agree to our',
@@ -282,27 +284,22 @@ export function ReservationSection() {
     setError('');
 
     try {
-      if (sendToApi) {
-        const response = await fetch('/api/reservation', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(form),
-        });
-        const result = await response.json().catch(() => ({ ok: false }));
+      const response = await fetch('/api/reservations', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+      const result = await response.json().catch(() => ({ ok: false, error: 'Invalid response from server.' }));
 
-        if (!response.ok || !result.ok) {
-          throw new Error(result.error || 'Reservation request could not be sent.');
-        }
-      } else {
-        await new Promise((resolve) => {
-          window.setTimeout(resolve, 300);
-        });
+      if (!response.ok || result.ok === false) {
+        throw new Error(result.error || `Reservation request failed with status ${response.status}.`);
       }
 
       setSubmitted(true);
       setForm(createInitialForm(getAthensNow()));
-    } catch {
-      setError(text.sendError);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : text.sendError;
+      setError(message);
     } finally {
       setIsSending(false);
     }
@@ -452,10 +449,7 @@ export function ReservationSection() {
           {submitted && (
             <p className="form-success" role="status" aria-live="polite">
               <CheckCircle2 size={20} />
-              <span>
-                <strong>{text.successTitle}</strong>
-                {text.successBody}
-              </span>
+              <span>{text.sendSuccess}</span>
             </p>
           )}
 
