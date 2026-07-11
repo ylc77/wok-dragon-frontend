@@ -6,6 +6,7 @@ import { Header } from './components/Header';
 import { ParticleSplash } from './components/ParticleSplash';
 import { CookieBanner } from './components/CookieBanner';
 import { CookieConsentProvider } from './components/CookieConsentProvider';
+import { Seo } from './components/Seo';
 import { ContactPage } from './routes/ContactPage';
 import { HomePage } from './routes/HomePage';
 import { LegalPage } from './routes/LegalPage';
@@ -29,6 +30,7 @@ export default function App() {
     <CookieConsentProvider>
       <div className="app-shell">
         <ParticleSplash />
+        <Seo />
         <ScrollToTop />
         <Header />
         <main>
